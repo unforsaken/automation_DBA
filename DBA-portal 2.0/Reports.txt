@@ -1,0 +1,16 @@
+*** Settings ***
+Suite Setup       LoadElementLocators
+Resource          ../AllResources.txt
+
+*** Test Cases ***
+Reports_Change_Log
+    [Tags]    change_log
+    Login
+    Back_To_Main_Page
+    Navigate_To_Change_Log
+
+Reports_Access_Point
+
+Reports_Alerts
+
+Reports_Licenses

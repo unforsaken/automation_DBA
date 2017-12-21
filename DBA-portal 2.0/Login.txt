@@ -1,0 +1,14 @@
+*** Settings ***
+Suite Setup       Main_Variables
+Force Tags
+Resource          ../AllResources.txt
+
+*** Test Cases ***
+Login
+    Login
+
+Logout
+
+ping_test
+    [Tags]    ping
+    ping_test    192.168.10.31    20

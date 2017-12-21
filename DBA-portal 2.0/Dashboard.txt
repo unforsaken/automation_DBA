@@ -1,0 +1,16 @@
+*** Settings ***
+Suite Setup       LoadElementLocators
+Resource          ../AllResources.txt
+
+*** Test Cases ***
+Dashboard_AP_Overview
+
+Dashboard_Client_Usage
+
+Dashboard_Connected_Clients
+
+Dashboard_Top_Devices
+
+Dashboard_Top_SSIDs
+
+Dashboard_Top_Clients

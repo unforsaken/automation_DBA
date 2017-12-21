@@ -1,0 +1,6 @@
+*** Settings ***
+Resource          CommonFunctions.txt
+Resource          ElementLocator.txt
+Library           ../library/pingLib.py
+Library           ../library/wireless.py
+Library           com.rabbit.automation.robotframework.KeyWordLib

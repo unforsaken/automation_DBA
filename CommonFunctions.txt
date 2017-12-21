@@ -1,0 +1,689 @@
+*** Settings ***
+Resource          ElementLocator.txt
+
+*** Keywords ***
+ToLoginPage
+    : FOR    ${var}    IN RANGE    1    10
+    \    tourl    https://192.168.10.1
+    \    sleep    3s
+    \    clearText    id    tf1_userName
+    \    sendText    id    tf1_userName    admin
+    \    clearText    id    tf1_password
+    \    sendText    id    tf1_password    admin
+    \    click    id    tf1_btnLogin
+    \    sleep    3s
+    \    click    xpath    /html/body/table/tbody/tr[1]/td/div[1]/div/div[2]/table/tbody/tr[1]/td[2]/a/div/div/icon
+
+Login
+    toURL    ${url}
+    sleep    1s
+    click    ${user_name_textbox}
+    sleep    1s
+    sendText    ${user_name_textbox}    ricky.lin@dlinkcorp.com
+    sleep    1s
+    click    ${password_textbox}
+    sleep    1s
+    sendText    ${password_textbox}    tsd2tsd2
+    sleep    1s
+    click    ${login_submit_button}
+    sleep    1s
+
+Logout
+    click    ${top_user_dropdown_menu}
+    click    ${top_user_dropdown_logout}
+    ${logout_status}=    waitElementDisplayed    xpath    (//*[contains(text(),'Login')])    5    true    #check if the page is displayed correctly, includes the element or not
+
+Back_To_Main_Page
+    sleep    1s
+    click    ${dlink_logo_icon}    #click main page
+    sleep    1s
+
+Top_User_Profile_Check
+    @{user_name}=    Create List    a    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa    DLAB TSD2
+    @{password}=    Create List    11111111    1111111111111111111111111111111111111111111111111111111111    tsd2tsd2
+    ${length}=    Get Length    ${user_name}
+    :FOR    ${number}    IN RANGE    0    ${length}
+    \    click    ${top_user_dropdown_menu}
+    \    click    ${top_user_dropdown_user_profile}
+    \    sleep    1s
+    \    clearText    ${user_profile_name_textbox}
+    \    sendText    ${user_profile_name_textbox}    ${user_name[${number}]}
+    \    sendText    ${user_profile_password_textbox}    ${password[${number}]}
+    \    sendText    ${user_profile_confirm_password_textbox}    ${password[${number}]}
+    \    sleep    1s
+    \    click    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[10]/div[2]/label/label
+    \    click    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[10]/div[3]/label/label
+    \    click    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[10]/div[4]/label/label
+    \    click    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[10]/div[5]/label/label
+    \    click    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[10]/div[6]/label/label
+    \    sleep    2s
+    \    click    ${user_profile_save_button}
+    \    waitElementDisplayed    xpath    (//*[contains(text(),'Save Success')])    5    true    #check if the page is displayed correctly, includes the element or not
+    \    Logout
+    \    waitElementDisplayed    xpath    (//*[contains(text(),'Login')])    5    true    #check if the page is displayed correctly, includes the element or not
+    \    sendText    ${user_name_textbox}    ricky.lin@dlinkcorp.com
+    \    sendText    ${password_textbox}    ${password[${number}]}
+    \    click    ${login_submit_button}
+    \    ${new_name}    getText    ${top_user_dropdown_menu}
+    \    should be true    '${new_name}'=='${user_name[${number}]}'    name did not change correctly
+
+Top_Navigation_Check
+    click    ${dashboard_button}
+    Error_Page_Search
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_devices}
+    Error_Page_Search
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    Error_Page_Search
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_eventlog}
+    Error_Page_Search
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_map}
+    Error_Page_Search
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_floorplans}
+    Error_Page_Search
+    click    ${configure_drop_down_menu}
+    click    ${configure_access_point_drop_down_menu}
+    click    ${configure_access_point_profiles_drop_down_menu}
+    Error_Page_Search
+    click    ${configure_drop_down_menu}
+    click    ${configure_access_point_drop_down_menu}
+    click    ${configure_accesspoint_devices}
+    Error_Page_Search
+    click    ${reports_dropdown_menu}
+    click    ${reports_dropdown_changelog}
+    Error_Page_Search
+    click    ${reports_dropdown_menu}
+    click    ${reports_dropdown_accesspoint}
+    Error_Page_Search
+    click    ${reports_dropdown_menu}
+    click    ${reports_dropdown_alerts}
+    Error_Page_Search
+    click    ${reports_dropdown_menu}
+    click    ${reports_dropdown_licenses}
+    Error_Page_Search
+    click    ${settings_dropdown_menu_button}
+    click    ${settings_dropdown_account_management}
+    Error_Page_Search
+    click    ${settings_dropdown_menu_button}
+    click    ${settings_dropdown_organization_management_button}
+    Error_Page_Search
+    click    ${settings_dropdown_menu_button}
+    click    ${settings_dropdown_licensemanagement}
+    Error_Page_Search
+    click    ${settings_dropdown_menu_button}
+    click    ${settings_dropdown_inventory}
+    Error_Page_Search
+    click    ${settings_dropdown_menu_button}
+    click    ${settings_dropdown_firmware}
+    Error_Page_Search
+    click    ${settings_dropdown_menu_button}
+    click    ${settings_dropdown_adddevice}
+    Error_Page_Search
+
+Error_Page_Search
+    @{error_code}=    Create List    403    404    500    503    error
+    ...    Error
+    ${length}=    Get Length    ${error_code}
+    :FOR    ${number}    IN RANGE    0    ${length}
+    \    ${error_result}=    waitElementDisplayed    xpath    //*[contains(text(),'${error_code[${number}]}')]    1
+    \    should not be true    ${error_result}
+
+Settings_Create_New_Organization
+    [Arguments]    ${new_org_name}
+    sleep    1s
+    click    ${settings_dropdown_menu_button}    #click settings dropdown button
+    sleep    1s
+    click    ${settings_dropdown_organization_management_button}    #click organization management menu button
+    sleep    1s
+    click    ${settings_create_organization_button}    #click create organization
+    sleep    1s
+    click    ${settings_create_organization_detail_organization_name}    #click organization name
+    sendText    ${settings_create_organization_detail_organization_name}    ${new_org_name}    #input Jack_Org as value
+    sleep    1s
+    click    ${settings_create_organization_detail_type_dropdown}    #click type drop down menu
+    sleep    1s
+    click    ${settings_create_organization_detail_type_dropdown_organization}    #choose Organization
+    sleep    1s
+    click    ${settings_create_organization_detail_name}    #choose Name
+    sleep    1s
+    sendText    ${settings_create_organization_detail_name}    test    #input test as value
+    sleep    1s
+    click    ${settings_create_organization_detail_telephone}    #choose Telephone
+    sleep    1s
+    sendText    ${settings_create_organization_detail_telephone}    02-12345678    #input 02-12345678 as value
+    sleep    1s
+    click    ${settings_create_organization_detail_email}    #choose Email
+    sleep    1s
+    sendText    ${settings_create_organization_detail_email}    jack.tzu@dlinkcorp.com    #input jack.tzu@dlinkcorp.com as value
+    sleep    1s
+    click    ${settings_create_organization_detail_save_button}    #click save button
+    sleep    5s
+
+Settings_Check_New_Organization
+    [Arguments]    ${organization_name}
+    sleep    1s
+    click    ${settings_dropdown_menu_button}    #click settings dropdown button
+    sleep    1s
+    click    ${settings_dropdown_organization_management_button}    #click organization management menu button
+    sleep    1s
+    click    ${settings_organization_last_page}    #goes to the last page of organization list
+    sleep    5s
+    :FOR    ${var}    IN RANGE    1    100
+    \    ${name}=    getText    xpath    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[1]/a
+    \    log    ${name}
+    \    ${OK}=    evaluate    "${name}"=="${organization_name}"
+    \    run keyword if    ${OK}    exit for loop
+    sleep    5s
+
+Settings_Account_Check
+    @{accounts}=    create list    jack.tzu@dlinkcorp.com    unholy_guns@hotmail.com    ricky.lin@dlinkcorp.com
+    ${index}    Evaluate    1
+    ${name}    Set Variable    result
+    : FOR    ${var}    IN    @{accounts}
+    \    click    ${user_name_textbox}
+    \    sendText    ${user_name_textbox}    ${var}
+    \    sleep    1s
+    \    click    ${password_textbox}
+    \    sendText    ${password_textbox}    tsd2tsd2
+    \    sleep    1s
+    \    click    ${login_submit_button}
+    \    ${top_menu_check}=    getText    ${organization_drop_down_menu}
+    \    Set Test Variable    ${${name}_${index}}    ${top_menu_check}
+    \    ${index}    Evaluate    ${index}+1
+    \    Logout
+    should not be equal    ${result_1}    ${result_2}    'two privileges should not match'
+    should not be equal    ${result_2}    ${result_3}    'two privileges should not match'
+    should not be equal    ${result_3}    ${result_1}    'two privileges should not match'
+
+Configure_Create_New_Profile
+    [Arguments]    ${profile_name}
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    click    ${create_new_profile}    #click create new profile
+    sleep    1s
+    sendText    ${new_profile_name}    ${profile_name}
+    sleep    1s
+    click    ${new_profile_model}
+    sleep    1s
+    click    ${new_profile_model_DBA1510}
+    sleep    1s
+    click    ${new_profile_country}
+    sleep    1s
+    click    ${new_profile_country_taiwan}
+    sleep    1s
+    click    ${new_profile_config_default}
+    sleep    1s
+    click    ${new_profile_save_button}
+    sleep    5s
+
+Configure_Check_New_Profile
+    [Arguments]    ${profile_name}
+    Back_To_Main_Page
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    click    ${configure_profile_last_button}
+    : FOR    ${var}    IN RANGE    1    100
+    \    ${name}=    getText    xpath    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[3]/input
+    \    log    ${name}
+    \    ${OK}=    evaluate    "${name}"=="${profile_name}"
+    \    run keyword if    ${OK}    exit for loop
+    return from keyword if    'True'    text
+    sleep    5s
+
+Configure_Set_Profile_SSID_Add
+    [Arguments]    ${profile_name}    ${ssid_name_2.4}    ${ssid_name_5}
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    click    ${configure_profile_ssid_2_icon}    #clicks the profile's SSID button
+    sleep    1s
+    click    ${configure_profile_ssid_add_ssid_button}    #clicks the Add SSID button inside the second profile
+    sleep    1s
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${ssid_name_2.4}    #clicks the SSID name input box
+    click    ${configure_profile_ssid_add_ssid_5g_checkbox}    #disables the 5G band selection (for 2.4G)
+    sleep    1s
+    click    ${configure_profile_ssid_add_ssid_save_button}    #clicks the Save Button
+    sleep    2s
+    click    ${configure_profile_ssid_add_ssid_button}    #clicks the Add SSID button inside the first profile
+    sleep    1s
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${ssid_name_5}    #clicks the SSID name input box
+    click    ${configure_profile_ssid_add_ssid_2.4g_checkbox}    #disables the 2.4G band selection (for 5G)
+    sleep    1s
+    click    ${configure_profile_ssid_add_ssid_save_button}    #clicks the Save Button
+    ${check_new_2.4_exist}=    waitElementDisplayed    xpath    (//a[contains(text(),'${ssid_name_2.4}')])    5    true
+    sleep    1s
+    ${check_new_5_exist}=    waitElementDisplayed    xpath    (//a[contains(text(),'${ssid_name_5}')])    5    true
+    sleep    5s
+
+Configure_Set_Profile_SSID_MAC_Filtering
+    [Arguments]    ${profile_name}    ${ssid_name_2.4}    ${ssid_name_5}
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${SSID_location}=    Configure_Get_Profile_SSID    ${profile_name}
+    click    xpath    ${SSID_location}    #clicks the profile's SSID button
+    sleep    2s
+    click    xpath    //a[contains(text(),'${ssid_name_2.4}')]    #clicks the SSID for 2.4G
+    sleep    1s
+    click    xpath    //a[contains(text(),'MAC Filtering')]    #clicks the MAC Filtering inside the SSID profile
+    ${check_mac_filtering_page_exist_2.4}=    waitElementDisplayed    xpath    (//*[contains(text(),'MSP Notice Editor')])    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    1s
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    click    xpath    ${SSID_location}    #clicks the profile's SSID button
+    sleep    2s
+    click    xpath    //a[contains(text(),'${ssid_name_5}')]    #clicks the SSID for 5G
+    sleep    1s
+    click    xpath    //a[contains(text(),'MAC Filtering')]    #clicks the MAC Filtering inside the SSID profile
+    ${check_mac_filtering_page_exist_5}=    waitElementDisplayed    xpath    (//*[contains(text(),'MSP Notice Editor')])    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    3s
+
+Configure_Set_Profile_SSID_IP_Filtering
+    [Arguments]    ${profile_name}    ${ssid_name_2.4}    ${ssid_name_5}
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${SSID_location}=    Configure_Get_Profile_SSID    ${profile_name}
+    click    xpath    ${SSID_location}    #clicks the profile's SSID button
+    sleep    2s
+    click    xpath    //a[contains(text(),'${ssid_name_2.4}')]    #clicks the SSID for 2.4G
+    sleep    1s
+    click    xpath    //a[contains(text(),'IP Filtering')]    #clicks the IP Filtering inside the SSID profile
+    ${check_ip_filtering_page_exist_2.4}=    waitElementDisplayed    xpath    //*[contains(text(),'Filtering Mode')]    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    1s
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${SSID_location}=    Configure_Get_Profile_SSID    ${profile_name}
+    click    xpath    ${SSID_location}    #clicks the profile's SSID button
+    sleep    2s
+    click    xpath    //a[contains(text(),'${ssid_name_5}')]    #clicks the SSID for 5G
+    sleep    1s
+    click    xpath    //a[contains(text(),'IP Filtering')]    #clicks the IP Filtering inside the SSID profile
+    ${check_ip_filtering_page_exist_5}=    waitElementDisplayed    xpath    //*[contains(text(),'Filtering Mode')]    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    3s
+
+Configure_Set_Profile_SSID_Captive_Portal
+    [Arguments]    ${profile_name}    ${ssid_name_2.4}    ${ssid_name_5}
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${SSID_location}=    Configure_Get_Profile_SSID    ${profile_name}
+    click    xpath    ${SSID_location}    #clicks the profile's SSID button
+    sleep    2s
+    click    xpath    //a[contains(text(),'${ssid_name_2.4}')]    #clicks the SSID for 2.4G
+    sleep    1s
+    click    xpath    //a[contains(text(),'Captive Portal')]    #clicks the Captive Portal button inside the SSID profile
+    ${check_captive_portal_page_exist_2.4}=    waitElementDisplayed    xpath    //*[contains(text(),'Splash Page')]    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    1s
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${SSID_location}=    Configure_Get_Profile_SSID    ${profile_name}
+    click    xpath    ${SSID_location}    #clicks the profile's SSID button
+    sleep    2s
+    click    xpath    //a[contains(text(),'${ssid_name_5}')]    #clicks the SSID for 5G
+    sleep    1s
+    click    xpath    //a[contains(text(),'Captive Portal')]    #clicks the Captive Portal button inside the SSID profile
+    ${check_captive_portal_page_exist_5}=    waitElementDisplayed    xpath    //*[contains(text(),'Splash Page')]    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    3s
+
+Configure_Set_Profile_SSID_Advanced
+    [Arguments]    ${profile_name}    ${ssid_name_2.4}    ${ssid_name_5}
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${SSID_location}=    Configure_Get_Profile_SSID    ${profile_name}
+    click    xpath    ${SSID_location}    #clicks the profile's SSID button
+    sleep    2s
+    click    xpath    //a[contains(text(),'${ssid_name_2.4}')]    #clicks the SSID for 2.4G
+    sleep    1s
+    click    xpath    //a[contains(text(),'Advanced')]    #clicks the Advanced button inside the SSID profile
+    ${check_advanced_page_exist_2.4}=    waitElementDisplayed    xpath    //*[contains(text(),'Max Clients')]    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    1s
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${SSID_location}=    Configure_Get_Profile_SSID    ${profile_name}
+    click    xpath    ${SSID_location}    #clicks the profile's SSID button
+    sleep    2s
+    click    xpath    //a[contains(text(),'${ssid_name_5}')]    #clicks the SSID for 5G
+    sleep    1s
+    click    xpath    //a[contains(text(),'Advanced')]    #clicks the Advanced button inside the SSID profile
+    ${check_advanced_page_exist_5}=    waitElementDisplayed    xpath    //*[contains(text(),'Max Clients')]    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    3s
+
+Configure_Set_Profile_Radio
+    [Arguments]    ${profile_name}
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${radio_location}=    Configure_Get_Profile_Radio    ${profile_name}
+    click    xpath    ${radio_location}    #clicks the profile's radio button
+    sleep    2s
+    ${check_radio_page_exist}=    waitElementDisplayed    xpath    //*[contains(text(),'Enabled Radio')]    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    1s
+
+Configure_Set_Profile_Radio_Channel
+    [Arguments]    ${profile_name}
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${radio_location}=    Configure_Get_Profile_Radio    ${profile_name}
+    click    xpath    ${radio_location}    #clicks the profile's radio button
+    sleep    2s
+    ${check_radio_page_exist}=    waitElementDisplayed    xpath    //*[contains(text(),'Enabled Radio')]    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    1s
+    click    ${profile_ssid_radio_channel_button}
+    ${check_radio_channel_page_exist}=    waitElementDisplayed    xpath    //*[contains(text(),'Eligible Channels')]    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    2s
+
+Configure_Set_Profile_General_Change_Country
+    [Arguments]    ${profile_name}
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${general_location}=    Configure_Get_Profile_General    ${profile_name}
+    click    xpath    ${general_location}    #clicks the profile's general button
+    ${check_radio_page_exist}=    waitElementDisplayed    xpath    //*[contains(text(),'User Name')]    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    1s
+    @{country}=    Create List    Albania    France    Egypt    Japan    Nigeria
+    ...    Thailand    United States    Zambia    Taiwan
+    : FOR    ${var}    IN    @{country}
+    \    sleep    1s
+    \    click    ${profile_general_country_dropdown_menu}    #clicks country dropdown menu
+    \    click    xpath    //*[contains(text(),'${var}')]    #clicks the country
+    \    sleep    1s
+    \    click    ${profiles_general_save_button}    #saves the change made in country
+    \    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true    #check if the page is displayed correctly, includes the element or not
+    \    click    ${profiles_button}    #clicks back to the profile page
+    \    sleep    1s
+    \    click    xpath    ${general_location}    #clicks the profile's general button
+    \    ${current_country}=    getText    ${profile_general_country_dropdown_menu}    #gets the text value of the current country
+    \    Should Be True    '${current_country}'=='${var}'    #compares the current country with the country variable, should be equal
+    \    sleep    1s
+    &{country_utc}=    Create Dictionary    'Taiwan'='(UTC+8)'    'Thailand'='(UTC+7)'
+
+Configure_Set_Profile_SplashPage
+    [Arguments]    ${profile_name}
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${splash_location}=    Configure_Get_Profile_SplashPage_Location    ${profile_name}
+    click    xpath    ${splash_location}    #clicks the profile's splashpage button
+    ${check_splash_page_exist}=    waitElementDisplayed    xpath    //*[contains(text(),'Default click-through')]    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    1s
+    : FOR    ${var1}    IN RANGE    1    5
+    \    click    xpath    //*[@id="v2-ap-profile-splash"]/div/div[5]/div[1]/div/div[2]/div/table/tbody/tr[${var1}]/td[1]/div
+    \    Configure_Get_Profile_SplashPage_ClickThrough
+
+Configure_Set_Profile_SplashPage_Edit
+    [Arguments]    ${profile_name}    ${splash_page_name}
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${splash_location}=    Configure_Get_Profile_SplashPage_Location    ${profile_name}
+    click    xpath    ${splash_location}    #clicks the profile's splashpage button
+    ${check_splash_page_exist}=    waitElementDisplayed    xpath    //*[contains(text(),'Default click-through')]    5    true    #check if the page is displayed correctly, includes the element or not
+    sleep    1s
+    : FOR    ${var1}    IN RANGE    1    5
+    \    Configure_Get_Profile_SplashPage_Add    ${var1}    ${splash_page_name}
+
+Settings_Create_New_User
+    [Arguments]    ${new_user_name}
+    click    ${settings_dropdown_menu_button}
+    click    ${settings_dropdown_account_management}
+    sleep    1s
+    click    ${settings_account_management_invite_user_button}
+    sleep    2s
+    sendText    ${settings_account_management_invite_user_popup_name_textbox}    ${new_user_name}
+    sendText    ${settings_account_management_invite_user_popup_email_textbox}    jack.tzu@dlinkcorp.com
+    click    ${settings_account_management_invite_user_popup_type_dropdown1}
+    sleep    1s
+    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[3]/div[2]/span/ul/li[3]/a
+    click    ${settings_account_management_invite_user_popup_type_dropdown2}
+    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[4]/div[2]/span/ul/li[1]/a
+    sleep    1s
+    click    ${settings_account_management_invite_user_popup_site_tag_dropdown}
+    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[7]/div[2]/span/ul/li[3]/a
+    sleep    1s
+    click    ${settings_account_management_invite_user_popup_site_dropdown}
+    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[8]/div[2]/span/ul/li[2]/a
+    sleep    1s
+    click    ${settings_account_management_invite_user_popup_privileges_dropdown}
+    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[9]/div[2]/span/ul/li[1]/a
+    sleep    1s
+    click    ${settings_account_management_invite_user_popup_submit_button}
+    sleep    10s
+
+Settings_Check_New_User
+    [Arguments]    ${new_user_name}
+
+Event_Log_Change_Date
+    [Arguments]    ${new_date}
+    ${time}=    getText    xpath    //*[@id="v2-ap-event-logs"]/div/div/div[2]/div[1]/div[5]/div[2]/input    #get the current date
+    log    ${time}    #show the current date
+    clearText    xpath    //*[@id="v2-ap-event-logs"]/div/div/div[2]/div[1]/div[5]/div[2]/input    #clear the current date text box
+    sleep    1s
+    sendText    xpath    //*[@id="v2-ap-event-logs"]/div/div/div[2]/div[1]/div[5]/div[2]/input    ${new_date}    #set the current date text box to the following
+    sleep    1s
+    click    xpath    //*[@id="v2-ap-event-logs"]/div/div/div[2]/div[1]/div[6]/a[2]    #click filter to check results
+
+Navigate_To_Event_Log
+    click    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[2]/a
+    sleep    1s
+    click    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[2]/ul/li[1]/a
+    sleep    1s
+    click    xpath    //*[@id="rightsubmenu21"]/li[3]/a
+
+Navigate_To_Created_Organization
+    [Arguments]    ${new_org_name}
+    sleep    1s
+    click    ${organization_drop_down_menu}    #changes the organization to Jack_Org
+    sleep    1s
+    click    xpath    //*[contains(text(),'${new_org_name}')]    #select the organization name
+    sleep    3s
+
+Navigate_To_Change_Log
+    sleep    1s
+    click    xpath    //a[contains(text(),'Reports')]
+    sleep    1s
+    click    xpath    //a[contains(text(),'Change Log')]
+    sleep    1s
+    click    xpath    //button[@id='typeDropdownMenu']
+    sleep    1s
+    click    xpath    //*[contains(text(),'Active Directory config')]
+    sleep    1s
+    click    xpath    //*[contains(text(),'SSID Profile')]
+    sleep    5s
+    click    xpath    //*[contains(text(),'SSID Profile')]
+
+ping_test
+    [Arguments]    ${ip}    ${loss_rate}
+    defping    ${ip}    ${loss_rate}
+
+Configure_Get_Profile_SSID
+    [Arguments]    ${profile_name}
+    : FOR    ${var}    IN RANGE    1    1000
+    \    ${name}=    getText    xpath    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[3]/input
+    \    ${OK}=    evaluate    "${name}"=="${profile_name}"
+    \    ${SSID_location}=    Set Variable If    '${OK}'=='True'    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[8]/a
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${SSID_location}
+
+Configure_Get_Profile_Radio
+    [Arguments]    ${profile_name}
+    : FOR    ${var}    IN RANGE    1    1000
+    \    ${name}=    getText    xpath    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[3]/input
+    \    ${OK}=    evaluate    "${name}"=="${profile_name}"
+    \    ${radio_location}=    Set Variable If    '${OK}'=='True'    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[9]/a
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${radio_location}
+
+Configure_Get_Profile_General
+    [Arguments]    ${profile_name}
+    : FOR    ${var}    IN RANGE    1    1000
+    \    ${name}=    getText    xpath    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[3]/input
+    \    ${OK}=    evaluate    "${name}"=="${profile_name}"
+    \    ${general_location}=    Set Variable If    '${OK}'=='True'    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[11]/a
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${general_location}
+
+Configure_Get_Profile_SplashPage_Location
+    [Arguments]    ${profile_name}
+    : FOR    ${var}    IN RANGE    1    1000
+    \    ${name}=    getText    xpath    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[3]/input
+    \    ${OK}=    evaluate    "${name}"=="${profile_name}"
+    \    ${splash_location}=    Set Variable If    '${OK}'=='True'    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[10]/a
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${splash_location}
+
+Configure_Get_Profile_SplashPage_Add
+    [Arguments]    ${var1}    ${splash_page_name}
+    : FOR    ${var2}    IN RANGE    1    5
+    \    click    ${profiles_splash_page_add_button}    #click add new splash page button
+    \    sleep    1s
+    \    sendText    ${profiles_splash_page_add_name_textbox}    ${splash_page_name}
+    \    sleep    1s
+    \    click    ${profiles_splash_page_add_type_dropdown}
+    \    click    xpath    //*[@id="v2-ap-profile-modal"]/div/div[2]/form/div[2]/div[2]/span/ul/li[${var1}]/a    #clicks the first type dropdown in sequence 1,2,3,4
+    \    sleep    1s
+    \    click    ${profiles_splash_page_add_background_dropdown}
+    \    click    xpath    //*[@id="v2-ap-profile-modal"]/div/div[2]/form/div[3]/div[2]/span/ul/li[${var2}]/a    #clicks the second background dropdown in sequence 1,2,3,4
+    \    sleep    1s
+    \    click    ${profiles_splash_page_add_save_button}
+    \    sleep    1s
+    \    ${splash_name_icon}=    Configure_Get_Profile_SplashPage_Name    ${splash_page_name}
+    \    ${check_splash_icon_exist}=    waitElementDisplayed    xpath    ${splash_name_icon}    5    true
+    \    click    xpath    ${splash_name_icon}
+    \    sleep    1s
+    \    ${splash_delete_location}=    Configure_Get_Profile_SplashPage_Delete    ${splash_page_name}
+    \    ${check_delete_splash_icon_exist}=    waitElementDisplayed    xpath    ${splash_delete_location}    5    true
+    \    click    xpath    ${splash_delete_location}    #deletes the created splashpage
+    \    sleep    1s
+    \    click    ${profiles_splash_page_delete_yes_button}    #press yes from the popup message
+    \    ${wait_for_splash_page}=    waitElementDisplayed    xpath    //*[contains(text(),'Default click-through')]    5    true
+    \    sleep    1s
+
+Configure_Get_Profile_SplashPage_Delete
+    [Arguments]    ${splash_page_name}
+    : FOR    ${var}    IN RANGE    5    1000
+    \    ${name}=    getText    xpath    //*[@id="v2-ap-profile-splash"]/div/div[5]/div[1]/div/div[2]/div/table/tbody/tr[${var}]/td[1]/div
+    \    ${OK}=    evaluate    "${name}"=="${splash_page_name}"
+    \    ${splash_delete_location}=    Set Variable If    '${OK}'=='True'    //*[@id="v2-ap-profile-splash"]/div/div[5]/div[1]/div/div[2]/div/table/tbody/tr[${var}]/td[2]/a
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${splash_delete_location}
+
+Configure_Get_Profile_SplashPage_Name
+    [Arguments]    ${splash_page_name}
+    : FOR    ${var}    IN RANGE    5    1000
+    \    ${name}=    getText    xpath    //*[@id="v2-ap-profile-splash"]/div/div[5]/div[1]/div/div[2]/div/table/tbody/tr[${var}]/td[1]/div
+    \    ${OK}=    evaluate    "${name}"=="${splash_page_name}"
+    \    ${splash_name_icon}=    Set Variable If    '${OK}'=='True'    //*[@id="v2-ap-profile-splash"]/div/div[5]/div[1]/div/div[2]/div/table/tbody/tr[${var}]/td[1]/div
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${splash_name_icon}
+
+Configure_Get_Profile_SplashPage_ClickThrough
+    : FOR    ${var}    IN RANGE    1    9
+    \    click    xpath    //*[@id="v2-ap-profile-splash"]/div/div[5]/div[2]/div[2]/div/ul/li[${var}]/a
+    \    run keyword if    ${var}==7    Configure_Get_Profile_Splashpage_ClickThrough_Page7
+    \    ...    ELSE    Configure_Get_Profile_Splashpage_ClickThrough_OtherPage    ${var}
+
+Configure_Get_Profile_Splashpage_ClickThrough_OtherPage
+    [Arguments]    ${var1}
+    ${check_save_button_appear}=    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-splash"]/div/div[5]/div[2]/div[2]/div/div/div[${var1}]/div/div[2]/div[2]/button[2]    5    true
+    sleep    1s
+
+Configure_Get_Profile_SplashPage_ClickThrough_Page7
+    ${check_upload_button_appear}=    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-splash"]/div/div[5]/div[2]/div[2]/div/div/div[7]/div/div[2]/div[2]/button    5    true
+    sleep    1s
+
+Configure_Show_Profile_General_UserName
+    [Arguments]    ${profile_name}
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${general_location}    Configure_Get_Profile_General    DBA-1510P_Jack_5255
+    click    xpath    ${general_location}
+    ${name}=    getText    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[1]/div[2]/label
+    ${check_general_name}    evaluate    "${name}"=='admin'
+    should be true    ${check_general_name}    must be true
+
+Configure_Show_Profile_General_Password
+    [Arguments]    ${profile_name}
+    click    ${configure_drop_down_menu}    #click Configure Drop Down menu
+    sleep    1s
+    click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
+    sleep    1s
+    click    ${configure_access_point_profiles_drop_down_menu}    #clicks Profile button
+    sleep    1s
+    ${general_location}    Configure_Get_Profile_General    DBA-1510P_Jack_5255
+    click    xpath    ${general_location}
+    ${password}=    getText    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[2]/div[2]/input[1]
+    ${check_password_hide}    evaluate    "${password}"==''
+    should be true    ${check_password_hide}    must be true
+    click    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[2]/div[6]/label
+    ${password2}    getText    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[2]/div[2]/input[1]
+    ${check_password_appear}    evaluate    "${password2}"=='password'
+    should be true    ${check_password_appear}    must be true
