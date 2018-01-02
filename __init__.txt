@@ -1,6 +1,5 @@
 *** Settings ***
 Resource          CommonFunctions.txt
-Resource          ElementLocator.txt
 Library           ../library/pingLib.py
 Library           Collections
 Library           ../library/wireless.py

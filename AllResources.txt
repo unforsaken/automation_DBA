@@ -1,6 +1,11 @@
 *** Settings ***
 Resource          CommonFunctions.txt
-Resource          ElementLocator.txt
 Library           ../library/pingLib.py
 Library           ../library/wireless.py
 Library           com.rabbit.automation.robotframework.KeyWordLib
+Library           Collections
+Resource          ElementLocators/ElementLocator-Configure.txt
+Resource          ElementLocators/ElementLocator-Main.txt
+Resource          ElementLocators/ElementLocator-Settings.txt
+Resource          ElementLocators/ElementLocator-Dashboard.txt
+Resource          ElementLocators/ElementLocator-Monitor.txt

@@ -1,93 +1,486 @@
 *** Settings ***
-Suite Setup       Run Keywords    Main_Variables    Configure_Variables
+Suite Setup       RunKeywords    ElementLocator-Main    ElementLocator-Configure    ElementLocator-Settings    ElementLocator-Dashboard    ElementLocator-Monitor
+Force Tags        DKP1707020
 Resource          ../AllResources.txt
 
 *** Test Cases ***
-0002_Configure_AP_Edit_Profile_Add_SSID
+0002_Configure_AP_Profile_Add_SSID
     [Tags]    2
+    Check_Login
     Login
     Back_To_Main_Page
-    Navigate_To_Created_Organization    Jack_Test_Org
+    Navigate_To_Created_Organization    ${org}
     Configure_Set_Profile_SSID_Add    DBA-1510P_Jack_5255_2    DBA-1510P-Jack_5255_2.4G_test    DBA-1510P-Jack_5255_5G_test
     Logout
 
-0015_Configure_AP_Edit_Profile_SSID_MAC_Filtering
+0015_Configure_AP_Profile_SSID_MAC_Filtering
     [Tags]    15
+    Check_Login
     Login
     Back_To_Main_Page
-    Navigate_To_Created_Organization    Jack_Test_Org
+    Navigate_To_Created_Organization    ${org}
     Configure_Set_Profile_SSID_MAC_Filtering    DBA-1510P_Jack_5255_2    DBA-1510P-Jack_5255_2.4G_test    DBA-1510P-Jack_5255_5G_test
     Logout
 
-0019_Configure_AP_Edit_Profile_SSID_IP_Filtering
+0019_Configure_AP_Profile_SSID_IP_Filtering
     [Tags]    19
+    Check_Login
     Login
     Back_To_Main_Page
-    Navigate_To_Created_Organization    Jack_Test_Org
+    Navigate_To_Created_Organization    ${org}
     Configure_Set_Profile_SSID_IP_Filtering    DBA-1510P_Jack_5255_2    DBA-1510P-Jack_5255_2.4G_test    DBA-1510P-Jack_5255_5G_test
     Logout
 
-0022_Configure_AP_Edit_Profile_SSID_Captive_Portal
+0022_Configure_AP_Profile_SSID_Captive_Portal
     [Tags]    22
+    Check_Login
     Login
     Back_To_Main_Page
-    Navigate_To_Created_Organization    Jack_Test_Org
+    Navigate_To_Created_Organization    ${org}
     Configure_Set_Profile_SSID_Captive_Portal    DBA-1510P_Jack_5255_2    DBA-1510P-Jack_5255_2.4G_test    DBA-1510P-Jack_5255_5G_test
     Logout
 
-0035_Configure_AP_Edit_Profile_SSID_Advanced
+0035_Configure_AP_Profile_SSID_Advanced
     [Tags]    35
+    Check_Login
     Login
     Back_To_Main_Page
-    Navigate_To_Created_Organization    Jack_Test_Org
+    Navigate_To_Created_Organization    ${org}
     Configure_Set_Profile_SSID_Captive_Portal    DBA-1510P_Jack_5255_2    DBA-1510P-Jack_5255_2.4G_test    DBA-1510P-Jack_5255_5G_test
     Logout
 
-0048_Configure_AP_Edit_Profile_Radio
+0048_Configure_AP_Profile_Radio
     [Tags]    48
+    Check_Login
     Login
     Back_To_Main_Page
-    Navigate_To_Created_Organization    Jack_Test_Org
+    Navigate_To_Created_Organization    ${org}
     Configure_Set_Profile_Radio    DBA-1510P_Jack_5255_2
     Logout
 
-0053-Configure_AP_Edit_Profile_General_Change_Country
+0053_Configure_AP_Profile_General_Change_Country
     [Tags]    53
+    Check_Login
     Login
     Back_To_Main_Page
-    Navigate_To_Created_Organization    Jack_Test_Org
+    Navigate_To_Created_Organization    ${org}
     Configure_Set_Profile_General_Change_Country    DBA-1510P_Jack_5255_2
     Logout
 
-0054_Configure_AP_Edit_Profile_Radio_Channel
+0054_Configure_AP_Profile_Radio_Channel
     [Tags]    54
+    Check_Login
     Login
     Back_To_Main_Page
-    Navigate_To_Created_Organization    Jack_Test_Org
+    Navigate_To_Created_Organization    ${org}
     Configure_Set_Profile_Radio_Channel    DBA-1510P_Jack_5255_2
     Logout
 
-0085_Configure_AP_Edit_Profile_SplashPage
+0085_Configure_AP_Profile_SplashPage
     [Tags]    85
+    Check_Login
     Login
     Back_To_Main_Page
-    Navigate_To_Created_Organization    Jack_Test_Org
+    Navigate_To_Created_Organization    ${org}
     Configure_Set_Profile_SplashPage    DBA-1510P_Jack_5255_2
     Logout
 
-0086_Configure_AP_Edit_Profile_SplashPage_Add
+0086_Configure_AP_Profile_SplashPage_Add
     [Tags]    86
+    Check_Login
     Login
     Back_To_Main_Page
-    Navigate_To_Created_Organization    Jack_Test_Org
+    Navigate_To_Created_Organization    ${org}
     Configure_Set_Profile_SplashPage_Edit    DBA-1510P_Jack_5255_2    test
     Logout
 
 0096_Settings_Account_Privileges
     [Tags]    96
+    Check_Login
     Login
     Logout
     Settings_Account_Check
+
+0098_Top_Logout
+    [Tags]    98
+    Check_Login
+    Login
+    Logout
+
+0100_Top_Navigation
+    [Tags]    100
+    Check_Login
+    Login
+    Top_Navigation_Check
+    Logout
+
+0118_Configure_AP_Profile_UserName
+    [Tags]    118
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Configure_Show_Profile_General_UserName    DBA-1510P_Jack_5255
+    Logout
+
+0119_Configure_AP_Profile_Password
+    [Tags]    119
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Configure_Show_Profile_General_Password    DBA-1510P_Jack_5255    tsd2tsd2
+    Logout
+
+0120_Configure_AP_Profile_EnableVlan
+    [Tags]    120
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Configure_Show_Profile_General_EnableVlan    DBA-1510P_Jack_5255
+    Logout
+
+0122_Configure_AP_Profile_ChangeNTPServer
+    [Tags]    122
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Configure_Show_Profile_General_ChangeNTPServer    DBA-1510P_Jack_5255
+    Logout
+
+0123_Configure_AP_Profile_ChangeTimeZone
+    [Tags]    123
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Configure_Show_Profile_General_ChangeTimeZone    DBA-1510P_Jack_5255
+    Logout
+
+0125_Configure_AP_Profile_UseLocalSettings
+    [Tags]    125
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    sleep    1s
+    ${general_location}    Configure_Get_Profile_General    DBA-1510P_Jack_5255
+    click    xpath    ${general_location}
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-general"]/div/div[3]/div[2]/div/ul/li[5]/button    5    true
+    click    ${profiles_general_localsettings_disable}
+    click    ${profiles_general_save_button}
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-general"]/div/div[2]/success-message-box[1]/div[2]/div    5    true
+    click    ${profiles_general_push_configuration_button}
+    sleep    5s
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]    5    true
+    ${success_check}    getText    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]
+    ${evaluate_success}    evaluate    '${success_check}'=='Successful'
+    shouldbeTrue    ${evaluate_success}
+    sleep    2s
+    toURL    https://euqa.mydlinkbusiness.com
+    Navigate_To_Created_Organization    Jack_Test_Org
+    Navigate_To_Profiles
+    sleep    1s
+    ${general_location}    Configure_Get_Profile_General    DBA-1510P_Jack_5255
+    click    xpath    ${general_location}
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-general"]/div/div[3]/div[2]/div/ul/li[5]/button    5    true
+    click    ${profiles_general_localsettings_enable}
+    click    ${profiles_general_save_button}
+    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    click    ${profiles_general_push_configuration_button}
+    sleep    5s
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]    5    true
+    ${success_check}    getText    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]
+    ${evaluate_success}    evaluate    '${success_check}'=='Successful'
+    shouldbeTrue    ${evaluate_success}
+    sleep    2s
+    toURL    https://euqa.mydlinkbusiness.com
+    Logout
+
+0126_Configure_AP_Profile_PushConfiguration
+    [Tags]    126
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    sleep    1s
+    ${SSID_location}    Configure_Get_Profile_SSID    DBA-1510P_Jack_5255
+    click    xpath    ${SSID_location}
+    click    xpath    //*[@id="v2-ap-profile-ssid"]/div/div[4]/div/div[1]/table/tbody/tr[1]/td[2]/a
+    waitElementDisplayed    xpath    //*[contains(text(),'SSID Name')]    5    true
+    click    xpath    //*[@id="top"]/div[2]/div/div/form/div[1]/div[2]/input
+    clearText    xpath    //*[@id="top"]/div[2]/div/div/form/div[1]/div[2]/input
+    sleep    1s
+    sendText    xpath    //*[@id="top"]/div[2]/div/div/form/div[1]/div[2]/input    DBA-1510P-Jack_5255_2.4G_test    #change ssid name
+    sleep    1s
+    click    xpath    //*[@id="top"]/div[2]/div/div/form/div[24]/button[2]    #click save button
+    sleep    1s
+    click    xpath    //*[@id="top"]/div[1]/div[1]/div/span/span[7]/a    #clicks back to the profile
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-ssid"]/div/div[4]/div/div[1]/table/tbody/tr[1]/td[2]/a    5    true
+    sleep    1s
+    click    ${profiles_ssid_push_configuration_button}
+    sleep    5s
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]    5    true
+    ${success_check}    getText    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]
+    ${evaluate_success}    evaluate    '${success_check}'=='Successful'
+    shouldbeTrue    ${evaluate_success}
+    sleep    2s
+    Logout
+
+0127_Configure_AP_Device_Info
+    [Tags]    127
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Devices
+    sleep    1s
+    ${current_device}=    set variable    DBA_1510_Jack_5255
+    ${get_device}=    getText    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a
+    ${check_name}=    evaluate    '${current_device}'=='${get_device}'    #check if first device name is the same as current
+    should be true    ${check_name}
+    click    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a    #goes into the first device
+    ${get_name}    getText    xpath    //*[@id="v2-configure-device-detail"]/div/div/form/div[1]/div/input
+    ${get_model}    getText    xpath    //*[@id="v2-configure-device-detail"]/div/div/form/div[2]/div/p
+    ${get_uid}    getText    xpath    //*[@id="v2-configure-device-detail"]/div/div/form/div[3]/div/p
+    ${get_sn}    getText    xpath    //*[@id="v2-configure-device-detail"]/div/div/form/div[4]/div/p
+    ${get_firmware_status}    getText    xpath    //*[@id="v2-configure-device-detail"]/div/div/form/div[5]/div/p
+    ${get_firmware_version}    getText    xpath    //*[@id="v2-configure-device-detail"]/div/div/form/div[6]/div/p
+    ${get_site}    getText    xpath    //*[@id="siteDropdownMenu"]/span
+    ${get_profile}    getText    xpath    //*[@id="profileDropdownMenu"]/span
+    should be true    '${get_name}'!=''
+    should be true    '${get_model}'!=''
+    should be true    '${get_uid}'!=''
+    should be true    '${get_sn}'!=''
+    should be true    '${get_firmware_status}'!=''
+    should be true    '${get_firmware_version}'!=''
+    should be true    '${get_site}'!=''
+    should be true    '${get_profile}'!=''
+    Logout
+
+0128_Configure_AP_Device_Radio
+    [Tags]    128
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Devices
+    sleep    1s
+    ${current_device}=    set variable    DBA_1510_Jack_5255
+    ${get_device}=    getText    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a
+    ${check_name}=    evaluate    '${current_device}'=='${get_device}'    #check if first device name is the same as current
+    should be true    ${check_name}
+    click    ${device_first_device}
+    click    ${device_radio_button}
+    sleep    1s
+    click    ${device_radio_applyconf_enable}
+    click    xpath    //*[@id="v2-configure-device-detail"]/div/div/div[2]/table/tbody/tr[1]/td[1]/div[1]/div/label
+    click    xpath    //*[@id="v2-configure-device-detail"]/div/div/div[3]/div[2]/button[2]
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]    5    true
+    ${success_check}    getText    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]
+    ${evaluate_success}    evaluate    '${success_check}'=='Successful'
+    shouldbeTrue    ${evaluate_success}
+    logout
+
+0129_Configure_AP_Device_Tools_Ping
+    [Tags]    129
+    ${ip}    set variable    8.8.8.8
+    ${current_device}    set variable    DBA_1510_Jack_5255
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Devices
+    sleep    1s
+    ${get_device}=    getText    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a
+    ${check_name}=    evaluate    '${current_device}'=='${get_device}'    #check if first device name is the same as current
+    should be true    ${check_name}
+    click    ${device_first_device}
+    click    ${device_tools_button}
+    sleep    1s
+    click    ${device_tools_ping_textbox}
+    cleartext    ${device_tools_ping_textbox}
+    sendtext    ${device_tools_ping_textbox}    ${ip}
+    sleep    1s
+    click    ${device_tools_ping_button}
+    waitElementDisplayed    ${device_tools_ping_result}    10    true
+    ${result}    getText    ${device_tools_ping_result}
+    #should not contain    ${result}    100% packet loss    msg=ping ${ip} unsuccessful
+    should contain    ${result}    2 packets received    msg=ping ${ip} unsuccessful
+    sleep    3s
+    Logout
+
+0130_Configure_AP_Device_Tools_TraceRoute
+    [Tags]    130
+    ${traceip}    set variable    168.95.1.1
+    ${current_device}    set variable    DBA_1510_Jack_5255
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Devices
+    sleep    1s
+    ${get_device}=    getText    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a
+    ${check_name}=    evaluate    '${current_device}'=='${get_device}'    #check if first device name is the same as current
+    should be true    ${check_name}
+    click    ${device_first_device}
+    click    ${device_tools_button}
+    sleep    1s
+    click    ${device_tools_tracert_textbox}
+    cleartext    ${device_tools_tracert_textbox}
+    sendtext    ${device_tools_tracert_textbox}    ${traceip}
+    click    ${device_tools_tracert_button}
+    waitElementDisplayed    ${device_tools_tracert_result}    30    true
+    ${result}    getText    ${device_tools_tracert_result}
+    #should not contain    ${result}    30 \ *    msg=trace ${traceip} unsuccessful
+    should contain    ${result}    dns.hinet.net [168.95.1.1]    msg=trace ${traceip} unsuccessful
+    sleep    20s
+    Logout
+
+0132_Configure_AP_Device_Tools_Reboot
+    [Tags]    132
+    ${ip}    set variable    8.8.8.8
+    ${current_device}    set variable    DBA_1510_Jack_5255
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Devices
+    sleep    1s
+    ${get_device}=    getText    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a
+    ${check_name}=    evaluate    '${current_device}'=='${get_device}'    #check if first device name is the same as current
+    should be true    ${check_name}
+    click    ${device_first_device}
+    click    ${device_tools_button}
+    sleep    1s
+    click    ${device_tools_reboot_button}
+    sleep    1s
+    click    ${device_tools_reboot_submit}
+    waitElementDisplayed    ${device_tools_reboot_result}    5    true
+    ${reboot_result}    getText    ${device_tools_reboot_result}
+    should be true    '${reboot_result}'=='REBOOT_SUCCESSFUL'    msg=device did not reboot successfully
+    sleep    90s
+    click    ${device_tools_ping_textbox}
+    cleartext    ${device_tools_ping_textbox}
+    sendtext    ${device_tools_ping_textbox}    ${ip}
+    sleep    1s
+    click    ${device_tools_ping_button}
+    waitElementDisplayed    ${device_tools_ping_result}    10    true
+    ${result}    getText    ${device_tools_ping_result}
+    #should not contain    ${result}    100% packet loss    msg=ping ${ip} unsuccessful
+    should contain    ${result}    2 packets received    msg=ping ${ip} unsuccessful
+    sleep    3s
+    Logout
+
+0137_Dashboard_Navigation
+    [Tags]    137
+    ${top_device}    set variable    DBA_1510_Jack_5255
+    ${top_ssid}    set variable    DBA-1510P-Jack_5255_5G
+    ${top_client}    set variable    60:F8:1D:E7:9C:70
+    Check_Login
+    Login
+    Back_To_Main_Page
+    click    ${email_button}
+    waitElementDisplayed    ${email_send_button}    5    true
+    click    ${email_address_textbox}    12
+    sendText    ${email_address_textbox}    jack.tzu@dlinkcorp.com
+    sleep    1s
+    click    ${email_send_button}
+    sendKeyEscape
+    sleep    3s
+    click    ${map_button}
+    Error_Page_Search
+    Back_To_Main_Page
+    click    ${organization_view_button}
+    Error_Page_Search
+    Back_To_Main_Page
+    click    ${ap_overview_reload_button}
+    Error_Page_Search
+    sleep    1s
+    click    ${client_usage_reload_button}
+    Error_Page_Search
+    sleep    1s
+    click    ${connected_clients_reload_button}
+    Error_Page_Search
+    sleep    1s
+    click    ${top_devices_outside_reload_button}
+    waitElementDisplayed    ${top_devices_outside_first_device}    5    true
+    ${current_outside_top_device}    getText    ${top_devices_outside_first_device}
+    should be true    '${current_outside_top_device}'=='${top_device}'
+    click    ${top_devices_more_button}
+    Error_Page_Search
+    waitElementDisplayed    ${top_devices_inside_first_device}    5    true
+    ${current_inside_top_device}    getText    ${top_devices_inside_first_device}
+    should be true    '${current_inside_top_device}'=='${top_device}'
+    sendKeyEscape
+    sleep    2s
+    click    ${top_ssids_outside_reload_button}
+    waitElementDisplayed    ${top_ssids_outside_first_ssid}    5    true
+    ${current_outside_top_ssid}    getText    ${top_ssids_outside_first_ssid}
+    should be true    '${current_outside_top_ssid}'=='${top_ssid}'
+    click    ${top_ssids_more_button}
+    Error_Page_Search
+    waitElementDisplayed    ${top_ssids_inside_first_ssid}    5    true
+    ${current_inside_top_ssid}    getText    ${top_ssids_inside_first_ssid}
+    should be true    '${current_inside_top_ssid}'=='${top_ssid}'
+    sendKeyEscape
+    sleep    2s
+    click    ${top_clients_outside_reload_button}
+    waitElementDisplayed    ${top_clients_outside_first_client}    5    true
+    ${current_outside_top_client}    getText    ${top_clients_outside_first_client}
+    should be true    '${current_outside_top_client}'=='${top_client}'
+    click    ${top_clients_more_button}
+    Error_Page_Search
+    waitElementDisplayed    ${top_clients_inside_first_client}    5    true
+    ${current_inside_top_client}    getText    ${top_clients_inside_first_client}
+    should be true    '${current_inside_top_client}'=='${top_client}'
+    sendKeyEscape
+    sleep    1s
+    Logout
+
+0139_Monitor_Map
+    [Tags]    139
+    @{sites}    Create List    tsd_site1    jack_site1    test_site1
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_map}
+    :FOR    ${var}    IN    @{sites}
+    \    click    ${site_search_textbox}
+    \    clearText    ${site_search_textbox}
+    \    sendText    ${site_search_textbox}    ${var}
+    \    ${result}    getText    ${site_search_result_first}
+    \    should be true    '${result}'=='${var}'
+    Logout
+
+0140_Monitor_FloorPlans
+    [Tags]    140
+    ${firmware_location}    set variable    D:\\automation temp\\site-survey\\1F.jpg'
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Created_Site    ${site}
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_floorplans}
+    waitElementDisplayed    ${add_floor_plan_button}    5    true
+    sleep    1s
+    click    ${add_floor_plan_button}
+    waitElementDisplayed    ${upload_image_button}    5    true
+    sleep    3s
+    click    ${upload_image_button}
+    waitElementDisplayed    xpath    //*[@id="v2-dashboard-modal"]/div[2]/form/div[1]/div/div/label/span[1]    10    true
+    sleep    3s
+    sendText    xpath    //*[@id="v2-dashboard-modal"]/div[2]/form/div[1]/div/div/label/span[1]    ${firmware_location}
+    click    ${upload_floorimage_button}
+    sleep    8s
+    waitElementDisplayed    ${first_floorplan_name}    5    true
+    click    ${first_floorplan_name}
+    clearText    ${first_floorplan_name}
+    sendText    ${first_floorplan_name}    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    waitElementDisplayed    ${flooplan_error_msg}    5    true
+    should contain    ${flooplan_error_msg}    Invalid parameters    msg='name is invalid'
+    click    ${first_floorplan_name}
+    clearText    ${first_floorplan_name}
+    sendText    ${first_floorplan_name}    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    click    ${floorplan_save_button}
+    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    click    xpath    //*[@id="v2-floor-plan"]/div/div[2]/div[2]/div[2]/div[1]/button
+    click    ${first_floorplan_delete_icon}
+    click    ${floorplan_delete_confirm}
+    Logout
 
 0097_Top_User_Profile
     [Tags]    97
@@ -95,30 +488,16 @@ Resource          ../AllResources.txt
     Top_User_Profile_Check
     Logout
 
-0098_Top_Logout
-    [Tags]    98
+Login_URL
+    [Tags]    login
     Login
-    Logout
 
-0100_Top_Navigation
-    [Tags]    100
+test
+    [Tags]    test
+    #this is test    &{country_utc}=    Create Dictionary    'Taiwan'='(UTC+8)'    'Thailand'='(UTC+7)'
+    ${login_or_not}=    waitElementDisplayed    ${user_name_textbox}    5
+    Run Keyword If    '${login_or_not}'=='False'    Logout
     Login
-    Top_Navigation_Check
-    Logout
-
-0118_Configure_AP_Show_Profile_UserName
-    [Tags]    118
-    Login
-    Navigate_To_Created_Organization    Jack_Test_Org
-    Configure_Show_Profile_General_UserName    DBA-1510P_Jack_5255
-    Logout
-
-0119_Configure_AP_Show_Profile_Password
-    [Tags]    119
-    Login
-    Navigate_To_Created_Organization    Jack_Test_Org
-    Configure_Show_Profile_General_Password    DBA-1510P_Jack_5255
-    Logout
 
 Configure_AP_Create_New_Profile
     [Tags]    create_profile
@@ -134,21 +513,3 @@ Configure_AP_Check_New_Profile
     Back_To_Main_Page
     Navigate_To_Created_Organization    Jack_Test_Org
     Configure_Check_New_Profile    DBA-1510P_Jack_5255
-
-test
-    [Tags]    test
-    #this is test    &{country_utc}=    Create Dictionary    'Taiwan'='(UTC+8)'    'Thailand'='(UTC+7)'
-    wireless_connect
-    sleep    5s
-    toURL    www.google.com.tw
-    waitElementDisplayed    xpath    //*[@id="step1"]/div/h1
-    sleep    1s
-    click    xpath    //*[@id="step1"]/div/div[2]/div/input
-    sleep    1s
-    click    xpath    //*[@id="btn_continue"]
-    sleep    5s
-    wireless_disconnect
-
-Login_URL
-    [Tags]    login
-    Login

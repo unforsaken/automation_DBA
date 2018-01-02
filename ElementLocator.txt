@@ -187,8 +187,26 @@ Configure_Variables
     #Profile_General
     ${profile_general_country_dropdown_menu}=    getElementLocator    xpath    //*[@id="countryDropdownMenu"]/span
     Set Global Variable    ${profile_general_country_dropdown_menu}
-    ${profiles_general_save_button}=    getElementLocator    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[20]/button[2]
+    ${profiles_general_save_button}    getElementLocator    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[20]/button[2]
     Set Global Variable    ${profiles_general_save_button}
+    ${profiles_general_vlan_enable}    getElementLocator    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[3]/div[2]/label[1]
+    Set Global Variable    ${profiles_general_vlan_enable}
+    ${profiles_general_vlan_disable}    getElementLocator    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[3]/div[2]/label[2]
+    Set Global Variable    ${profiles_general_vlan_disable}
+    ${profiles_general_vlan_tagged}    getElementLocator    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[4]/div[2]/label[1]
+    Set Global Variable    ${profiles_general_vlan_tagged}
+    ${profiles_general_vlan_untagged}    getElementLocator    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[4]/div[2]/label[2]
+    Set Global Variable    ${profiles_general_vlan_untagged}
+    ${profiles_general_vlan_textbox}    getElementLocator    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[5]/div[2]/input
+    Set Global Variable    ${profiles_general_vlan_textbox}
+    ${profiles_general_ntpserver1}    getElementLocator    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[9]/div[2]/input
+    Set Global Variable    ${profiles_general_ntpserver1}
+    ${profiles_general_timezone_dropdown}    getElementLocator    xpath    //*[@id="timezoneDropdownMenu"]/span
+    Set Global Variable    ${profiles_general_timezone_dropdown}
+    ${profiles_general_localsettings_enable}    getElementLocator    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[13]/div[2]/label[1]
+    Set Global Variable    ${profiles_general_localsettings_enable}
+    ${profiles_general_localsettings_disable}    getElementLocator    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[13]/div[2]/label[2]
+    Set Global Variable    ${profiles_general_localsettings_disable}
     #Profile_Splash_Page
     ${profiles_splash_page_add_button}=    getElementLocator    xpath    //*[@id="v2-ap-profile-splash"]/div/div[4]/button
     Set Global Variable    ${profiles_splash_page_add_button}
@@ -202,6 +220,36 @@ Configure_Variables
     Set Global Variable    ${profiles_splash_page_delete_yes_button}
     ${profiles_splash_page_add_save_button}=    getElementLocator    xpath    //*[@id="v2-ap-profile-modal"]/div/div[2]/form/div[6]/button[2]
     Set Global Variable    ${profiles_splash_page_add_save_button}
+    #push config
+    ${profiles_general_push_configuration_button}=    getElementLocator    xpath    //*[@id="v2-ap-profile-general"]/div/div[3]/div[2]/div/ul/li[5]/button
+    Set Global Variable    ${profiles_general_push_configuration_button}
+    ${profiles_ssid_push_configuration_button}=    getElementLocator    xpath    //*[@id="v2-ap-profile-ssid"]/div/div[2]/div[2]/div/ul/li[5]/button
+    Set Global Variable    ${profiles_ssid_push_configuration_button}
+    #Devices
+    ${device_first_device}    getElementLocator    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a
+    Set Global Variable    ${device_first_device}
+    ${device_info_button}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div[2]/div/div/ul/li[1]/a
+    Set Global Variable    ${device_info_button}
+    ${device_radio_button}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div[2]/div/div/ul/li[2]/a
+    Set Global Variable    ${device_radio_button}
+    ${device_radio_applyconf_enable}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div/div[1]/div[2]/div[1]/div/label
+    Set Global Variable    ${device_radio_applyconf_enable}
+    ${device_radio_applyconf_disable}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div/div[1]/div[2]/div[2]/div/label
+    Set Global Variable    ${device_radio_applyconf_disable}
+    ${device_tools_button}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div[2]/div/div/ul/li[3]/a
+    Set Global Variable    ${device_tools_button}
+    ${device_tools_ping_textbox}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div/form[1]/div/div[1]/div/div[1]/input
+    Set Global Variable    ${device_tools_ping_textbox}
+    ${device_tools_ping_button}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div/form[1]/div/div[1]/div/div[2]/button
+    Set Global Variable    ${device_tools_ping_button}
+    ${device_tools_ping_result}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div/form[1]/div/div[2]/div[2]/success-message-box/div[2]/div
+    Set Global Variable    ${device_tools_ping_result}
+    ${device_tools_tracert_textbox}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div/form[2]/div/div[1]/div/div[1]/input
+    Set Global Variable    ${device_tools_tracert_textbox}
+    ${device_tools_ping_button}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div/form[2]/div/div[1]/div/div[2]/button
+    Set Global Variable    ${device_tools_ping_button}
+    ${device_tools_tracert_result}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div/form[2]/div/div[2]/div[2]/success-message-box/div[2]/div
+    Set Global Variable    ${device_tools_tracert_result}
 
 Reports_Variables
 
