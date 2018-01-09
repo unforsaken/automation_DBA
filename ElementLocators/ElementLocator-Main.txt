@@ -13,20 +13,20 @@ ElementLocator-Main
     ##Top menu
     ${top_user_dropdown_menu}=    getElementLocator    xpath    //*[@id="userDropdownMenu"]/span/span[1]/span
     Set Global Variable    ${top_user_dropdown_menu}
-    ${top_user_dropdown_user_profile}=    getElementLocator    xpath    //*[@id="v2-header-client"]/div/div/div[2]/ul[2]/li[1]/div/ul/li[1]/a/span
+    ${top_user_dropdown_user_profile}    getElementLocator    xpath    //*[@id="v2-header-client"]/div/div/div[2]/ul[2]/li[1]/div/ul/li[1]/a/span
     Set Global Variable    ${top_user_dropdown_user_profile}
-    ${top_user_dropdown_logout}=    getElementLocator    xpath    //*[@id="v2-header-client"]/div/div/div[2]/ul[2]/li[1]/div/ul/li[2]/a/span
+    ${top_user_dropdown_logout}    getElementLocator    xpath    //*[@id="v2-header-client"]/div/div/div[2]/ul[2]/li[1]/div/ul/li[2]/a/span
     Set Global Variable    ${top_user_dropdown_logout}
-    ${organization_drop_down_menu}=    getElementLocator    xpath    //button[@id='organizationDropdownMenu']
+    ${organization_drop_down_menu}    getElementLocator    xpath    //button[@id='organizationDropdownMenu']
     Set Global Variable    ${organization_drop_down_menu}
     ${site_drop_down_menu}    getElementLocator    xpath    //*[@id="siteDropdownMenu"]/span/span[1]/span
     Set Global Variable    ${site_drop_down_menu}
     ##User Profile
-    ${user_profile_name_textbox}=    getElementLocator    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[2]/div[1]/input
+    ${user_profile_name_textbox}    getElementLocator    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[2]/div[1]/input
     Set Global Variable    ${user_profile_name_textbox}
-    ${user_profile_password_textbox}=    getElementLocator    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[6]/div[1]/input
+    ${user_profile_password_textbox}    getElementLocator    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[6]/div[1]/input
     Set Global Variable    ${user_profile_password_textbox}
-    ${user_profile_confirm_password_textbox}=    getElementLocator    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[7]/div/input
+    ${user_profile_confirm_password_textbox}    getElementLocator    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[7]/div/input
     Set Global Variable    ${user_profile_confirm_password_textbox}
     ${user_profile_save_button}=    getElementLocator    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[2]/div[2]/div[2]/button
     Set Global Variable    ${user_profile_save_button}

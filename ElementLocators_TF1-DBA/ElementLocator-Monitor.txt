@@ -1,6 +1,42 @@
 *** Keywords ***
 ElementLocator-Monitor
-    ${GoogleTranslateSubmitButton_2}=    getElementLocator    id    gt-submit_2
-    Set Global Variable    ${GoogleTranslateSubmitButton_2}
-    ${GoogleTranslateInput_2}=    getElementLocator    id    source_2
-    Set Global Variable    ${GoogleTranslateInput_2}
+    #Map
+    ${site_search_textbox}    getElementLocator    xpath    //*[@id="v2-map"]/div/div[2]/div[1]/div[1]/span[2]/input
+    Set Global Variable    ${site_search_textbox}
+    ${site_search_result_first}    getElementLocator    xpath    //*[@id="v2-map"]/div/div[2]/div[1]/div[3]/div/div[3]/div[1]/span[2]
+    Set Global Variable    ${site_search_result_first}
+    #Floor Plan
+    ${add_floor_plan_button}    getElementLocator    xpath    //*[@id="addFloorPlanButton"]
+    Set Global Variable    ${add_floor_plan_button}
+    ${upload_image_button}    getElementLocator    xpath    //*[@id="v2-floor-plan"]/div/div[1]/div/div/div/div/button[2]
+    Set Global Variable    ${upload_image_button}
+    ${input_floorimage_location}    getElementLocator    xpath    //*[@id="v2-dashboard-modal"]/div[2]/form/div[1]/div/div/label/span[1]
+    Set Global Variable    ${input_floorimage_location}
+    ${upload_floorimage_button}    getElementLocator    xpath    //*[@id="v2-dashboard-modal"]/div[2]/form/div[3]/div[2]/button
+    Set Global Variable    ${upload_floorimage_button}
+    ${remove_floorimage_button}    getElementLocator    xpath    //*[@id="v2-floor-plan"]/div/div[1]/div/div/div/div/button[1]
+    Set Global Variable    ${remove_floorimage_button}
+    ${floorplan_name_textbox}    getElementLocator    xpath    //*[@id="v2-floor-plan"]/div/div[1]/div/div/div/input
+    Set Global Variable    ${floorplan_name_textbox}
+    ${floorplan_save_button}    getElementLocator    xpath    //*[@id="v2-floor-plan"]/div/div[2]/div[2]/div[2]/div[2]/button
+    Set Global Variable    ${floorplan_save_button}
+    ${floorplan_cancel_button}    getElementLocator    xpath    //*[@id="v2-floor-plan"]/div/div[2]/div[2]/div[2]/div[1]/button
+    Set Global Variable    ${floorplan_cancel_button}
+    ${first_floorplan_name}    getElementLocator    xpath    //*[@id="v2-ap-clients"]/div/div[2]/div/div[1]/table/tbody/tr[1]/td[2]/span[1]/a
+    Set Global Variable    ${first_floorplan_name}
+    ${first_floorplan_delete_icon}    getElementLocator    xpath    //*[@id="v2-ap-clients"]/div/div[2]/div/div[1]/table/tbody/tr[1]/td[5]/a
+    Set Global Variable    ${first_floorplan_delete_icon}
+    ${floorplan_delete_confirm}    getElementLocator    xpath    //*[@id="v2-dashboard-modal"]/div/form/div[2]/div[2]/button
+    Set Global Variable    ${floorplan_delete_confirm}
+    ${floorplan_delete_cancel}    getElementLocator    xpath    //*[@id="v2-dashboard-modal"]/div/form/div[2]/div[1]/button
+    Set Global Variable    ${floorplan_delete_cancel}
+    ${flooplan_error_msg}    getElementLocator    xpath    //*[@id="v2-floor-plan"]/div/div[1]/div/div/error-message-box/div[2]/div
+    Set Global Variable    ${flooplan_error_msg}
+    #Access Point_Clients
+    ${clients_ap_dropdown_menu}    getElementLocator    xpath    //*[@id="apDropdownMenu"]/span
+    Set Global Variable    ${clients_ap_dropdown_menu}
+    ${clients_ap_dropdown_firstap}    getElementLocator    xpath    //*[@id="deviceNameUl"]/li[3]/a[1]
+    Set Global Variable    ${clients_ap_dropdown_firstap}
+    #Access Point_Devices
+    ${device_attribute_add_dropdown}    getElementLocator    xpath    //*[@id="addDropdownMenu"]/img
+    Set Global Variable    ${device_attribute_add_dropdown}

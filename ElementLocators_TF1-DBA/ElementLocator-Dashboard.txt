@@ -1,6 +1,56 @@
 *** Keywords ***
 ElementLocator-Dashboard
-    ${GoogleTranslateSubmitButton_2}=    getElementLocator    id    gt-submit_2
-    Set Global Variable    ${GoogleTranslateSubmitButton_2}
-    ${GoogleTranslateInput_2}=    getElementLocator    id    source_2
-    Set Global Variable    ${GoogleTranslateInput_2}
+    #Dashboard-Email
+    ${email_button}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[1]/div/div/div/a[1]
+    Set Global Variable    ${email_button}
+    ${email_send_button}    getElementLocator    xpath    //*[@id="v2-dashboard-modal"]/div[2]/form/div[5]/div/button
+    Set Global Variable    ${email_send_button}
+    ${email_address_textbox}    getElementLocator    xpath    //*[@id="v2-dashboard-modal"]/div[2]/form/div[3]/div[2]/textarea
+    Set Global Variable    ${email_address_textbox}
+    #Dashboard-Map
+    ${map_button}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[1]/div/div/div/a[2]
+    Set Global Variable    ${map_button}
+    #Dashboard-Organization
+    ${organization_view_button}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[1]/div/div/div/a[3]
+    Set Global Variable    ${organization_view_button}
+    #Dashboard-no-more-area
+    ${ap_overview_reload_button}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[2]/div[1]/div/div[1]/span[2]/a
+    Set Global Variable    ${ap_overview_reload_button}
+    ${client_usage_reload_button}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[2]/div[2]/div/div[1]/span[2]/a
+    Set Global Variable    ${client_usage_reload_button}
+    ${connected_clients_reload_button}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[3]/div/div/div[1]/span[2]/a
+    Set Global Variable    ${connected_clients_reload_button}
+    #Dashboard-more-area
+    #Dashboard-Top Devices
+    ${top_devices_more_button}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[4]/div[1]/div/div[7]/button
+    Set Global Variable    ${top_devices_more_button}
+    ${top_devices_outside_reload_button}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[4]/div[1]/div/div[1]/span[2]/a
+    Set Global Variable    ${top_devices_outside_reload_button}
+    ${top_devices_outside_first_device}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[4]/div[1]/div/div[5]/div[1]/div[1]/span/a
+    Set Global Variable    ${top_devices_outside_first_device}
+    ${top_devices_inside_first_device}    getElementLocator    xpath    //*[@id="v2-dashboard-modal"]/div/div[5]/div[1]/span/a
+    Set Global Variable    ${top_devices_inside_first_device}
+    ${top_devices_inside_reload_button}    getElementLocator    xpath    //*[@id="v2-dashboard-modal"]/div/div[1]/span[2]/a
+    Set Global Variable    ${top_devices_inside_reload_button}
+    #Dashboard-Top SSIDs
+    ${top_ssids_more_button}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[4]/div[2]/div/div[7]/button
+    Set Global Variable    ${top_ssids_more_button}
+    ${top_ssids_outside_reload_button}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[4]/div[2]/div/div[1]/span[2]/a
+    Set Global Variable    ${top_ssids_outside_reload_button}
+    ${top_ssids_outside_first_ssid}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[4]/div[2]/div/div[5]/div[1]/div[1]/span/a
+    Set Global Variable    ${top_ssids_outside_first_ssid}
+    ${top_ssids_inside_first_ssid}    getElementLocator    xpath    //*[@id="v2-dashboard-modal"]/div/div[5]/div[1]/span/a
+    Set Global Variable    ${top_ssids_inside_first_ssid}
+    ${top_ssid_inside_reload_button}    getElementLocator    xpath    //*[@id="v2-dashboard-modal"]/div/div[1]/span[2]/a
+    Set Global Variable    ${top_ssid_inside_reload_button}
+    #Dashboard-Top Clients
+    ${top_clients_more_button}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[4]/div[3]/div/div[7]/button
+    Set Global Variable    ${top_clients_more_button}
+    ${top_clients_outside_reload_button}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[4]/div[3]/div/div[1]/span[2]/a
+    Set Global Variable    ${top_clients_outside_reload_button}
+    ${top_clients_outside_first_client}    getElementLocator    xpath    //*[@id="v2-dashboard"]/div/div[4]/div[3]/div/div[5]/div[1]/div[1]/span/a
+    Set Global Variable    ${top_clients_outside_first_client}
+    ${top_clients_inside_first_client}    getElementLocator    xpath    //*[@id="v2-dashboard-modal"]/div/div[5]/div[1]/span/a
+    Set Global Variable    ${top_clients_inside_first_client}
+    ${top_clients_inside_reload_button}    getElementLocator    xpath    //*[@id="v2-dashboard-modal"]/div/div[1]/span[2]/a
+    Set Global Variable    ${top_clients_inside_reload_button}

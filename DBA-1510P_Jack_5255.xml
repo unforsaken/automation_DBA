@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1">
+	<name>DBA-1510P_Jack_5255</name>
+	<SSIDConfig>
+		<SSID>
+			<hex>4442412D31353130502D4A61636B5F353235355F3547</hex>
+			<name>DBA-1510P_Jack_5255</name>
+		</SSID>
+	</SSIDConfig>
+	<connectionType>ESS</connectionType>
+	<connectionMode>auto</connectionMode>
+	<MSM>
+		<security>
+			<authEncryption>
+				<authentication>open</authentication>
+				<encryption>none</encryption>
+				<useOneX>false</useOneX>
+			</authEncryption>
+		</security>
+	</MSM>
+</WLANProfile>

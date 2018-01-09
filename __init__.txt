@@ -4,3 +4,4 @@ Library           ../library/pingLib.py
 Library           Collections
 Library           ../library/wireless.py
 Library           com.rabbit.automation.robotframework.KeyWordLib
+Library           ../library/connectSSID.py

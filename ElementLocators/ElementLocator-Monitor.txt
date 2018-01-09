@@ -32,3 +32,11 @@ ElementLocator-Monitor
     Set Global Variable    ${floorplan_delete_cancel}
     ${flooplan_error_msg}    getElementLocator    xpath    //*[@id="v2-floor-plan"]/div/div[1]/div/div/error-message-box/div[2]/div
     Set Global Variable    ${flooplan_error_msg}
+    #Access Point_Clients
+    ${clients_ap_dropdown_menu}    getElementLocator    xpath    //*[@id="apDropdownMenu"]/span
+    Set Global Variable    ${clients_ap_dropdown_menu}
+    ${clients_ap_dropdown_firstap}    getElementLocator    xpath    //*[@id="deviceNameUl"]/li[3]/a[1]
+    Set Global Variable    ${clients_ap_dropdown_firstap}
+    #Access Point_Devices
+    ${device_attribute_add_dropdown}    getElementLocator    xpath    //*[@id="addDropdownMenu"]/img
+    Set Global Variable    ${device_attribute_add_dropdown}

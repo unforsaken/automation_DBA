@@ -1,5 +1,10 @@
 *** Settings ***
-Resource          ElementLocator.txt
+Resource          ElementLocators/ElementLocator-Configure.txt
+Resource          ElementLocators/ElementLocator-Dashboard.txt
+Resource          ElementLocators/ElementLocator-Main.txt
+Resource          ElementLocators/ElementLocator-Monitor.txt
+Resource          ElementLocators/ElementLocator-Reports.txt
+Resource          ElementLocators/ElementLocator-Settings.txt
 
 *** Keywords ***
 ToLoginPage
@@ -125,8 +130,7 @@ Top_Navigation_Check
     Error_Page_Search
 
 Error_Page_Search
-    @{error_code}=    Create List    403    404    500    503    error
-    ...    Error
+    @{error_code}=    Create List    403    404    503    error    Error
     ${length}=    Get Length    ${error_code}
     : FOR    ${number}    IN RANGE    0    ${length}
     \    ${error_result}=    isElementDisplayed    xpath    //*[contains(text(),'${error_code[${number}]}')]
@@ -441,7 +445,7 @@ Settings_Create_New_User
     click    ${settings_account_management_invite_user_button}
     sleep    2s
     sendText    ${settings_account_management_invite_user_popup_name_textbox}    ${new_user_name}
-    sendText    ${settings_account_management_invite_user_popup_email_textbox}    jack.tzu@dlinkcorp.com
+    sendText    ${settings_account_management_invite_user_popup_email_textbox}    test@dlinkcorp.com
     click    ${settings_account_management_invite_user_popup_type_dropdown1}
     sleep    1s
     click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[3]/div[2]/span/ul/li[3]/a
@@ -712,3 +716,30 @@ Navigate_To_Created_Site
     sleep    1s
     click    xpath    //*[contains(text(),'${new_site_name}')]    #select the site name
     sleep    1s
+
+Settings_Get_New_User_Location
+    [Arguments]    ${new_user_name}
+    : FOR    ${var}    IN RANGE    2    20
+    \    ${user}=    getText    xpath    //*[@id="v2-account-management"]/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[1]/span/span/a
+    \    ${OK}    evaluate    '${user}'=='${new_user_name}'
+    \    ${user_location}    Set Variable If    ${OK}    //*[@id="v2-account-management"]/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[1]/span/span/a
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${user_location}
+
+Settings_Get_New_User_Verify
+    [Arguments]    ${new_user_name}
+    : FOR    ${var}    IN RANGE    2    20
+    \    ${user}=    getText    xpath    //*[@id="v2-account-management"]/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[1]/span/span/a
+    \    ${OK}    evaluate    '${user}'=='${new_user_name}'
+    \    ${verify_location}    Set Variable If    ${OK}    //*[@id="v2-account-management"]/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[6]/span/button
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${verify_location}
+
+Settings_Get_New_User_Delete
+    [Arguments]    ${new_user_name}
+    : FOR    ${var}    IN RANGE    2    20
+    \    ${user}=    getText    xpath    //*[@id="v2-account-management"]/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[1]/span/span/a
+    \    ${OK}    evaluate    '${user}'=='${new_user_name}'
+    \    ${delete_location}    Set Variable If    ${OK}    //*[@id="v2-account-management"]/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[7]/span/a
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${delete_location}

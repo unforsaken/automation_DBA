@@ -46,8 +46,20 @@ ElementLocator-Configure
     ${configure_profile_ssid_mac_filtering_button}=    getElementLocator    xpath    //a[contains(text(),'MAC Filtering')]
     Set Global Variable    ${configure_profile_ssid_mac_filtering_button}
     #Profile_SSID_Radio
-    ${profile_ssid_radio_channel_button}=    getElementLocator    xpath    //section[@id='v2-ap-profile-radio']/div/div[4]/div/div/ul/li[2]/a
+    ${profile_ssid_radio_channel_button}    getElementLocator    xpath    //section[@id='v2-ap-profile-radio']/div/div[4]/div/div/ul/li[2]/a
     Set Global Variable    ${profile_ssid_radio_channel_button}
+    ${profile_ssid_radio_channel_2.4auto_enable}    getElementLocator    xpath    //*[@id="v2-ap-profile-radio"]/div/div[4]/div/div/div/div[2]/div/table/tbody/tr[1]/td[1]/div[1]/div/label
+    Set Global Variable    ${profile_ssid_radio_channel_2.4auto_enable}
+    ${profile_ssid_radio_channel_5auto_enable}    getElementLocator    xpath    //*[@id="v2-ap-profile-radio"]/div/div[4]/div/div/div/div[2]/div/table/tbody/tr[1]/td[2]/div[1]/div/label
+    Set Global Variable    ${profile_ssid_radio_channel_5auto_enable}
+    ${profile_ssid_radio_channel_run_auto_2.4g}    getElementLocator    xpath    //*[@id="v2-ap-profile-radio"]/div/div[4]/div/div/div/div[2]/div/table/tbody/tr[7]/td[1]/button
+    Set Global Variable    ${profile_ssid_radio_channel_run_auto_2.4g}
+    ${profile_ssid_radio_channel_run_auto_confirm}    getElementLocator    xpath    //*[@id="v2-dashboard-modal"]/div[2]/form/div[2]/div[2]/button
+    Set Global Variable    ${profile_ssid_radio_channel_run_auto_confirm}
+    ${profile_ssid_radio_channel_run_auto_5g}    getElementLocator    xpath    //*[@id="v2-ap-profile-radio"]/div/div[4]/div/div/div/div[2]/div/table/tbody/tr[7]/td[2]/button
+    Set Global Variable    ${profile_ssid_radio_channel_run_auto_5g}
+    ${profile_ssid_radio_channel_save_button}    getElementLocator    xpath    //*[@id="v2-ap-profile-radio"]/div/div[4]/div/div/div/div[2]/div/div/div[2]/button[2]
+    Set Global Variable    ${profile_ssid_radio_channel_save_button}
     #Profile_General
     ${profile_general_country_dropdown_menu}=    getElementLocator    xpath    //*[@id="countryDropdownMenu"]/span
     Set Global Variable    ${profile_general_country_dropdown_menu}
@@ -89,6 +101,8 @@ ElementLocator-Configure
     Set Global Variable    ${profiles_general_push_configuration_button}
     ${profiles_ssid_push_configuration_button}=    getElementLocator    xpath    //*[@id="v2-ap-profile-ssid"]/div/div[2]/div[2]/div/ul/li[5]/button
     Set Global Variable    ${profiles_ssid_push_configuration_button}
+    ${profiles_radio_push_configuration_button}    getElementLocator    xpath    //*[@id="v2-ap-profile-radio"]/div/div[3]/div[2]/div/ul/li[5]/button
+    Set Global Variable    ${profiles_radio_push_configuration_button}
     #Devices
     ${device_first_device}    getElementLocator    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a
     Set Global Variable    ${device_first_device}
@@ -100,6 +114,8 @@ ElementLocator-Configure
     Set Global Variable    ${device_radio_applyconf_enable}
     ${device_radio_applyconf_disable}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div/div[1]/div[2]/div[2]/div/label
     Set Global Variable    ${device_radio_applyconf_disable}
+    ${device_radio_save_button}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div/div[3]/div[2]/button[2]
+    Set Global Variable    ${device_radio_save_button}
     ${device_tools_button}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div[2]/div/div/ul/li[3]/a
     Set Global Variable    ${device_tools_button}
     ${device_tools_ping_textbox}    getElementLocator    xpath    //*[@id="v2-configure-device-detail"]/div/div/form[1]/div/div[1]/div/div[1]/input

@@ -1,5 +1,5 @@
 *** Settings ***
-Suite Setup       RunKeywords    ElementLocator-Main    ElementLocator-Configure    ElementLocator-Settings    ElementLocator-Dashboard    ElementLocator-Monitor
+Suite Setup       Run Keywords    ElementLocator-Reports    ElementLocator-Main    ElementLocator-Configure    ElementLocator-Settings    ElementLocator-Dashboard    ElementLocator-Monitor
 Force Tags        DKP1707020
 Resource          ../AllResources.txt
 
@@ -267,14 +267,10 @@ Resource          ../AllResources.txt
     should be true    ${check_name}
     click    ${device_first_device}
     click    ${device_radio_button}
-    sleep    1s
+    Error_Page_Search
     click    ${device_radio_applyconf_enable}
-    click    xpath    //*[@id="v2-configure-device-detail"]/div/div/div[2]/table/tbody/tr[1]/td[1]/div[1]/div/label
-    click    xpath    //*[@id="v2-configure-device-detail"]/div/div/div[3]/div[2]/button[2]
-    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]    5    true
-    ${success_check}    getText    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]
-    ${evaluate_success}    evaluate    '${success_check}'=='Successful'
-    shouldbeTrue    ${evaluate_success}
+    click    ${device_radio_save_button}
+    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
     logout
 
 0129_Configure_AP_Device_Tools_Ping
@@ -344,9 +340,9 @@ Resource          ../AllResources.txt
     should be true    ${check_name}
     click    ${device_first_device}
     click    ${device_tools_button}
-    sleep    1s
+    sleep    2s
     click    ${device_tools_reboot_button}
-    sleep    1s
+    sleep    2s
     click    ${device_tools_reboot_submit}
     waitElementDisplayed    ${device_tools_reboot_result}    5    true
     ${reboot_result}    getText    ${device_tools_reboot_result}
@@ -374,7 +370,7 @@ Resource          ../AllResources.txt
     Back_To_Main_Page
     click    ${email_button}
     waitElementDisplayed    ${email_send_button}    5    true
-    click    ${email_address_textbox}    12
+    click    ${email_address_textbox}
     sendText    ${email_address_textbox}    jack.tzu@dlinkcorp.com
     sleep    1s
     click    ${email_send_button}
@@ -438,7 +434,7 @@ Resource          ../AllResources.txt
     Navigate_To_Created_Organization    ${org}
     click    ${monitor_dropdown_menu}
     click    ${monitor_dropdown_map}
-    :FOR    ${var}    IN    @{sites}
+    : FOR    ${var}    IN    @{sites}
     \    click    ${site_search_textbox}
     \    clearText    ${site_search_textbox}
     \    sendText    ${site_search_textbox}    ${var}
@@ -461,9 +457,10 @@ Resource          ../AllResources.txt
     waitElementDisplayed    ${upload_image_button}    5    true
     sleep    3s
     click    ${upload_image_button}
-    waitElementDisplayed    xpath    //*[@id="v2-dashboard-modal"]/div[2]/form/div[1]/div/div/label/span[1]    10    true
-    sleep    3s
-    sendText    xpath    //*[@id="v2-dashboard-modal"]/div[2]/form/div[1]/div/div/label/span[1]    ${firmware_location}
+    ${isDisplayed}=    waitElementDisplayed    xpath    //*[@id="v2-dashboard-modal"]/div[2]/form/div[1]/div/div/label/span[1]    10    true
+    ${isDisplayed}=    waitElementDisplayed    id    upload-map-input    10    true
+    sleep    5s
+    sendText    id    upload-map-input    ${firmware_location}
     click    ${upload_floorimage_button}
     sleep    8s
     waitElementDisplayed    ${first_floorplan_name}    5    true
@@ -482,34 +479,395 @@ Resource          ../AllResources.txt
     click    ${floorplan_delete_confirm}
     Logout
 
+0141_Monitor_AccessPoints_Clients
+    [Tags]    141
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    Error_Page_Search
+    click    ${clients_ap_dropdown_menu}
+    click    ${clients_ap_dropdown_firstap}
+    Error_Page_Search
+    Logout
+
+0146_Reports_Alerts
+    [Tags]    146
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    click    ${reports_dropdown_menu}    #navigate to alerts
+    click    ${reports_dropdown_alerts}
+    Error_Page_Search
+    click    xpath    //*[@id="v2-alerts"]/div/div[2]/div/div[2]/div/div[2]/ul/li[3]/select
+    click    xpath    //*[contains(text(),'100')]
+    sleep    2s
+    : FOR    ${var}    IN RANGE    2    7
+    \    click    xpath    //*[@id="v2-alerts"]/div/div[2]/div/div[1]/table/thead/tr/th[${var}]/a
+    \    Error_Page_Search
+    click    ${all_severity_dropdown}
+    click    ${severity_dropdown_critical}
+    sleep    2s
+    ${minor_exist_1}    isElementDisplayed    xpath    //*[contains(text(),'Minor')]
+    ${major_exist_1}    isElementDisplayed    xpath    //*[contains(text(),'Major')]
+    should be true    '${minor_exist_1}'=='False'
+    should be true    '${major_exist_1}'=='False'
+    Error_Page_Search
+    click    ${all_severity_dropdown}
+    click    ${severity_dropdown_major}
+    sleep    2s
+    ${minor_exist_2}    isElementDisplayed    xpath    //*[contains(text(),'Minor')]
+    ${critical_exist_2}    isElementDisplayed    xpath    //*[contains(text(),'Critical')]
+    should be true    '${minor_exist_2}'=='False'
+    should be true    '${critical_exist_2}'=='False'
+    Error_Page_Search
+    click    ${all_severity_dropdown}
+    click    ${severity_dropdown_minor}
+    sleep    2s
+    ${major_exist_3}    isElementDisplayed    xpath    //*[contains(text(),'Major')]
+    ${critical_exist_3}    isElementDisplayed    xpath    //*[contains(text(),'Critical')]
+    should be true    '${major_exist_3}'=='False'
+    should be true    '${critical_exist_3}'=='False'
+    Error_Page_Search
+    Logout
+
+0148_Monitor_AccessPoints_Devices
+    [Tags]    148
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_devices}
+    Error_Page_Search
+    click    ${device_attribute_add_dropdown}
+    : FOR    ${var}    IN RANGE    1    10
+    \    click    xpath    //*[@id="v2-ap-devices"]/div/div/div[2]/div/div[1]/table/thead/tr/th[22]/div/ul/li[${var}]/label
+    \    sleep    2s
+    Error_Page_Search
+    : FOR    ${var}    IN RANGE    2    22
+    \    click    xpath    //*[@id="v2-ap-devices"]/div/div/div[2]/div/div[1]/table/thead/tr/th[${var}]
+    \    Error_Page_Search
+    Logout
+
+0167_Configure_AP_Device_Radio_AutoChannel
+    [Tags]    128
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    sleep    1s
+    ${radio_location}=    Configure_Get_Profile_Radio    DBA-1510P_Jack_5255
+    click    xpath    ${radio_location}    #clicks the profile's radio button
+    sleep    2s
+    click    ${profile_ssid_radio_channel_button}
+    click    ${profile_ssid_radio_channel_2.4auto_enable}
+    click    ${profile_ssid_radio_channel_5auto_enable}
+    sleep    1s
+    click    ${profile_ssid_radio_channel_run_auto_2.4g}
+    click    ${profile_ssid_radio_channel_run_auto_confirm}
+    waitElementDisplayed    xpath    //*[contains(text(),'Execute completed')]    5    true
+    sendKeyEscape
+    click    ${profile_ssid_radio_channel_run_auto_5g}
+    click    ${profile_ssid_radio_channel_run_auto_confirm}
+    waitElementDisplayed    xpath    //*[contains(text(),'Execute completed')]    5    true
+    sendKeyEscape
+    click    ${profile_ssid_radio_channel_save_button}
+    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    click    ${profiles_radio_push_configuration_button}
+    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10    true
+    sendKeyEscape
+    Logout
+
+0168_Reports_Licenses
+    [Tags]    168
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    click    ${reports_dropdown_menu}    #navigate to alerts
+    click    ${reports_dropdown_licenses}
+    Error_Page_Search
+    click    xpath    //*[@id="v2-license"]/div/div[2]/div/div[2]/div/div[2]/ul/li[3]/select    #select the how many items shown dropdown
+    click    xpath    //*[contains(text(),'100')]    #change to 100
+    click    ${license_add_button}
+    sleep    2s
+    : FOR    ${var}    IN RANGE    1    9
+    \    click    xpath    //*[@id="v2-license"]/div/div[2]/div/div[1]/table/thead/tr/th[17]/div/ul/li[${var}]/label
+    \    Error_Page_Search
+    sleep    3s
+    : FOR    ${var}    IN RANGE    2    16
+    \    click    xpath    //*[@id="v2-license"]/div/div[2]/div/div[1]/table/thead/tr/th[${var}]/a/span[3]
+    \    Error_Page_Search
+    Logout
+
+0169_Reports_ChangeLogs
+    [Tags]    169
+    ${org1_name}    set variable    RICKY_TEST
+    ${org2_name}    set variable    DBA-1510P_Jack_5255
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    TSD2
+    click    ${reports_dropdown_menu}    #navigate to alerts
+    click    ${reports_dropdown_changelog}
+    Error_Page_Search
+    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[2]/div[2]/div/div[2]/ul/li[3]/select    #select the how many items shown dropdown
+    click    xpath    //*[contains(text(),'100')]    #change to 100
+    ${name1}    getText    ${profile_dropdown}
+    should be true    '${name1}'=='${org1_name}'
+    Navigate_To_Created_Organization    ${org}
+    ${name2}    getText    ${profile_dropdown}
+    should be true    '${name2}'=='${org2_name}'
+    : FOR    ${var}    IN RANGE    1    33
+    \    click    ${type_dropdown}
+    \    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[1]/div[2]/div[2]/ul/li[${var}]/label
+    \    click    ${filter_button}
+    \    Error_Page_Search
+    click    ${resetfilter_button}
+    click    ${filter_button}
+    sleep    3s
+    : FOR    ${var}    IN RANGE    1    12
+    \    click    ${change_dropdown}
+    \    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[1]/div[3]/div[2]/ul/li[${var}]/label
+    \    click    ${filter_button}
+    \    Error_Page_Search
+    click    ${resetfilter_button}
+    click    ${filter_button}
+    : FOR    ${var}    IN RANGE    1    8
+    \    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[2]/div[1]/table/thead/tr/th[7]/a
+    \    Error_Page_Search
+    Logout
+
+0170_Reports_ChangeLogs_Filter
+    [Tags]    170
+    ${org1_name}    set variable    RICKY_TEST
+    ${org2_name}    set variable    DBA-1510P_Jack_5255
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    TSD2
+    click    ${reports_dropdown_menu}    #navigate to alerts
+    click    ${reports_dropdown_changelog}
+    Error_Page_Search
+    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[2]/div[2]/div/div[2]/ul/li[3]/select    #select the how many items shown dropdown
+    click    xpath    //*[contains(text(),'100')]    #change to 100
+    ${name1}    getText    ${profile_dropdown}
+    should be true    '${name1}'=='${org1_name}'
+    Navigate_To_Created_Organization    ${org}
+    ${name2}    getText    ${profile_dropdown}
+    should be true    '${name2}'=='${org2_name}'
+    : FOR    ${var}    IN RANGE    1    33
+    \    click    ${type_dropdown}
+    \    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[1]/div[2]/div[2]/ul/li[${var}]/label
+    \    click    ${filter_button}
+    \    Error_Page_Search
+    click    ${resetfilter_button}
+    click    ${filter_button}
+    sleep    3s
+    : FOR    ${var}    IN RANGE    1    12
+    \    click    ${change_dropdown}
+    \    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[1]/div[3]/div[2]/ul/li[${var}]/label
+    \    click    ${filter_button}
+    \    Error_Page_Search
+    click    ${resetfilter_button}
+    click    ${filter_button}
+    : FOR    ${var}    IN RANGE    1    8
+    \    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[2]/div[1]/table/thead/tr/th[7]/a
+    \    Error_Page_Search
+    click    ${download_log_img}
+    Error_Page_Search
+    Logout
+
+0171_Settings_Account_Management_Summary
+    [Tags]    171
+    Check_Login
+    Login
+    click    ${settings_dropdown_menu_button}
+    click    ${settings_dropdown_account_management}
+    Error_Page_Search
+    sleep    2s
+    : FOR    ${var}    IN RANGE    1    5
+    \    click    ${sam_invite_user_button}
+    \    sendText    ${sam_invite_user_popup_name_textbox}    test
+    \    sleep    1s
+    \    sendText    ${sam_invite_user_popup_email_textbox}    test@hotmail.com
+    \    sleep    1s
+    \    click    ${sam_invite_user_popup_type_dropdown1}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[3]/div[2]/span/ul/li[1]/a    #first type
+    \    click    ${sam_invite_user_popup_type_dropdown2}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[4]/div[2]/span/ul/li/a    #first subtype
+    \    click    ${sam_invite_user_popup_privileges_dropdown}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[9]/div[2]/span/ul/li[${var}]/a    #4 privileges
+    \    click    ${sam_invite_user_popup_submit_button}
+    \    sleep    2s
+    \    ${user_location}    Settings_Get_New_User_Location    test
+    \    ${verify_location}    Settings_Get_New_User_Verify    test
+    \    ${delete_location}    Settings_Get_New_User_Delete    test
+    \    sleep    1s
+    \    click    xpath    ${verify_location}
+    \    click    ${sam_user_unverified_resend_button}
+    \    Error_Page_Search
+    \    click    xpath    ${delete_location}
+    \    click    ${sam_user_delete_yes_button}
+    \    Error_Page_Search
+    : FOR    ${var}    IN RANGE    1    5
+    \    click    ${sam_invite_user_button}
+    \    sendText    ${sam_invite_user_popup_name_textbox}    test
+    \    sleep    1s
+    \    sendText    ${sam_invite_user_popup_email_textbox}    test@hotmail.com
+    \    sleep    1s
+    \    click    ${sam_invite_user_popup_type_dropdown1}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[3]/div[2]/span/ul/li[2]/a    #second type
+    \    click    ${sam_invite_user_popup_type_dropdown2}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[4]/div[2]/span/ul/li[1]/a    #first subtype
+    \    click    ${sam_invite_user_popup_privileges_dropdown}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[9]/div[2]/span/ul/li[${var}]/a    #4 privileges
+    \    click    ${sam_invite_user_popup_submit_button}
+    \    sleep    2s
+    \    ${user_location}    Settings_Get_New_User_Location    test
+    \    ${verify_location}    Settings_Get_New_User_Verify    test
+    \    ${delete_location}    Settings_Get_New_User_Delete    test
+    \    sleep    1s
+    \    click    xpath    ${verify_location}
+    \    click    ${sam_user_unverified_resend_button}
+    \    Error_Page_Search
+    \    click    xpath    ${delete_location}
+    \    click    ${sam_user_delete_yes_button}
+    \    Error_Page_Search
+    : FOR    ${var}    IN RANGE    1    5
+    \    click    ${sam_invite_user_button}
+    \    sendText    ${sam_invite_user_popup_name_textbox}    test
+    \    sleep    1s
+    \    sendText    ${sam_invite_user_popup_email_textbox}    test@hotmail.com
+    \    sleep    1s
+    \    click    ${sam_invite_user_popup_type_dropdown1}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[3]/div[2]/span/ul/li[3]/a    #third type
+    \    click    ${sam_invite_user_popup_type_dropdown2}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[4]/div[2]/span/ul/li[1]/a    #first subtype
+    \    click    ${sam_invite_user_popup_privileges_dropdown}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[9]/div[2]/span/ul/li[${var}]/a    #4 privileges
+    \    click    ${sam_invite_user_popup_submit_button}
+    \    sleep    2s
+    \    ${user_location}    Settings_Get_New_User_Location    test
+    \    ${verify_location}    Settings_Get_New_User_Verify    test
+    \    ${delete_location}    Settings_Get_New_User_Delete    test
+    \    sleep    1s
+    \    click    xpath    ${verify_location}
+    \    click    ${sam_user_unverified_resend_button}
+    \    Error_Page_Search
+    \    click    xpath    ${delete_location}
+    \    click    ${sam_user_delete_yes_button}
+    \    Error_Page_Search
+    Logout
+
+0172_Settings_Account_Management_Edit&Remove
+    [Tags]    172
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0173_Settings_Account_Management_ResendMail
+    [Tags]    173
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0174_Settings_Account_Management_InviteUser_ISPAdminP
+    [Tags]    174
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0175_Settings_Account_Management_InviteUser_ISPEditorP
+    [Tags]    175
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0176_Settings_Account_Management_InviteUser_ISPMonitorP
+    [Tags]    176
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0177_Settings_Account_Management_InviteUser_ISPViewerP
+    [Tags]    177
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0178_Settings_Account_Management_InviteUser_MSPAdminP
+    [Tags]    178
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0179_Settings_Account_Management_InviteUser_MSPEditorP
+    [Tags]    179
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0180_Settings_Account_Management_InviteUser_MSPViewerP
+    [Tags]    180
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0181_Settings_Account_Management_InviteUser_MSPMonitorP
+    [Tags]    181
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0182_Settings_Account_Management_InviteUser_ORGAdminP
+    [Tags]    182
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0183_Settings_Account_Management_InviteUser_ORGEditorP
+    [Tags]    183
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0184_Settings_Account_Management_InviteUser_ORGMonitorP
+    [Tags]    184
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0185_Settings_Account_Management_InviteUser_ORGViewerP
+    [Tags]    185
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
 0097_Top_User_Profile
     [Tags]    97
     Login
     Top_User_Profile_Check
     Logout
 
-Login_URL
-    [Tags]    login
-    Login
-
 test
     [Tags]    test
-    #this is test    &{country_utc}=    Create Dictionary    'Taiwan'='(UTC+8)'    'Thailand'='(UTC+7)'
-    ${login_or_not}=    waitElementDisplayed    ${user_name_textbox}    5
-    Run Keyword If    '${login_or_not}'=='False'    Logout
-    Login
-
-Configure_AP_Create_New_Profile
-    [Tags]    create_profile
-    [Setup]
-    Login
-    Back_To_Main_Page
-    Navigate_To_Created_Organization    Jack_Test_Org
-    Configure_Create_New_Profile    DBA-1510P_Jack_5255_2
-
-Configure_AP_Check_New_Profile
-    [Tags]    check_profile
-    #To_DBA_URL_and_Login
-    Back_To_Main_Page
-    Navigate_To_Created_Organization    Jack_Test_Org
-    Configure_Check_New_Profile    DBA-1510P_Jack_5255
+    ${ssid_name}    set variable    DBA-1510P_Jack_5255
+    create_and_add_profile    ${ssid_name}
+    sleep    3s
+    connection    ${ssid_name}
+    sleep    10s

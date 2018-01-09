@@ -1,6 +1,90 @@
 *** Keywords ***
 ElementLocator-Main
-    ${GoogleTranslateSubmitButton}=    getElementLocator    id    gt-submit
-    Set Global Variable    ${GoogleTranslateSubmitButton}
-    ${GoogleTranslateInput}=    getElementLocator    id    source
-    Set Global Variable    ${GoogleTranslateInput}
+    ##URL
+    ${url}=    set Variable    https://euqa.mydlinkbusiness.com/
+    Set Global Variable    ${url}
+    ##Login
+    ${user_name_textbox}=    getElementLocator    xpath    //input[@name='username']
+    Set Global Variable    ${user_name_textbox}
+    ${password_textbox}=    getElementLocator    xpath    //input[@name='password']
+    Set Global Variable    ${password_textbox}
+    ${login_submit_button}=    getElementLocator    xpath    //a[contains(text(),'Log in')]
+    Set Global Variable    ${login_submit_button}
+    ##Top menu
+    ${top_user_dropdown_menu}=    getElementLocator    xpath    //*[@id="userDropdownMenu"]/span/span[1]/span
+    Set Global Variable    ${top_user_dropdown_menu}
+    ${top_user_dropdown_user_profile}    getElementLocator    xpath    //*[@id="v2-header-client"]/div/div/div[2]/ul[2]/li[1]/div/ul/li[1]/a/span
+    Set Global Variable    ${top_user_dropdown_user_profile}
+    ${top_user_dropdown_logout}    getElementLocator    xpath    //*[@id="v2-header-client"]/div/div/div[2]/ul[2]/li[1]/div/ul/li[2]/a/span
+    Set Global Variable    ${top_user_dropdown_logout}
+    ${organization_drop_down_menu}    getElementLocator    xpath    //button[@id='organizationDropdownMenu']
+    Set Global Variable    ${organization_drop_down_menu}
+    ${site_drop_down_menu}    getElementLocator    xpath    //*[@id="siteDropdownMenu"]/span/span[1]/span
+    Set Global Variable    ${site_drop_down_menu}
+    ##User Profile
+    ${user_profile_name_textbox}    getElementLocator    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[2]/div[1]/input
+    Set Global Variable    ${user_profile_name_textbox}
+    ${user_profile_password_textbox}    getElementLocator    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[6]/div[1]/input
+    Set Global Variable    ${user_profile_password_textbox}
+    ${user_profile_confirm_password_textbox}    getElementLocator    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[7]/div/input
+    Set Global Variable    ${user_profile_confirm_password_textbox}
+    ${user_profile_save_button}=    getElementLocator    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[2]/div[2]/div[2]/button
+    Set Global Variable    ${user_profile_save_button}
+    ${user_profile_cancel_button}=    getElementLocator    xpath    //*[@id="v2-ap-profile"]/div/div[2]/div/div[1]/div[1]/form/div[7]/div/input
+    Set Global Variable    ${user_profile_cancel_button}
+    ##Dashboard
+    ${dlink_logo_icon}=    getElementLocator    xpath    //*[@id="v2-header-client"]/div/div/div[1]/a/img
+    Set Global Variable    ${dlink_logo_icon}
+    ##Top Menu DropDown Dashboard
+    ${dashboard_button}    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[1]/a
+    Set Global Variable    ${dashboard_button}
+    ##Top Menu DropDown Configure
+    ${configure_drop_down_menu}=    getElementLocator    xpath    //a[contains(text(),'Configure')]
+    Set Global Variable    ${configure_drop_down_menu}
+    ${configure_access_point_drop_down_menu}=    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[3]/ul/li/a
+    Set Global Variable    ${configure_access_point_drop_down_menu}
+    ${configure_access_point_profiles_drop_down_menu}=    getElementLocator    xpath    //a[contains(text(),'Profiles')]
+    Set Global Variable    ${configure_access_point_profiles_drop_down_menu}
+    ${configure_accesspoint_devices}=    getElementLocator    xpath    //*[@id="rightsubmenu31"]/li[2]/a
+    Set Global Variable    ${configure_accesspoint_devices}
+    ##Top Menu DropDown Monitor
+    ${monitor_dropdown_menu}    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[2]/a
+    Set Global Variable    ${monitor_dropdown_menu}
+    ${monitor_dropdown_accesspoint}    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[2]/ul/li[1]/a
+    Set Global Variable    ${monitor_dropdown_accesspoint}
+    ${monitor_dropdown_accesspoint_devices}    getElementLocator    xpath    //*[@id="rightsubmenu21"]/li[1]/a
+    Set Global Variable    ${monitor_dropdown_accesspoint_devices}
+    ${monitor_dropdown_accesspoint_clients}    getElementLocator    xpath    //*[@id="rightsubmenu21"]/li[2]/a
+    Set Global Variable    ${monitor_dropdown_accesspoint_clients}
+    ${monitor_dropdown_accesspoint_eventlog}    getElementLocator    xpath    //*[@id="rightsubmenu21"]/li[3]/a
+    Set Global Variable    ${monitor_dropdown_accesspoint_eventlog}
+    ${monitor_dropdown_map}    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[2]/ul/li[2]/a
+    Set Global Variable    ${monitor_dropdown_map}
+    ${monitor_dropdown_floorplans}    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[2]/ul/li[3]/a
+    Set Global Variable    ${monitor_dropdown_floorplans}
+    ##Top Menu DropDown Reports
+    ${reports_dropdown_menu}    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[4]/a
+    Set Global Variable    ${reports_dropdown_menu}
+    ${reports_dropdown_changelog}    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[4]/ul/li[1]/a
+    Set Global Variable    ${reports_dropdown_changelog}
+    ${reports_dropdown_accesspoint}    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[4]/ul/li[2]/a
+    Set Global Variable    ${reports_dropdown_accesspoint}
+    ${reports_dropdown_alerts}    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[4]/ul/li[3]/a
+    Set Global Variable    ${reports_dropdown_alerts}
+    ${reports_dropdown_licenses}    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[4]/ul/li[4]/a
+    Set Global Variable    ${reports_dropdown_licenses}
+    ##Top Menu DropDown Settings
+    ${settings_dropdown_menu_button}=    getElementLocator    xpath    //a[contains(text(),'Settings')]
+    Set Global Variable    ${settings_dropdown_menu_button}
+    ${settings_dropdown_account_management}=    getElementLocator    xpath    //a[contains(text(),'Account Management')]
+    Set Global Variable    ${settings_dropdown_account_management}
+    ${settings_dropdown_organization_management_button}=    getElementLocator    xpath    //a[contains(text(),'Organization Management')]
+    Set Global Variable    ${settings_dropdown_organization_management_button}
+    ${settings_dropdown_licensemanagement}=    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[5]/ul/li[3]/a
+    Set Global Variable    ${settings_dropdown_licensemanagement}
+    ${settings_dropdown_inventory}=    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[5]/ul/li[4]/a
+    Set Global Variable    ${settings_dropdown_inventory}
+    ${settings_dropdown_firmware}=    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[5]/ul/li[5]/a
+    Set Global Variable    ${settings_dropdown_firmware}
+    ${settings_dropdown_adddevice}=    getElementLocator    xpath    //*[@id="v2-navigation"]/div/div/nav/ul/li[5]/ul/li[6]/a
+    Set Global Variable    ${settings_dropdown_adddevice}

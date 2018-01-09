@@ -1,0 +1,33 @@
+*** Keywords ***
+ElementLocator-Reports
+    #Alerts
+    ${all_severity_dropdown}    getElementLocator    xpath    //*[@id="severityOption"]/span
+    Set Global Variable    ${all_severity_dropdown}
+    ${severity_dropdown_critical}    getElementLocator    xpath    //*[@id="severityUl"]/li[2]/a[1]
+    Set Global Variable    ${severity_dropdown_critical}
+    ${severity_dropdown_major}    getElementLocator    xpath    //*[@id="severityUl"]/li[3]/a[1]
+    Set Global Variable    ${severity_dropdown_major}
+    ${severity_dropdown_minor}    getElementLocator    xpath    //*[@id="severityUl"]/li[4]/a[1]
+    Set Global Variable    ${severity_dropdown_minor}
+    #Licenses
+    ${license_add_button}    getElementLocator    xpath    //*[@id="addDropdownMenu"]
+    Set Global Variable    ${license_add_button}
+    #ChangeLog
+    ${profile_dropdown}    getElementLocator    xpath    //*[@id="deviceGroupDropdownMenu"]/span
+    Set Global Variable    ${profile_dropdown}
+    ${type_dropdown}    getElementLocator    xpath    //*[@id="typeDropdownMenu"]/span
+    Set Global Variable    ${type_dropdown}
+    ${change_dropdown}    getElementLocator    xpath    //*[@id="changeDropdownMenu"]/span
+    Set Global Variable    ${change_dropdown}
+    ${startdate_textbox}    getElementLocator    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[1]/div[7]/div[2]/input
+    Set Global Variable    ${startdate_textbox}
+    ${enddate_textbox}    getElementLocator    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[1]/div[8]/div[2]/input
+    Set Global Variable    ${enddate_textbox}
+    ${filter_button}    getElementLocator    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[1]/div[9]/div[2]/a[2]
+    Set Global Variable    ${filter_button}
+    ${resetfilter_button}    getElementLocator    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[1]/div[9]/div[2]/a[1]
+    Set Global Variable    ${resetfilter_button}
+    ${change_log_download_button}    getElementLocator    xpath    //*[@id="v2-change-logs"]/div/div/div[1]/div/div/div/a
+    Set Global Variable    ${change_log_download_button}
+    ${download_log_img}    getElementLocator    xpath    //*[@id="v2-change-logs"]/div/div/div[1]/div/div/div/a
+    Set Global Variable    ${download_log_img}

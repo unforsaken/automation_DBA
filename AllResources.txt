@@ -9,3 +9,5 @@ Resource          ElementLocators/ElementLocator-Main.txt
 Resource          ElementLocators/ElementLocator-Settings.txt
 Resource          ElementLocators/ElementLocator-Dashboard.txt
 Resource          ElementLocators/ElementLocator-Monitor.txt
+Resource          ElementLocators/ElementLocator-Reports.txt
+Library           ../library/connectSSID.py

@@ -1,0 +1,29 @@
+*** Settings ***
+Suite Setup       Main_Variables
+Force Tags
+Resource          ../AllResources.txt
+
+*** Test Cases ***
+Login
+    Login
+
+Logout
+
+ping_test
+    [Tags]    ping
+    ping_test    192.168.10.31    20
+
+Configure_AP_Create_New_Profile
+    [Tags]    create_profile
+    [Setup]
+    Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    Jack_Test_Org
+    Configure_Create_New_Profile    DBA-1510P_Jack_5255_2
+
+Configure_AP_Check_New_Profile
+    [Tags]    check_profile
+    #To_DBA_URL_and_Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    Jack_Test_Org
+    Configure_Check_New_Profile    DBA-1510P_Jack_5255
