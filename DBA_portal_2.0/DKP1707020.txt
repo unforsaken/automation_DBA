@@ -858,6 +858,21 @@ Resource          ../AllResources.txt
     Logout
     #same test as 0171
 
+0186_Settings_Organization_Management_Summary
+    [Tags]    186
+    Check_Login
+    Login
+    click    ${settings_dropdown_menu_button}    #click settings dropdown button
+    click    ${settings_dropdown_organization_management_button}    #click organization management menu button
+    sleep    1s
+    Settings_Create_New_Organization    Jack_Test
+    Error_Page_Search
+    ${org_location}    Settings_Get_New_Org_Location    Jack_Test
+    ${site_location}    Settings_Get_New_Org_Site    Jack_Test
+    ${sitetag_location}    Settings_Get_New_Org_SiteTag    Jack_Test
+    ${inviteuser_location}    Settings_Get_New_Org_InviteUser    Jack_Test
+    ${delete_location}    Settings_Get_New_Org_Delete    Jack_Test
+
 0097_Top_User_Profile
     [Tags]    97
     Login

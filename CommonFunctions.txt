@@ -138,11 +138,6 @@ Error_Page_Search
 
 Settings_Create_New_Organization
     [Arguments]    ${new_org_name}
-    sleep    1s
-    click    ${settings_dropdown_menu_button}    #click settings dropdown button
-    sleep    1s
-    click    ${settings_dropdown_organization_management_button}    #click organization management menu button
-    sleep    1s
     click    ${settings_create_organization_button}    #click create organization
     sleep    1s
     click    ${settings_create_organization_detail_organization_name}    #click organization name
@@ -165,7 +160,6 @@ Settings_Create_New_Organization
     sendText    ${settings_create_organization_detail_email}    jack.tzu@dlinkcorp.com    #input jack.tzu@dlinkcorp.com as value
     sleep    1s
     click    ${settings_create_organization_detail_save_button}    #click save button
-    sleep    5s
 
 Settings_Check_New_Organization
     [Arguments]    ${organization_name}
@@ -741,5 +735,50 @@ Settings_Get_New_User_Delete
     \    ${user}=    getText    xpath    //*[@id="v2-account-management"]/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[1]/span/span/a
     \    ${OK}    evaluate    '${user}'=='${new_user_name}'
     \    ${delete_location}    Set Variable If    ${OK}    //*[@id="v2-account-management"]/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[7]/span/a
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${delete_location}
+
+Settings_Get_New_Org_Location
+    [Arguments]    ${new_org_name}
+    : FOR    ${var}    IN RANGE    2    20
+    \    ${user}=    getText    xpath    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[1]/a
+    \    ${OK}    evaluate    '${user}'=='${new_org_name}'
+    \    ${org_location}    Set Variable If    ${OK}    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[1]/a
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${org_location}
+
+Settings_Get_New_Org_Site
+    [Arguments]    ${new_org_name}
+    : FOR    ${var}    IN RANGE    2    20
+    \    ${user}=    getText    xpath    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[1]/a
+    \    ${OK}    evaluate    '${user}'=='${new_org_name}'
+    \    ${site_location}    Set Variable If    ${OK}    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[7]/button[1]
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${site_location}
+
+Settings_Get_New_Org_SiteTag
+    [Arguments]    ${new_org_name}
+    : FOR    ${var}    IN RANGE    2    20
+    \    ${user}=    getText    xpath    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[1]/a
+    \    ${OK}    evaluate    '${user}'=='${new_org_name}'
+    \    ${sitetag_location}    Set Variable If    ${OK}    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[7]/button[2]
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${sitetag_location}
+
+Settings_Get_New_Org_InviteUser
+    [Arguments]    ${new_org_name}
+    : FOR    ${var}    IN RANGE    2    20
+    \    ${user}=    getText    xpath    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[1]/a
+    \    ${OK}    evaluate    '${user}'=='${new_org_name}'
+    \    ${inviteuser_location}    Set Variable If    ${OK}    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[7]/button[3]
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${inviteuser_location}
+
+Settings_Get_New_Org_Delete
+    [Arguments]    ${new_org_name}
+    : FOR    ${var}    IN RANGE    2    20
+    \    ${user}=    getText    xpath    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[1]/a
+    \    ${OK}    evaluate    '${user}'=='${new_org_name}'
+    \    ${delete_location}    Set Variable If    ${OK}    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[7]/span/a
     \    run keyword if    '${OK}'=='True'    exit for loop
     [Return]    ${delete_location}
