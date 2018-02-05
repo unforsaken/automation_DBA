@@ -1,0 +1,1223 @@
+*** Settings ***
+Suite Setup       Run Keywords    ElementLocator-Reports    ElementLocator-Main    ElementLocator-Configure    ElementLocator-Settings    ElementLocator-Dashboard    ElementLocator-Monitor
+Force Tags        DKP1707020
+Resource          ../AllResources.txt
+
+*** Test Cases ***
+0002
+    [Documentation]    Configure_AP_Profile_Add_SSID
+    [Tags]    DKP1707020-0002
+    Check_Login
+    Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    ${org}
+    Configure_Set_Profile_SSID_Add    DBA-1510P_Jack_5255_2    DBA-1510P-Jack_5255_2.4G_test    DBA-1510P-Jack_5255_5G_test
+    Logout
+
+0015
+    [Documentation]    Configure_AP_Profile_SSID_MAC_Filtering
+    [Tags]    DKP1707020-0015
+    Check_Login
+    Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    ${org}
+    Configure_Set_Profile_SSID_MAC_Filtering    DBA-1510P_Jack_5255_2    DBA-1510P-Jack_5255_2.4G_test    DBA-1510P-Jack_5255_5G_test
+    Logout
+
+0019
+    [Documentation]    Configure_AP_Profile_SSID_IP_Filtering
+    [Tags]    DKP1707020-0019
+    Check_Login
+    Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    ${org}
+    Configure_Set_Profile_SSID_IP_Filtering    DBA-1510P_Jack_5255_2    DBA-1510P-Jack_5255_2.4G_test    DBA-1510P-Jack_5255_5G_test
+    Logout
+
+0022
+    [Documentation]    Configure_AP_Profile_SSID_Captive_Portal
+    [Tags]    DKP1707020-0022
+    Check_Login
+    Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    ${org}
+    Configure_Set_Profile_SSID_Captive_Portal    DBA-1510P_Jack_5255_2    DBA-1510P-Jack_5255_2.4G_test    DBA-1510P-Jack_5255_5G_test
+    Logout
+
+0035
+    [Documentation]    Configure_AP_Profile_SSID_Advanced
+    [Tags]    DKP1707020-0035
+    Check_Login
+    Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    ${org}
+    Configure_Set_Profile_SSID_Captive_Portal    DBA-1510P_Jack_5255_2    DBA-1510P-Jack_5255_2.4G_test    DBA-1510P-Jack_5255_5G_test
+    Logout
+
+0048
+    [Documentation]    Configure_AP_Profile_Radio
+    [Tags]    DKP1707020-0048
+    Check_Login
+    Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    ${org}
+    Configure_Set_Profile_Radio    DBA-1510P_Jack_5255_2
+    Logout
+
+0053
+    [Documentation]    Configure_AP_Profile_General_Change_Country
+    [Tags]    DKP1707020-0053
+    Check_Login
+    Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    ${org}
+    Configure_Set_Profile_General_Change_Country    DBA-1510P_Jack_5255_2
+    Logout
+
+0054
+    [Documentation]    Configure_AP_Profile_Radio_Channel
+    [Tags]    DKP1707020-0054
+    Check_Login
+    Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    ${org}
+    Configure_Set_Profile_Radio_Channel    DBA-1510P_Jack_5255_2
+    Logout
+
+0085
+    [Documentation]    Configure_AP_Profile_SplashPage
+    [Tags]    DKP1707020-0085
+    Check_Login
+    Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    ${org}
+    Configure_Set_Profile_SplashPage    DBA-1510P_Jack_5255_2
+    Logout
+
+0086
+    [Documentation]    Configure_AP_Profile_SplashPage_Add
+    [Tags]    DKP1707020-0086
+    Check_Login
+    Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    ${org}
+    Configure_Set_Profile_SplashPage_Edit    DBA-1510P_Jack_5255_2    test
+    Logout
+
+0096
+    [Documentation]    Settings_Account_Privileges
+    [Tags]    DKP1707020-0096
+    Check_Login
+    Login
+    Logout
+    Settings_Account_Check
+
+0098
+    [Documentation]    Top_Logout
+    [Tags]    DKP1707020-0098
+    Check_Login
+    Login
+    Logout
+
+0100
+    [Documentation]    Top_Navigation
+    [Tags]    DKP1707020-0100
+    Check_Login
+    Login
+    Top_Navigation_Check
+    Logout
+
+0118
+    [Documentation]    Configure_AP_Profile_UserName
+    [Tags]    DKP1707020-0118
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Configure_Show_Profile_General_UserName    DBA-1510P_Jack_5255
+    Logout
+
+0119
+    [Documentation]    Configure_AP_Profile_Password
+    [Tags]    DKP1707020-0119
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Configure_Show_Profile_General_Password    DBA-1510P_Jack_5255    tsd2tsd2
+    Logout
+
+0120
+    [Documentation]    Configure_AP_Profile_EnableVlan
+    [Tags]    DKP1707020-0120
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Configure_Show_Profile_General_EnableVlan    DBA-1510P_Jack_5255
+    Logout
+
+0122
+    [Documentation]    Configure_AP_Profile_ChangeNTPServer
+    [Tags]    DKP1707020-0122
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Configure_Show_Profile_General_ChangeNTPServer    DBA-1510P_Jack_5255
+    Logout
+
+0123
+    [Documentation]    Configure_AP_Profile_ChangeTimeZone
+    [Tags]    DKP1707020-0123
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Configure_Show_Profile_General_ChangeTimeZone    DBA-1510P_Jack_5255
+    Logout
+
+0125
+    [Documentation]    Configure_AP_Profile_UseLocalSettings
+    [Tags]    DKP1707020-0125
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    sleep    1s
+    ${general_location}    Configure_Get_Profile_General    DBA-1510P_Jack_5255
+    click    xpath    ${general_location}
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-general"]/div/div[3]/div[2]/div/ul/li[5]/button    5    true
+    click    ${profiles_general_localsettings_disable}
+    click    ${profiles_general_save_button}
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-general"]/div/div[2]/success-message-box[1]/div[2]/div    5    true
+    click    ${profiles_general_push_configuration_button}
+    sleep    5s
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]    5    true
+    ${success_check}    getText    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]
+    ${evaluate_success}    evaluate    '${success_check}'=='Successful'
+    shouldbeTrue    ${evaluate_success}    msg=success message did not appear, please check the case manually
+    sendKeyEscape
+    sleep    2s
+    toURL    https://euqa.mydlinkbusiness.com
+    Navigate_To_Created_Organization    Jack_Test_Org
+    Navigate_To_Profiles
+    sleep    1s
+    ${general_location}    Configure_Get_Profile_General    DBA-1510P_Jack_5255
+    click    xpath    ${general_location}
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-general"]/div/div[3]/div[2]/div/ul/li[5]/button    5    true
+    click    ${profiles_general_localsettings_enable}
+    click    ${profiles_general_save_button}
+    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    click    ${profiles_general_push_configuration_button}
+    sleep    5s
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]    5    true
+    ${success_check}    getText    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]
+    ${evaluate_success}    evaluate    '${success_check}'=='Successful'
+    shouldbeTrue    ${evaluate_success}    msg=success message did not appear correctly, please check the case manually
+    sendKeyEscape
+    sleep    2s
+    toURL    https://euqa.mydlinkbusiness.com
+    Logout
+
+0126
+    [Documentation]    Configure_AP_Profile_PushConfiguration
+    [Tags]    DKP1707020-0126
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    sleep    1s
+    ${SSID_location}    Configure_Get_Profile_SSID    DBA-1510P_Jack_5255
+    click    xpath    ${SSID_location}
+    click    xpath    //*[@id="v2-ap-profile-ssid"]/div/div[4]/div/div[1]/table/tbody/tr[1]/td[2]/a
+    waitElementDisplayed    xpath    //*[contains(text(),'SSID Name')]    5    true
+    click    xpath    //*[@id="top"]/div[2]/div/div/form/div[1]/div[2]/input
+    clearText    xpath    //*[@id="top"]/div[2]/div/div/form/div[1]/div[2]/input
+    sleep    1s
+    sendText    xpath    //*[@id="top"]/div[2]/div/div/form/div[1]/div[2]/input    DBA-1510P-Jack_5255_2.4G_test    #change ssid name
+    sleep    1s
+    click    xpath    //*[@id="top"]/div[2]/div/div/form/div[24]/button[2]    #click save button
+    sleep    1s
+    click    xpath    //*[@id="top"]/div[1]/div[1]/div/span/span[7]/a    #clicks back to the profile
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-ssid"]/div/div[4]/div/div[1]/table/tbody/tr[1]/td[2]/a    5    true
+    sleep    1s
+    click    ${profiles_ssid_push_configuration_button}
+    sleep    5s
+    waitElementDisplayed    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]    5    true
+    ${success_check}    getText    xpath    //*[@id="v2-ap-profile-modal"]/div/div[6]/table/tbody/tr/td[2]
+    ${evaluate_success}    evaluate    '${success_check}'=='Successful'
+    shouldbeTrue    ${evaluate_success}    msg=successful message did not appear correctly, please check the case manually
+    sendKeyEscape
+    Logout
+
+0127
+    [Documentation]    Configure_AP_Device_Info
+    [Tags]    DKP1707020-0127
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Devices
+    sleep    1s
+    ${current_device}=    set variable    DBA_1510_Jack_5255
+    ${get_device}=    getText    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a
+    ${check_name}=    evaluate    '${current_device}'=='${get_device}'    #check if first device name is the same as current
+    should be true    ${check_name}    msg=current device name did not match, please check the case manually
+    click    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a    #goes into the first device
+    ${get_name}    getText    xpath    //*[@id="v2-configure-device-detail"]/div/div/form/div[1]/div/input
+    ${get_model}    getText    xpath    //*[@id="v2-configure-device-detail"]/div/div/form/div[2]/div/p
+    ${get_uid}    getText    xpath    //*[@id="v2-configure-device-detail"]/div/div/form/div[3]/div/p
+    ${get_sn}    getText    xpath    //*[@id="v2-configure-device-detail"]/div/div/form/div[4]/div/p
+    ${get_firmware_status}    getText    xpath    //*[@id="v2-configure-device-detail"]/div/div/form/div[5]/div/p
+    ${get_firmware_version}    getText    xpath    //*[@id="v2-configure-device-detail"]/div/div/form/div[6]/div/p
+    ${get_site}    getText    xpath    //*[@id="siteDropdownMenu"]/span
+    ${get_profile}    getText    xpath    //*[@id="profileDropdownMenu"]/span
+    should be true    '${get_name}'!=''    msg=name column must not be empty
+    should be true    '${get_model}'!=''    msg=model column must not be empty
+    should be true    '${get_uid}'!=''    msg=uid column must not be empty
+    should be true    '${get_sn}'!=''    msg=sn column must not be empty
+    should be true    '${get_firmware_status}'!=''    msg=firmware statuscolumn must not be empty
+    should be true    '${get_firmware_version}'!=''    msg=firmware version column must not be empty
+    should be true    '${get_site}'!=''    msg=site column must not be empty
+    should be true    '${get_profile}'!=''    msg=profile column must not be empty
+    Logout
+
+0128
+    [Documentation]    Configure_AP_Device_Radio
+    [Tags]    DKP1707020-0128
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Devices
+    sleep    1s
+    ${current_device}=    set variable    DBA_1510_Jack_5255
+    ${get_device}=    getText    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a
+    ${check_name}=    evaluate    '${current_device}'=='${get_device}'    #check if first device name is the same as current
+    should be true    ${check_name}    msg=current device name does not match, please check the case manually
+    click    ${device_first_device}
+    click    ${device_radio_button}
+    Error_Page_Search
+    click    ${device_radio_applyconf_enable}
+    click    ${device_radio_save_button}
+    ${check_save_success}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    should be true    ${check_save_success}    msg=radio page did not save successfully, please check the case manually
+    logout
+
+0129
+    [Documentation]    Configure_AP_Device_Tools_Ping
+    [Tags]    DKP1707020-0129
+    ${ip}    set variable    8.8.8.8
+    ${current_device}    set variable    DBA_1510_Jack_5255
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Devices
+    sleep    1s
+    ${get_device}=    getText    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a
+    ${check_name}=    evaluate    '${current_device}'=='${get_device}'    #check if first device name is the same as current
+    should be true    ${check_name}    msg=device name did not match, please check the case manually
+    click    ${device_first_device}
+    click    ${device_tools_button}
+    sleep    1s
+    click    ${device_tools_ping_textbox}
+    cleartext    ${device_tools_ping_textbox}
+    sendtext    ${device_tools_ping_textbox}    ${ip}
+    sleep    1s
+    click    ${device_tools_ping_button}
+    waitElementDisplayed    ${device_tools_ping_result}    10    true
+    ${result}    getText    ${device_tools_ping_result}
+    #should not contain    ${result}    100% packet loss    msg=ping ${ip} unsuccessful
+    should contain    ${result}    2 packets received    msg=ping ${ip} unsuccessful, please check the case manually
+    sleep    1s
+    Logout
+
+0130
+    [Documentation]    Configure_AP_Device_Tools_TraceRoute
+    [Tags]    DKP1707020-0130
+    ${traceip}    set variable    168.95.1.1
+    ${current_device}    set variable    DBA_1510_Jack_5255
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Devices
+    sleep    1s
+    ${get_device}=    getText    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a
+    ${check_name}=    evaluate    '${current_device}'=='${get_device}'    #check if first device name is the same as current
+    should be true    ${check_name}    msg=device name did not match, please check the case manually
+    click    ${device_first_device}
+    click    ${device_tools_button}
+    sleep    1s
+    click    ${device_tools_tracert_textbox}
+    cleartext    ${device_tools_tracert_textbox}
+    sendtext    ${device_tools_tracert_textbox}    ${traceip}
+    click    ${device_tools_tracert_button}
+    ${check_tracert_exist}    waitElementDisplayed    ${device_tools_tracert_result}    30    true
+    should be true    ${check_tracert_exist}    msg=tracert result did not appear correctly, please check the case manually
+    ${result}    getText    ${device_tools_tracert_result}
+    #should not contain    ${result}    30 \ *    msg=trace ${traceip} unsuccessful
+    should contain    ${result}    dns.hinet.net [168.95.1.1]    msg=trace ${traceip} unsuccessful, please check the case manually
+    sleep    20s
+    Logout
+
+0132
+    [Documentation]    Configure_AP_Device_Tools_Reboot
+    [Tags]    DKP1707020-0132
+    ${ip}    set variable    8.8.8.8
+    ${current_device}    set variable    DBA_1510_Jack_5255
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Devices
+    sleep    1s
+    ${get_device}=    getText    xpath    //*[@id="v2-configure-devices"]/div/div[2]/div/div[1]/table/tbody/tr/td[4]/a
+    ${check_name}=    evaluate    '${current_device}'=='${get_device}'    #check if first device name is the same as current
+    should be true    ${check_name}    msg=device name did not match, please check the case manually
+    click    ${device_first_device}
+    click    ${device_tools_button}
+    sleep    2s
+    click    ${device_tools_reboot_button}
+    sleep    2s
+    click    ${device_tools_reboot_submit}
+    waitElementDisplayed    ${device_tools_reboot_result}    5    true
+    ${reboot_result}    getText    ${device_tools_reboot_result}
+    should be true    '${reboot_result}'=='REBOOT_SUCCESSFUL'    msg=device did not reboot successfully, please check the case manually
+    sleep    90s
+    click    ${device_tools_ping_textbox}
+    cleartext    ${device_tools_ping_textbox}
+    sendtext    ${device_tools_ping_textbox}    ${ip}
+    sleep    1s
+    click    ${device_tools_ping_button}
+    waitElementDisplayed    ${device_tools_ping_result}    10    true
+    ${result}    getText    ${device_tools_ping_result}
+    #should not contain    ${result}    100% packet loss    msg=ping ${ip} unsuccessful
+    should contain    ${result}    2 packets received    msg=ping ${ip} unsuccessful, please check the case manually
+    sleep    3s
+    Logout
+
+0137
+    [Documentation]    Dashboard_Navigation
+    [Tags]    DKP1707020-0137
+    Check_Login
+    Login
+    Back_To_Main_Page
+    click    ${email_button}
+    ${check_email_popup}    waitElementDisplayed    ${email_send_button}    5    true
+    should be true    ${check_email_popup}    msg=email popup did not appear correctly, please check this case manually
+    click    ${email_address_textbox}
+    sendText    ${email_address_textbox}    jack.tzu@dlinkcorp.com
+    sleep    1s
+    click    ${email_send_button}
+    sendKeyEscape
+    sleep    3s
+    click    ${map_button}
+    Error_Page_Search
+    Back_To_Main_Page
+    click    ${organization_view_button}
+    Error_Page_Search
+    Back_To_Main_Page
+    click    ${ap_overview_reload_button}
+    Error_Page_Search
+    sleep    1s
+    click    ${client_usage_reload_button}
+    Error_Page_Search
+    sleep    1s
+    click    ${connected_clients_reload_button}
+    Error_Page_Search
+    sleep    1s
+    click    ${top_devices_outside_reload_button}
+    waitElementDisplayed    ${top_devices_outside_first_device}    5    true
+    ${current_outside_top_device}    getText    ${top_devices_outside_first_device}
+    #should be true    '${current_outside_top_device}'=='${top_device}'    msg=the device outside did not match with the top device, please check the case manually
+    click    ${top_devices_more_button}
+    Error_Page_Search
+    waitElementDisplayed    ${top_devices_inside_first_device}    5    true
+    ${current_inside_top_device}    getText    ${top_devices_inside_first_device}
+    should be true    '${current_inside_top_device}'=='${current_outside_top_device}'    msg=the device inside did not match with the top device outside, please check the case manually
+    sendKeyEscape
+    sleep    2s
+    click    ${top_ssids_outside_reload_button}
+    waitElementDisplayed    ${top_ssids_outside_first_ssid}    5    true
+    ${current_outside_top_ssid}    getText    ${top_ssids_outside_first_ssid}
+    #should be true    '${current_outside_top_ssid}'=='${top_ssid}'    msg=the ssid outside did not match with the top ssid, please check the case manually
+    click    ${top_ssids_more_button}
+    Error_Page_Search
+    waitElementDisplayed    ${top_ssids_inside_first_ssid}    5    true
+    ${current_inside_top_ssid}    getText    ${top_ssids_inside_first_ssid}
+    should be true    '${current_inside_top_ssid}'=='${current_outside_top_ssid}'    msg=the ssid inside did not match with the top ssid outside, please check the case manually
+    sendKeyEscape
+    sleep    2s
+    click    ${top_clients_outside_reload_button}
+    waitElementDisplayed    ${top_clients_outside_first_client}    5    true
+    ${current_outside_top_client}    getText    ${top_clients_outside_first_client}
+    #should be true    '${current_outside_top_client}'=='${top_client}'    msg=the client outside did not match with the top client, please check the case manually
+    click    ${top_clients_more_button}
+    Error_Page_Search
+    waitElementDisplayed    ${top_clients_inside_first_client}    5    true
+    ${current_inside_top_client}    getText    ${top_clients_inside_first_client}
+    should be true    '${current_inside_top_client}'=='${current_outside_top_client}'    msg=the client inside did not match with the top client outside, please check the case manually
+    sendKeyEscape
+    sleep    1s
+    Logout
+
+0139
+    [Documentation]    Monitor_Map
+    ...
+    ...    Critiera: unable to check the MAP correctness, only verified the search bar.
+    [Tags]    DKP1707020-0139
+    @{sites}    Create List    tsd_site1    jack_site1    test_site1
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_map}
+    : FOR    ${var}    IN    @{sites}
+    \    click    ${site_search_textbox}
+    \    clearText    ${site_search_textbox}
+    \    sendText    ${site_search_textbox}    ${var}
+    \    ${result}    getText    ${site_search_result_first}
+    \    should be true    '${result}'=='${var}'    msg=search bar did not work correctly, please check the case manually
+    Logout
+
+0141
+    [Documentation]    Monitor_AccessPoints_Clients
+    [Tags]    DKP1707020-0141
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    Error_Page_Search
+    click    ${clients_ap_dropdown_menu}
+    click    ${clients_ap_dropdown_firstap}
+    Error_Page_Search
+    Logout
+
+0146
+    [Documentation]    Reports_Alerts
+    [Tags]    DKP1707020-0146
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    click    ${reports_dropdown_menu}    #navigate to alerts
+    click    ${reports_dropdown_alerts}
+    Error_Page_Search
+    click    xpath    //*[@id="v2-alerts"]/div/div[2]/div/div[2]/div/div[2]/ul/li[3]/select    #selects the items for each page
+    click    xpath    //*[contains(text(),'100')]    #changes from 10 to 100
+    sleep    2s
+    : FOR    ${var}    IN RANGE    2    7
+    \    click    xpath    //*[@id="v2-alerts"]/div/div[2]/div/div[1]/table/thead/tr/th[${var}]/a    #checks each tag and see if any error page will appear
+    \    Error_Page_Search
+    click    ${all_severity_dropdown}
+    click    ${severity_dropdown_critical}
+    sleep    2s
+    ${minor_exist_1}    isElementDisplayed    xpath    //*[contains(text(),'Minor')]
+    ${major_exist_1}    isElementDisplayed    xpath    //*[contains(text(),'Major')]
+    should be true    '${minor_exist_1}'=='False'    msg=filter did not work for critical filter, please check the case manually
+    should be true    '${major_exist_1}'=='False'    msg=filter did not work for critical filter, please check the case manually
+    Error_Page_Search
+    click    ${all_severity_dropdown}
+    click    ${severity_dropdown_major}
+    sleep    2s
+    ${minor_exist_2}    isElementDisplayed    xpath    //*[contains(text(),'Minor')]
+    ${critical_exist_2}    isElementDisplayed    xpath    //*[contains(text(),'Critical')]
+    should be true    '${minor_exist_2}'=='False'    msg=filter did not work for major filter, please check the case manually
+    should be true    '${critical_exist_2}'=='False'    msg=filter did not work for major filter, please check the case manually
+    Error_Page_Search
+    click    ${all_severity_dropdown}
+    click    ${severity_dropdown_minor}
+    sleep    2s
+    ${major_exist_3}    isElementDisplayed    xpath    //*[contains(text(),'Major')]
+    ${critical_exist_3}    isElementDisplayed    xpath    //*[contains(text(),'Critical')]
+    should be true    '${major_exist_3}'=='False'    msg=filter did not work for minor filter, please check the case manually
+    should be true    '${critical_exist_3}'=='False'    msg=filter did not work for minor filter, please check the case manually
+    Error_Page_Search
+    Logout
+
+0148
+    [Documentation]    Monitor_AccessPoints_Devices
+    [Tags]    DKP1707020-0148
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_devices}
+    Error_Page_Search
+    click    ${device_attribute_add_dropdown}
+    : FOR    ${var}    IN RANGE    1    10
+    \    click    xpath    //*[@id="v2-ap-devices"]/div/div/div[2]/div/div[1]/table/thead/tr/th[22]/div/ul/li[${var}]/label    #adds the tags to the current display 1 by 1
+    \    sleep    2s
+    Error_Page_Search
+    : FOR    ${var}    IN RANGE    2    22
+    \    click    xpath    //*[@id="v2-ap-devices"]/div/div/div[2]/div/div[1]/table/thead/tr/th[${var}]    #navigates through each tag and check if any error page will appear
+    \    Error_Page_Search
+    Logout
+
+0167
+    [Documentation]    Configure_AP_Device_Radio_AutoChannel
+    [Tags]    DKP1707020-0167
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    sleep    1s
+    ${radio_location}=    Configure_Get_Profile_Radio    DBA-1510P_Jack_5255
+    click    xpath    ${radio_location}    #clicks the profile's radio button
+    sleep    2s
+    click    ${profile_ssid_radio_channel_button}
+    click    ${profile_ssid_radio_channel_2.4auto_enable}
+    click    ${profile_ssid_radio_channel_5auto_enable}
+    sleep    1s
+    click    ${profile_ssid_radio_channel_run_auto_2.4g}
+    click    ${profile_ssid_radio_channel_run_auto_confirm}
+    ${check_execute_success}    waitElementDisplayed    xpath    //*[contains(text(),'Execute completed')]    5    true
+    should be true    ${check_execute_success}    msg=execute message did not appear correctly, please check the issue manually
+    sendKeyEscape
+    click    ${profile_ssid_radio_channel_run_auto_5g}
+    click    ${profile_ssid_radio_channel_run_auto_confirm}
+    ${check_execute_success2}    waitElementDisplayed    xpath    //*[contains(text(),'Execute completed')]    5    true
+    should be true    ${check_execute_success2}    msg=execute message did not appear correctly, please check the issue manually
+    sendKeyEscape
+    click    ${profile_ssid_radio_channel_save_button}
+    ${check_save_success}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    should be true    ${check_save_success}    msg=save message did not appear correctly, please check the issue manually
+    click    ${profiles_radio_push_configuration_button}
+    ${check_save_success2}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10    true
+    should be true    ${check_save_success2}    msg=save message did not appear correctly, please check the issue manually
+    sendKeyEscape
+    Logout
+
+0168
+    [Documentation]    Reports_Licenses
+    [Tags]    DKP1707020-0168
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    click    ${reports_dropdown_menu}    #navigate to alerts
+    click    ${reports_dropdown_licenses}
+    Error_Page_Search
+    click    xpath    //*[@id="v2-license"]/div/div[2]/div/div[2]/div/div[2]/ul/li[3]/select    #select how many items shown dropdown
+    click    xpath    //*[contains(text(),'100')]    #change to 100
+    click    ${license_add_button}
+    sleep    2s
+    : FOR    ${var}    IN RANGE    1    9
+    \    click    xpath    //*[@id="v2-license"]/div/div[2]/div/div[1]/table/thead/tr/th[17]/div/ul/li[${var}]/label    #adds the tags for the display of columns
+    \    Error_Page_Search
+    sleep    3s
+    : FOR    ${var}    IN RANGE    2    16
+    \    click    xpath    //*[@id="v2-license"]/div/div[2]/div/div[1]/table/thead/tr/th[${var}]/a/span[3]    #navigates through each column and check if any error messages appear
+    \    Error_Page_Search
+    Logout
+
+0169
+    [Documentation]    Reports_ChangeLogs
+    [Tags]    DKP1707020-0169
+    ${org1_name}    set variable    RICKY_TEST
+    ${org2_name}    set variable    DBA-1510P_Jack_5255
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    TSD2
+    click    ${reports_dropdown_menu}    #navigate to alerts
+    click    ${reports_dropdown_changelog}
+    Error_Page_Search
+    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[2]/div[2]/div/div[2]/ul/li[3]/select    #select the how many items shown dropdown
+    click    xpath    //*[contains(text(),'100')]    #change to 100
+    ${name1}    getText    ${profile_dropdown}
+    should be true    '${name1}'=='${org1_name}'    msg=the profile name did not match for this Organization, please check the case manually
+    Navigate_To_Created_Organization    ${org}
+    ${name2}    getText    ${profile_dropdown}
+    should be true    '${name2}'=='${org2_name}'    msg=the profile name did not match for this Organization, please check the case manually
+    : FOR    ${var}    IN RANGE    1    33
+    \    click    ${type_dropdown}
+    \    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[1]/div[2]/div[2]/ul/li[${var}]/label
+    \    click    ${filter_button}
+    \    Error_Page_Search
+    click    ${resetfilter_button}
+    click    ${filter_button}
+    sleep    3s
+    : FOR    ${var}    IN RANGE    1    12
+    \    click    ${change_dropdown}
+    \    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[1]/div[3]/div[2]/ul/li[${var}]/label
+    \    click    ${filter_button}
+    \    Error_Page_Search
+    click    ${resetfilter_button}
+    click    ${filter_button}
+    : FOR    ${var}    IN RANGE    2    8
+    \    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[2]/div[1]/table/thead/tr/th[${var}]/a
+    \    Error_Page_Search
+    Logout
+
+0170
+    [Documentation]    Reports_ChangeLogs_Filter
+    [Tags]    DKP1707020-0170
+    ${org1_name}    set variable    RICKY_TEST
+    ${org2_name}    set variable    DBA-1510P_Jack_5255
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    TSD2
+    click    ${reports_dropdown_menu}    #navigate to alerts
+    click    ${reports_dropdown_changelog}
+    Error_Page_Search
+    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[2]/div[2]/div/div[2]/ul/li[3]/select    #select the how many items shown dropdown
+    click    xpath    //*[contains(text(),'100')]    #change to 100
+    ${name1}    getText    ${profile_dropdown}
+    should be true    '${name1}'=='${org1_name}'    msg=the profile name did not match for this Organization, please check the case manually
+    Navigate_To_Created_Organization    ${org}
+    ${name2}    getText    ${profile_dropdown}
+    should be true    '${name2}'=='${org2_name}'    msg=the profile name did not match for this Organization, please check the case manually
+    : FOR    ${var}    IN RANGE    1    33
+    \    click    ${type_dropdown}
+    \    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[1]/div[2]/div[2]/ul/li[${var}]/label
+    \    click    ${filter_button}
+    \    Error_Page_Search
+    click    ${resetfilter_button}
+    click    ${filter_button}
+    sleep    3s
+    : FOR    ${var}    IN RANGE    1    12
+    \    click    ${change_dropdown}
+    \    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[1]/div[3]/div[2]/ul/li[${var}]/label
+    \    click    ${filter_button}
+    \    Error_Page_Search
+    click    ${resetfilter_button}
+    click    ${filter_button}
+    : FOR    ${var}    IN RANGE    2    8
+    \    click    xpath    //*[@id="v2-change-logs"]/div/div/div[2]/div[2]/div[1]/table/thead/tr/th[${var}]/a
+    \    Error_Page_Search
+    click    ${download_log_img}
+    Error_Page_Search
+    Logout
+
+0171
+    [Documentation]    Settings_Account_Management_Summary
+    [Tags]    DKP1707020-0171
+    Check_Login
+    Login
+    click    ${settings_dropdown_menu_button}
+    click    ${settings_dropdown_account_management}
+    Error_Page_Search
+    sleep    2s
+    : FOR    ${var}    IN RANGE    1    5
+    \    click    ${sam_invite_user_button}
+    \    sendText    ${sam_invite_user_popup_name_textbox}    test
+    \    sleep    1s
+    \    sendText    ${sam_invite_user_popup_email_textbox}    test@hotmail.com
+    \    sleep    1s
+    \    click    ${sam_invite_user_popup_type_dropdown1}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[3]/div[2]/span/ul/li[1]/a    #first type
+    \    click    ${sam_invite_user_popup_type_dropdown2}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[4]/div[2]/span/ul/li/a    #first subtype
+    \    click    ${sam_invite_user_popup_privileges_dropdown}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[9]/div[2]/span/ul/li[${var}]/a    #4 privileges
+    \    click    ${sam_invite_user_popup_submit_button}
+    \    sleep    2s
+    \    ${user_location}    Settings_Get_New_User_Location    test    #gets the created user location
+    \    ${verify_location}    Settings_Get_New_User_Verify    test    #gets the created user verify location
+    \    ${delete_location}    Settings_Get_New_User_Delete    test    #gets the created user delete location
+    \    should be true    '${user_location}'!=''    msg=user location should not be empty, please check the case manually
+    \    should be true    '${verify_location}'!=''    msg=user's verification location should not be empty, please check the case manually
+    \    should be true    '${delete_location}'!=''    msg=user's delete location should not be empty, please check the case manually
+    \    sleep    1s
+    \    click    xpath    ${verify_location}
+    \    click    ${sam_user_unverified_resend_button}
+    \    Error_Page_Search
+    \    click    xpath    ${delete_location}
+    \    click    ${sam_user_delete_yes_button}
+    \    Error_Page_Search
+    : FOR    ${var}    IN RANGE    1    5
+    \    click    ${sam_invite_user_button}
+    \    sendText    ${sam_invite_user_popup_name_textbox}    test
+    \    sleep    1s
+    \    sendText    ${sam_invite_user_popup_email_textbox}    test@hotmail.com
+    \    sleep    1s
+    \    click    ${sam_invite_user_popup_type_dropdown1}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[3]/div[2]/span/ul/li[2]/a    #second type
+    \    click    ${sam_invite_user_popup_type_dropdown2}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[4]/div[2]/span/ul/li[1]/a    #first subtype
+    \    click    ${sam_invite_user_popup_privileges_dropdown}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[9]/div[2]/span/ul/li[${var}]/a    #4 privileges
+    \    click    ${sam_invite_user_popup_submit_button}
+    \    sleep    2s
+    \    ${user_location}    Settings_Get_New_User_Location    test    #gets the created user location
+    \    ${verify_location}    Settings_Get_New_User_Verify    test    #gets the created user verify location
+    \    ${delete_location}    Settings_Get_New_User_Delete    test    #gets the created user delete location
+    \    should be true    '${user_location}'!=''    msg=user location should not be empty, please check the case manually
+    \    should be true    '${verify_location}'!=''    msg=user's verification location should not be empty, please check the case manually
+    \    should be true    '${delete_location}'!=''    msg=user's delete location should not be empty, please check the case manually
+    \    sleep    1s
+    \    click    xpath    ${verify_location}
+    \    click    ${sam_user_unverified_resend_button}
+    \    Error_Page_Search
+    \    click    xpath    ${delete_location}
+    \    click    ${sam_user_delete_yes_button}
+    \    Error_Page_Search
+    : FOR    ${var}    IN RANGE    1    5
+    \    click    ${sam_invite_user_button}
+    \    sendText    ${sam_invite_user_popup_name_textbox}    test
+    \    sleep    1s
+    \    sendText    ${sam_invite_user_popup_email_textbox}    test@hotmail.com
+    \    sleep    1s
+    \    click    ${sam_invite_user_popup_type_dropdown1}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[3]/div[2]/span/ul/li[3]/a    #third type
+    \    click    ${sam_invite_user_popup_type_dropdown2}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[4]/div[2]/span/ul/li[1]/a    #first subtype
+    \    click    ${sam_invite_user_popup_privileges_dropdown}
+    \    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[9]/div[2]/span/ul/li[${var}]/a    #4 privileges
+    \    click    ${sam_invite_user_popup_submit_button}
+    \    sleep    2s
+    \    ${user_location}    Settings_Get_New_User_Location    test    #gets the created user location
+    \    ${verify_location}    Settings_Get_New_User_Verify    test    #gets the created user verify location
+    \    ${delete_location}    Settings_Get_New_User_Delete    test    #gets the created user delete location
+    \    should be true    '${user_location}'!=''    msg=user location should not be empty, please check the case manually
+    \    should be true    '${verify_location}'!=''    msg=user's verification location should not be empty, please check the case manually
+    \    should be true    '${delete_location}'!=''    msg=user's delete location should not be empty, please check the case manually
+    \    sleep    1s
+    \    click    xpath    ${verify_location}
+    \    click    ${sam_user_unverified_resend_button}
+    \    Error_Page_Search
+    \    click    xpath    ${delete_location}
+    \    click    ${sam_user_delete_yes_button}
+    \    Error_Page_Search
+    Logout
+
+0172
+    [Documentation]    Settings_Account_Management_Edit&Remove
+    [Tags]    DKP1707020-0172
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0173
+    [Documentation]    Settings_Account_Management_ResendMail
+    [Tags]    DKP1707020-0173
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0174
+    [Documentation]    Settings_Account_Management_InviteUser_ISPAdminP
+    [Tags]    DKP1707020-0174
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0175
+    [Documentation]    Settings_Account_Management_InviteUser_ISPEditorP
+    [Tags]    DKP1707020-0175
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0176
+    [Documentation]    Settings_Account_Management_InviteUser_ISPMonitorP
+    [Tags]    DKP1707020-0176
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0177
+    [Documentation]    Settings_Account_Management_InviteUser_ISPViewerP
+    [Tags]    DKP1707020-0177
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0178
+    [Documentation]    Settings_Account_Management_InviteUser_MSPAdminP
+    [Tags]    DKP1707020-0178
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0179
+    [Documentation]    Settings_Account_Management_InviteUser_MSPEditorP
+    [Tags]    DKP1707020-0179
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0180
+    [Documentation]    Settings_Account_Management_InviteUser_MSPViewerP
+    [Tags]    DKP1707020-0180
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0181
+    [Documentation]    Settings_Account_Management_InviteUser_MSPMonitorP
+    [Tags]    DKP1707020-0181
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0182
+    [Documentation]    Settings_Account_Management_InviteUser_ORGAdminP
+    [Tags]    DKP1707020-0182
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0183
+    [Documentation]    Settings_Account_Management_InviteUser_ORGEditorP
+    [Tags]    DKP1707020-0183
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0184
+    [Documentation]    Settings_Account_Management_InviteUser_ORGMonitorP
+    [Tags]    DKP1707020-0184
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0185
+    [Documentation]    Settings_Account_Management_InviteUser_ORGViewerP
+    [Tags]    DKP1707020-0185
+    Check_Login
+    Login
+    Logout
+    #same test as 0171
+
+0186
+    [Documentation]    Settings_Organization_Management_Summary
+    ...
+    ...    Criteria: unable to upload picture to WEB portal through RIDE, so critieria is not checked.
+    [Tags]    DKP1707020-0186
+    Check_Login
+    Login
+    click    ${settings_dropdown_menu_button}    #click settings dropdown button
+    click    ${settings_dropdown_organization_management_button}    #click organization management menu button
+    sleep    1s
+    : FOR    ${var}    IN RANGE    1    7
+    \    click    xpath    //*[@id="top"]/div[2]/div/div[1]/table/thead/tr/th[${var}]/a/span[3]    #clicks the top bar, to check if sorting is correct
+    \    Error_Page_Search
+    Settings_Create_New_Organization    Jack_Test
+    sendKeyEscape
+    Error_Page_Search
+    ${org_location}    Settings_Get_New_Org_Location    Jack_Test
+    #${inviteuser_location}    Settings_Get_New_Org_InviteUser    Jack_Test
+    should be true    '${org_location}'!=''    msg=the organization field should not be empty, please check the case manually
+    click    xpath    ${org_location}
+    sleep    1s
+    clearText    xpath    //*[@id="top"]/div[2]/div/div[1]/div[2]/div/form/div[5]/div[2]/input    #name column
+    sendText    xpath    //*[@id="top"]/div[2]/div/div[1]/div[2]/div/form/div[5]/div[2]/input    Jack_Test    #changes name to Jack_Test2
+    click    xpath    //*[@id="top"]/div[2]/div/div[4]/button[2]    #save button
+    ${check_save_status}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5
+    should be true    ${check_save_status}    msg=did not observe save success status, please check the case manually
+    click    xpath    //*[@id="top"]/div[2]/div/div[4]/button[1]    #cancel button
+    click    xpath    //*[@id="top"]/div[1]/div[2]/success-message-box[1]/div[2]/button/span[1]
+    sleep    1s
+    ${site_location}    Settings_Get_New_Org_Site    Jack_Test
+    should be true    '${site_location}'!=''    msg=site location icon should exist, please check the case manually
+    click    xpath    ${site_location}
+    sleep    1s
+    sendText    ${settings_create_site_name}    test
+    sendText    ${settings_create_site_address}    test
+    sendText    ${settings_create_site_city}    test
+    click    ${settings_create_site_country_dropdown}
+    click    ${settings_create_site_country_taiwan}
+    click    ${settings_create_site_save_button}
+    ${check_save_status2}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    should be true    ${check_save_status2}    msg=did not observe save success status, please check the case manually
+    click    xpath    //*[@id="top"]/div[1]/div[2]/success-message-box[1]/div[2]/button/span[1]
+    sleep    1s
+    #click    xpath    //*[@id="v2-organization-management-modal"]/div/div[2]/form/div[13]/button[1]    #cancel button
+    ${sitetag_location}    Settings_Get_New_Org_SiteTag    Jack_Test
+    should be true    '${sitetag_location}'!=''    msg=sitetag location icon should exist, please check the case manually
+    click    xpath    ${sitetag_location}
+    sendText    ${settings_create_sitetag_name}    test
+    click    ${settings_create_sitetag_save_button}
+    ${check_save_status3}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    should be true    ${check_save_status3}    msg=did not observe save success status, please check the case manually
+    sleep    1s
+    #click    xpath    ${inviteuser_location}
+    click    xpath    ${org_location}
+    click    ${settings_created_sitetag}
+    click    ${settings_created_sitetag_delete_icon}
+    click    xpath    //*[@id="v2-organization-management-modal"]/div/div[2]/div[3]/button[2]    #confirm delete
+    sleep    1s
+    click    ${settings_created_sitetag}
+    click    ${settings_created_site_delete_icon}
+    click    xpath    //*[@id="v2-organization-management-modal"]/div/div[2]/div[3]/button[2]    #confirm delete
+    sleep    1s
+    click    xpath    //*[@id="top"]/div[2]/div/div[4]/button[1]    #cancel button
+    ${delete_location}    Settings_Get_New_Org_Delete    Jack_Test
+    should be true    '${delete_location}'!=''    msg=delete location icon should exist, please check the case manually
+    click    xpath    ${delete_location}
+    sleep    1s
+    click    xpath    //*[@id="v2-organization-management-modal"]/div/div[2]/div[3]/button[2]    #yes button
+    ${check_save_status4}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    should be true    ${check_save_status4}    msg=did not observe save success status, please check the case manually
+    Logout
+
+0187
+    [Documentation]    Settings_Organization_Management_Create&Edit_Org
+    ...
+    ...    Criteria: unable to upload picture to WEB portal through RIDE, so critieria is not checked.
+    [Tags]    DKP1707020-0187
+    Check_Login
+    Login
+    Logout
+    #same test as 0186
+
+0188
+    [Documentation]    Settings_Organization_Management_Site&SiteTag
+    ...
+    ...    Criteria: unable to upload picture to WEB portal through RIDE, so critieria is not checked.
+    [Tags]    DKP1707020-0188
+    Check_Login
+    Login
+    Logout
+    #same test as 0186
+
+0189
+    [Documentation]    Settings_Organization_Management_Invite_User
+    [Tags]    DKP1707020-0189
+    ${org_name}    set Variable    Jack_Test_Org
+    ${user_name}    set Variable    test
+    Check_Login
+    Login
+    click    ${settings_dropdown_menu_button}    #click settings dropdown button
+    click    ${settings_dropdown_organization_management_button}    #click organization management menu button
+    ${inviteuser_location}    Settings_Get_New_Org_InviteUser    ${org_name}
+    should be true    '${inviteuser_location}'!=''    msg=invite user location should not be empty, please check the case manually
+    click    xpath    ${inviteuser_location}
+    sendText    ${sam_invite_user_popup_name_textbox}    ${user_name}
+    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[2]/div[2]/input
+    sleep    1s
+    sendText    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[2]/div[2]/input    test@dlinkcorp.com
+    click    ${sam_invite_user_popup_type_dropdown1}
+    sleep    1s
+    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[3]/div[2]/span/ul/li[3]/a
+    click    ${sam_invite_user_popup_type_dropdown2}
+    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[4]/div[2]/span/ul/li[1]/a
+    sleep    1s
+    click    ${sam_invite_user_popup_site_tag_dropdown}
+    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[7]/div[2]/span/ul/li[3]/a
+    sleep    1s
+    click    ${sam_invite_user_popup_site_dropdown}
+    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[8]/div[2]/span/ul/li[2]/a
+    sleep    1s
+    click    ${sam_invite_user_popup_privileges_dropdown}
+    click    xpath    //*[@id="v2-edit-account-modal"]/div/div[2]/form/div[9]/div[2]/span/ul/li[1]/a
+    sleep    1s
+    click    ${sam_invite_user_popup_submit_button}
+    sleep    1s
+    sendKeyEscape
+    click    ${settings_dropdown_menu_button}    #click settings dropdown button
+    click    ${settings_dropdown_account_management}    #click account management menu button
+    ${verify_location}    Settings_Get_New_User_Verify    ${user_name}
+    ${delete_location}    Settings_Get_New_User_Delete    ${user_name}
+    should be true    '${verify_location}'!=''    msg=verify location should not be empty, please check the case manually
+    should be true    '${delete_location}'!=''    msg=delete location should not be empty, please check the case manually
+    click    xpath    ${verify_location}
+    click    xpath    //*[@id="v2-ap-profile-modal"]/div/div[2]/form/div[4]/button[2]    #confirm button
+    Error_Page_Search
+    click    xpath    ${delete_location}
+    click    xpath    //*[@id="v2-ap-profile-modal"]/div/div[2]/div[3]/button[2]    #yes button
+    Error_Page_Search
+    Logout
+
+0190
+    [Documentation]    Settings_Organization_Management_Delete_Org
+    ...
+    ...    Criteria: unable to upload picture to WEB portal through RIDE, so critieria is not checked.
+    [Tags]    DKP1707020-0190
+    Check_Login
+    Login
+    Logout
+    #same test as 0186
+
+0194
+    [Documentation]    Settings_Inventory_Device_Summary
+    ...
+    ...    Criteria: "Bulk Import" unable to upload file to WEB portal through RIDE, so critieria is not checked.
+    [Tags]    DKP1707020-0194
+    ${uid}    set Variable    DLABTEST2222
+    ${device_name}    set Variable    test
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    click    ${settings_dropdown_menu_button}
+    click    ${settings_dropdown_inventory}
+    click    ${si_used_button}    #used button
+    : FOR    ${var}    IN RANGE    3    10
+    \    click    xpath    //*[@id="v2-settings-inventory"]/div/div[2]/div/div[1]/table/thead/tr/th[${var}]/a/span[3]
+    \    Error_Page_Search
+    click    ${si_unused_button}    #unused button
+    : FOR    ${var}    IN RANGE    3    10
+    \    click    xpath    //*[@id="v2-settings-inventory"]/div/div[2]/div/div[1]/table/thead/tr/th[${var}]/a/span[3]
+    \    Error_Page_Search
+    click    ${si_both_button}    #both button
+    : FOR    ${var}    IN RANGE    3    10
+    \    click    xpath    //*[@id="v2-settings-inventory"]/div/div[2]/div/div[1]/table/thead/tr/th[${var}]/a/span[3]
+    \    Error_Page_Search
+    click    ${si_used_button}    #used button
+    click    ${si_add_device_button}
+    sendText    ${si_add_device_uid}    ${uid}
+    click    ${si_add_device_register_enable}
+    sendText    ${si_add_device_name}    ${device_name}
+    click    ${si_add_device_profile_dropdown}
+    click    xpath    //*[@id="profileUl"]/li[1]/a    #clicks profile 1
+    click    ${si_add_device_site_dropdown}
+    click    xpath    //*[@id="storeUl"]/li[1]/a    #clicks site 1
+    click    ${si_add_device_license_dropdown}
+    click    xpath    //*[@id="licenseTermUl"]/li[1]/a    #clicks license 1
+    click    ${si_add_device_save_button}
+    Error_Page_Search
+    sendKeyEscape
+    ${check_location}    Settings_Get_New_Device_Check_Used    ${device_name}
+    should be true    '${check_location}'!=''    msg=check box location should not be empty, please check the case manually
+    click    xpath    ${check_location}
+    click    ${si_delete_device_icon}
+    click    xpath    //*[@id="v2-dashboard-modal"]/div[3]/form/div[2]/div[2]/button    #confirm yes button
+    sleep    3s
+    click    ${si_unused_button}
+    ${check_location2}    Settings_Get_New_Device_Check_Unused    ${device_name}
+    should be true    '${check_location2}'!=''    msg=check box location should not be empty, please check the case manually
+    click    xpath    ${check_location2}
+    click    ${si_delete_device_icon}
+    click    xpath    //*[@id="v2-dashboard-modal"]/div[3]/form/div[2]/div[2]/button    #confirm yes button
+    click    ${si_used_button}    #used button
+    click    ${si_used_button}    #used button
+    click    ${settings_dropdown_menu_button}
+    click    ${settings_dropdown_adddevice}
+    sendText    ${si_add_device_uid}    ${uid}
+    click    ${si_add_device_register_enable}
+    sendText    ${si_add_device_name}    ${device_name}
+    click    ${si_add_device_profile_dropdown}
+    click    xpath    //*[@id="profileUl"]/li[1]/a    #clicks profile 1
+    click    ${si_add_device_site_dropdown}
+    click    xpath    //*[@id="storeUl"]/li[1]/a    #clicks site 1
+    click    ${si_add_device_license_dropdown}
+    click    xpath    //*[@id="licenseTermUl"]/li[1]/a    #clicks license 1
+    click    ${si_add_device_save_button}
+    Error_Page_Search
+    sendKeyEscape
+    Back_To_Main_Page
+    click    ${settings_dropdown_menu_button}
+    click    ${settings_dropdown_inventory}
+    ${check_location}    Settings_Get_New_Device_Check_Used    ${device_name}
+    should be true    '${check_location}'!=''    msg=check box location should not be empty, please check the case manually
+    click    xpath    ${check_location}
+    sleep    1s
+    click    ${si_delete_device_icon}
+    click    xpath    //*[@id="v2-dashboard-modal"]/div[3]/form/div[2]/div[2]/button    #confirm yes button
+    sleep    3s
+    click    ${si_unused_button}
+    sleep    5s
+    ${check_location2}    Settings_Get_New_Device_Check_Unused    ${device_name}
+    #should be true    '${check_location2}'!=''    msg=check box location should not be empty, please check the case manually
+    click    xpath    ${check_location2}
+    sleep    1s
+    click    ${si_delete_device_icon}
+    click    xpath    //*[@id="v2-dashboard-modal"]/div[3]/form/div[2]/div[2]/button    #confirm yes button
+    Logout
+
+0195
+    [Documentation]    Settings_Inventory_Device_Report
+    ...
+    ...    Criteria: "Bulk Import" unable to upload file to WEB portal through RIDE, so critieria is not checked.
+    [Tags]    DKP1707020-0195
+    ${uid}    set Variable    DLABTEST2222
+    ${device_name}    set Variable    test
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Logout
+    #same test as 0194
+
+0196
+    [Documentation]    Settings_Inventory_Device_CreateDevice
+    ...
+    ...    Criteria: "Bulk Import" unable to upload file to WEB portal through RIDE, so critieria is not checked.
+    [Tags]    DKP1707020-0196
+    ${uid}    set Variable    DLABTEST2222
+    ${device_name}    set Variable    test
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Logout
+    #same test as 0194
+
+0198
+    [Documentation]    Settings_Inventory_Device_Remove
+    ...
+    ...    Criteria: "Bulk Import" unable to upload file to WEB portal through RIDE, so critieria is not checked.
+    [Tags]    DKP1707020-0198
+    ${uid}    set Variable    DLABTEST2222
+    ${device_name}    set Variable    test
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Logout
+    #same test as 0194
+
+0199
+    [Documentation]    Settings_Monitor_AccessPoint_Devices_Summary
+    [Tags]    DKP1707020-0199
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_devices}
+    sleep    1s
+    click    ${device_attribute_add_dropdown}
+    : FOR    ${var}    IN RANGE    1    10
+    \    click    xpath    //*[@id="v2-ap-devices"]/div/div/div[2]/div/div[1]/table/thead/tr/th[22]/div/ul/li[${var}]/label
+    \    Error_Page_Search
+    sleep    1s
+    : FOR    ${var}    IN RANGE    2    22
+    \    click    xpath    //*[@id="v2-ap-devices"]/div/div/div[2]/div/div[1]/table/thead/tr/th[${var}]/a/span[3]
+    \    Error_Page_Search
+    Logout
+
+0200
+    [Documentation]    Settings_License_Management_Summary
+    [Tags]    DKP1707020-0200
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    click    ${settings_dropdown_menu_button}
+    click    ${settings_dropdown_licensemanagement}
+    sleep    1s
+    : FOR    ${var}    IN RANGE    2    9
+    \    click    xpath    //*[@id="v2-license-management"]/div/div[2]/div/div/div/div[1]/div/div/div[1]/table/thead/tr/th[${var}]/a
+    \    Error_Page_Search
+    click    ${lm_unused_license}
+    : FOR    ${var}    IN RANGE    2    8
+    \    click    xpath    //*[@id="v2-license-management"]/div/div[2]/div/div/div/div[2]/div/div/div[1]/table/thead/tr/th[${var}]/a/span[3]
+    \    Error_Page_Search
+    click    ${lm_log_download_icon}
+    sleep    2s
+    click    ${lm_log_button}
+    Error_Page_Search
+    Logout
+
+0201
+    [Documentation]    Settings_License_Management_Log
+    [Tags]    DKP1707020-0201
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Logout
+    #same test as 0200
+
+0202
+    [Documentation]    Settings_License_Management_Action
+    [Tags]    DKP1707020-0202
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Logout
+    #same test as 0200

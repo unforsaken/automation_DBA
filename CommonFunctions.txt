@@ -72,93 +72,101 @@ Top_User_Profile_Check
 Top_Navigation_Check
     click    ${dashboard_button}
     Error_Page_Search
+    sleep    1s
     click    ${monitor_dropdown_menu}
     click    ${monitor_dropdown_accesspoint}
     click    ${monitor_dropdown_accesspoint_devices}
     Error_Page_Search
+    sleep    1s
     click    ${monitor_dropdown_menu}
     click    ${monitor_dropdown_accesspoint}
     click    ${monitor_dropdown_accesspoint_clients}
     Error_Page_Search
+    sleep    1s
     click    ${monitor_dropdown_menu}
     click    ${monitor_dropdown_accesspoint}
     click    ${monitor_dropdown_accesspoint_eventlog}
     Error_Page_Search
+    sleep    1s
     click    ${monitor_dropdown_menu}
     click    ${monitor_dropdown_map}
     Error_Page_Search
+    sleep    1s
     click    ${monitor_dropdown_menu}
     click    ${monitor_dropdown_floorplans}
     Error_Page_Search
+    sleep    1s
     click    ${configure_drop_down_menu}
     click    ${configure_access_point_drop_down_menu}
     click    ${configure_access_point_profiles_drop_down_menu}
     Error_Page_Search
+    sleep    1s
     click    ${configure_drop_down_menu}
     click    ${configure_access_point_drop_down_menu}
     click    ${configure_accesspoint_devices}
     Error_Page_Search
+    sleep    1s
     click    ${reports_dropdown_menu}
     click    ${reports_dropdown_changelog}
     Error_Page_Search
+    sleep    1s
     click    ${reports_dropdown_menu}
     click    ${reports_dropdown_accesspoint}
     Error_Page_Search
+    sleep    1s
     click    ${reports_dropdown_menu}
     click    ${reports_dropdown_alerts}
     Error_Page_Search
+    sleep    1s
     click    ${reports_dropdown_menu}
     click    ${reports_dropdown_licenses}
     Error_Page_Search
+    sleep    1s
     click    ${settings_dropdown_menu_button}
     click    ${settings_dropdown_account_management}
     Error_Page_Search
+    sleep    1s
     click    ${settings_dropdown_menu_button}
     click    ${settings_dropdown_organization_management_button}
     Error_Page_Search
+    sleep    1s
     click    ${settings_dropdown_menu_button}
     click    ${settings_dropdown_licensemanagement}
     Error_Page_Search
+    sleep    1s
     click    ${settings_dropdown_menu_button}
     click    ${settings_dropdown_inventory}
     Error_Page_Search
+    sleep    1s
     click    ${settings_dropdown_menu_button}
     click    ${settings_dropdown_firmware}
     Error_Page_Search
+    sleep    1s
     click    ${settings_dropdown_menu_button}
     click    ${settings_dropdown_adddevice}
     Error_Page_Search
+    sleep    1s
 
 Error_Page_Search
     @{error_code}=    Create List    403    404    503    error    Error
     ${length}=    Get Length    ${error_code}
     : FOR    ${number}    IN RANGE    0    ${length}
     \    ${error_result}=    isElementDisplayed    xpath    //*[contains(text(),'${error_code[${number}]}')]
-    \    should not be true    ${error_result}
+    \    should not be true    ${error_result}    msg=displayed error page, please check the case manually
 
 Settings_Create_New_Organization
     [Arguments]    ${new_org_name}
     click    ${settings_create_organization_button}    #click create organization
-    sleep    1s
     click    ${settings_create_organization_detail_organization_name}    #click organization name
     sendText    ${settings_create_organization_detail_organization_name}    ${new_org_name}    #input Jack_Org as value
-    sleep    1s
     click    ${settings_create_organization_detail_type_dropdown}    #click type drop down menu
-    sleep    1s
     click    ${settings_create_organization_detail_type_dropdown_organization}    #choose Organization
-    sleep    1s
     click    ${settings_create_organization_detail_name}    #choose Name
-    sleep    1s
     sendText    ${settings_create_organization_detail_name}    test    #input test as value
-    sleep    1s
     click    ${settings_create_organization_detail_telephone}    #choose Telephone
-    sleep    1s
     sendText    ${settings_create_organization_detail_telephone}    02-12345678    #input 02-12345678 as value
-    sleep    1s
     click    ${settings_create_organization_detail_email}    #choose Email
-    sleep    1s
     sendText    ${settings_create_organization_detail_email}    jack.tzu@dlinkcorp.com    #input jack.tzu@dlinkcorp.com as value
-    sleep    1s
     click    ${settings_create_organization_detail_save_button}    #click save button
 
 Settings_Check_New_Organization
@@ -193,9 +201,9 @@ Settings_Account_Check
     \    Set Test Variable    ${${name}_${index}}    ${top_menu_check}
     \    ${index}    Evaluate    ${index}+1
     \    Logout
-    should not be equal    ${result_1}    ${result_2}    'two privileges should not match'
-    should not be equal    ${result_2}    ${result_3}    'two privileges should not match'
-    should not be equal    ${result_3}    ${result_1}    'two privileges should not match'
+    should not be equal    ${result_1}    ${result_2}    msg=two privileges should not match
+    should not be equal    ${result_2}    ${result_3}    msg=two privileges should not match
+    should not be equal    ${result_3}    ${result_1}    msg=two privileges should not match
 
 Configure_Create_New_Profile
     [Arguments]    ${profile_name}
@@ -241,17 +249,18 @@ Configure_Set_Profile_SSID_Add
     click    ${configure_profile_ssid_add_ssid_5g_checkbox}    #disables the 5G band selection (for 2.4G)
     sleep    1s
     click    ${configure_profile_ssid_add_ssid_save_button}    #clicks the Save Button
-    sleep    2s
+    sendKeyEscape
     click    ${configure_profile_ssid_add_ssid_button}    #clicks the Add SSID button inside the first profile
     sleep    1s
     sendText    ${configure_profile_ssid_add_ssid_name}    ${ssid_name_5}    #clicks the SSID name input box
     click    ${configure_profile_ssid_add_ssid_2.4g_checkbox}    #disables the 2.4G band selection (for 5G)
     sleep    1s
     click    ${configure_profile_ssid_add_ssid_save_button}    #clicks the Save Button
+    sendKeyEscape
     ${check_new_2.4_exist}=    waitElementDisplayed    xpath    (//a[contains(text(),'${ssid_name_2.4}')])    5    true
-    sleep    1s
-    ${check_new_5_exist}=    waitElementDisplayed    xpath    (//a[contains(text(),'${ssid_name_5}')])    5    true
-    sleep    5s
+    should be true    '${check_new_2.4_exist}'=='True'    msg=2.4G created profile name is incorrect.
+    ${check_new_5_exist}    waitElementDisplayed    xpath    (//a[contains(text(),'${ssid_name_5}')])    5    true
+    should be true    '${check_new_5_exist}'=='True'    msg=5G created profile name is incorrect
 
 Configure_Set_Profile_SSID_MAC_Filtering
     [Arguments]    ${profile_name}    ${ssid_name_2.4}    ${ssid_name_5}
@@ -262,7 +271,8 @@ Configure_Set_Profile_SSID_MAC_Filtering
     click    xpath    //a[contains(text(),'${ssid_name_2.4}')]    #clicks the SSID for 2.4G
     sleep    1s
     click    xpath    //a[contains(text(),'MAC Filtering')]    #clicks the MAC Filtering inside the SSID profile
-    ${check_mac_filtering_page_exist_2.4}=    waitElementDisplayed    xpath    (//*[contains(text(),'MSP Notice Editor')])    5    true    #check if the page is displayed correctly, includes the element or not
+    ${check_mac_filtering_page_exist_2.4}    waitElementDisplayed    xpath    (//*[contains(text(),'MSP Notice Editor')])    5    true    #check if the page is displayed correctly, includes the element or not
+    should be true    '${check_mac_filtering_page_exist_2.4}'=='True'    msg=page loaded incorrectly, please check case manually
     sleep    1s
     click    ${configure_drop_down_menu}    #click Configure Drop Down menu
     sleep    1s
@@ -275,8 +285,8 @@ Configure_Set_Profile_SSID_MAC_Filtering
     click    xpath    //a[contains(text(),'${ssid_name_5}')]    #clicks the SSID for 5G
     sleep    1s
     click    xpath    //a[contains(text(),'MAC Filtering')]    #clicks the MAC Filtering inside the SSID profile
-    ${check_mac_filtering_page_exist_5}=    waitElementDisplayed    xpath    (//*[contains(text(),'MSP Notice Editor')])    5    true    #check if the page is displayed correctly, includes the element or not
-    sleep    3s
+    ${check_mac_filtering_page_exist_5}    waitElementDisplayed    xpath    (//*[contains(text(),'MSP Notice Editor')])    5    true    #check if the page is displayed correctly, includes the element or not
+    should be true    '${check_mac_filtering_page_exist_5}'=='True'    msg=page loaded incorrectly, please check case manually
 
 Configure_Set_Profile_SSID_IP_Filtering
     [Arguments]    ${profile_name}    ${ssid_name_2.4}    ${ssid_name_5}
@@ -287,8 +297,8 @@ Configure_Set_Profile_SSID_IP_Filtering
     click    xpath    //a[contains(text(),'${ssid_name_2.4}')]    #clicks the SSID for 2.4G
     sleep    1s
     click    xpath    //a[contains(text(),'IP Filtering')]    #clicks the IP Filtering inside the SSID profile
-    ${check_ip_filtering_page_exist_2.4}=    waitElementDisplayed    xpath    //*[contains(text(),'Filtering Mode')]    5    true    #check if the page is displayed correctly, includes the element or not
-    sleep    1s
+    ${check_ip_filtering_page_exist_2.4}    waitElementDisplayed    xpath    //*[contains(text(),'Filtering Mode')]    5    true    #check if the page is displayed correctly, includes the element or not
+    should be true    '${check_ip_filtering_page_exist_2.4}'=='True'    msg=page loaded incorrectly, please check case manually
     click    ${configure_drop_down_menu}    #click Configure Drop Down menu
     sleep    1s
     click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
@@ -301,8 +311,8 @@ Configure_Set_Profile_SSID_IP_Filtering
     click    xpath    //a[contains(text(),'${ssid_name_5}')]    #clicks the SSID for 5G
     sleep    1s
     click    xpath    //a[contains(text(),'IP Filtering')]    #clicks the IP Filtering inside the SSID profile
-    ${check_ip_filtering_page_exist_5}=    waitElementDisplayed    xpath    //*[contains(text(),'Filtering Mode')]    5    true    #check if the page is displayed correctly, includes the element or not
-    sleep    3s
+    ${check_ip_filtering_page_exist_5}    waitElementDisplayed    xpath    //*[contains(text(),'Filtering Mode')]    5    true    #check if the page is displayed correctly, includes the element or not
+    should be true    '${check_ip_filtering_page_exist_5}'=='True'    msg=page loaded incorrectly, please check case manually
 
 Configure_Set_Profile_SSID_Captive_Portal
     [Arguments]    ${profile_name}    ${ssid_name_2.4}    ${ssid_name_5}
@@ -313,8 +323,8 @@ Configure_Set_Profile_SSID_Captive_Portal
     click    xpath    //a[contains(text(),'${ssid_name_2.4}')]    #clicks the SSID for 2.4G
     sleep    1s
     click    xpath    //a[contains(text(),'Captive Portal')]    #clicks the Captive Portal button inside the SSID profile
-    ${check_captive_portal_page_exist_2.4}=    waitElementDisplayed    xpath    //*[contains(text(),'Splash Page')]    5    true    #check if the page is displayed correctly, includes the element or not
-    sleep    1s
+    ${check_captive_portal_page_exist_2.4}    waitElementDisplayed    xpath    //*[contains(text(),'Splash Page')]    5    true    #check if the page is displayed correctly, includes the element or not
+    should be true    ${check_captive_portal_page_exist_2.4}    msg=page loaded incorrectly, please check case manually
     click    ${configure_drop_down_menu}    #click Configure Drop Down menu
     sleep    1s
     click    ${configure_access_point_drop_down_menu}    #clicks the access point drop list
@@ -327,8 +337,8 @@ Configure_Set_Profile_SSID_Captive_Portal
     click    xpath    //a[contains(text(),'${ssid_name_5}')]    #clicks the SSID for 5G
     sleep    1s
     click    xpath    //a[contains(text(),'Captive Portal')]    #clicks the Captive Portal button inside the SSID profile
-    ${check_captive_portal_page_exist_5}=    waitElementDisplayed    xpath    //*[contains(text(),'Splash Page')]    5    true    #check if the page is displayed correctly, includes the element or not
-    sleep    3s
+    ${check_captive_portal_page_exist_5}    waitElementDisplayed    xpath    //*[contains(text(),'Splash Page')]    5    true    #check if the page is displayed correctly, includes the element or not
+    should be true    ${check_captive_portal_page_exist_5}    msg=page loaded incorrectly, please check case manually
 
 Configure_Set_Profile_SSID_Advanced
     [Arguments]    ${profile_name}    ${ssid_name_2.4}    ${ssid_name_5}
@@ -362,8 +372,8 @@ Configure_Set_Profile_Radio
     ${radio_location}=    Configure_Get_Profile_Radio    ${profile_name}
     click    xpath    ${radio_location}    #clicks the profile's radio button
     sleep    2s
-    ${check_radio_page_exist}=    waitElementDisplayed    xpath    //*[contains(text(),'Enabled Radio')]    5    true    #check if the page is displayed correctly, includes the element or not
-    sleep    1s
+    ${check_radio_page_exist}    waitElementDisplayed    xpath    //*[contains(text(),'Enabled Radio')]    5    true    #check if the page is displayed correctly, includes the element or not
+    should be true    '${check_radio_page_exist}'=='True'    msg=page loaded incorrectly, please check case manually
 
 Configure_Set_Profile_Radio_Channel
     [Arguments]    ${profile_name}
@@ -371,19 +381,19 @@ Configure_Set_Profile_Radio_Channel
     ${radio_location}=    Configure_Get_Profile_Radio    ${profile_name}
     click    xpath    ${radio_location}    #clicks the profile's radio button
     sleep    2s
-    ${check_radio_page_exist}=    waitElementDisplayed    xpath    //*[contains(text(),'Enabled Radio')]    5    true    #check if the page is displayed correctly, includes the element or not
-    sleep    1s
+    ${check_radio_page_exist}    waitElementDisplayed    xpath    //*[contains(text(),'Enabled Radio')]    5    true    #check if the page is displayed correctly, includes the element or not
+    should be true    '${check_radio_page_exist}'=='True'    msg=page loaded incorrectly, please check case manually
     click    ${profile_ssid_radio_channel_button}
-    ${check_radio_channel_page_exist}=    waitElementDisplayed    xpath    //*[contains(text(),'Eligible Channels')]    5    true    #check if the page is displayed correctly, includes the element or not
-    sleep    2s
+    ${check_radio_channel_page_exist}    waitElementDisplayed    xpath    //*[contains(text(),'Eligible Channels')]    5    true    #check if the page is displayed correctly, includes the element or not
+    should be true    '${check_radio_channel_page_exist}'=='True'    msg=page loaded incorrectly, please check case manually
 
 Configure_Set_Profile_General_Change_Country
     [Arguments]    ${profile_name}
     Navigate_To_Profiles
     ${general_location}=    Configure_Get_Profile_General    ${profile_name}
     click    xpath    ${general_location}    #clicks the profile's general button
-    ${check_radio_page_exist}=    waitElementDisplayed    xpath    //*[contains(text(),'User Name')]    5    true    #check if the page is displayed correctly, includes the element or not
-    sleep    1s
+    ${check_radio_page_exist}    waitElementDisplayed    xpath    //*[contains(text(),'User Name')]    5    true    #check if the page is displayed correctly, includes the element or not
+    should be true    '${check_radio_page_exist}'=='True'    msg=page loaded incorrectly, please check case manually
     @{country}=    Create List    Albania    France    Egypt    Japan    Nigeria
     ...    Thailand    United States    Zambia    Taiwan
     : FOR    ${var}    IN    @{country}
@@ -392,12 +402,14 @@ Configure_Set_Profile_General_Change_Country
     \    click    xpath    //*[contains(text(),'${var}')]    #clicks the country
     \    sleep    1s
     \    click    ${profiles_general_save_button}    #saves the change made in country
-    \    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true    #check if the page is displayed correctly, includes the element or not
+    \    ${check_page_success}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    \    ...    #check if the page is displayed correctly, includes the element or not
+    \    Should Be True    '${check_page_success}'=='True'    msg=page loaded incorrectly, please check case manually
     \    click    ${profiles_button}    #clicks back to the profile page
     \    sleep    1s
     \    click    xpath    ${general_location}    #clicks the profile's general button
     \    ${current_country}=    getText    ${profile_general_country_dropdown_menu}    #gets the text value of the current country
-    \    Should Be True    '${current_country}'=='${var}'    #compares the current country with the country variable, should be equal
+    \    Should Be True    '${current_country}'=='${var}'    msg=the current country did not equal to the selected country, please test this case manually    #compares the current country with the country variable, should be equal
     \    sleep    1s
 
 Configure_Set_Profile_SplashPage
@@ -410,8 +422,8 @@ Configure_Set_Profile_SplashPage
     sleep    1s
     ${splash_location}=    Configure_Get_Profile_SplashPage_Location    ${profile_name}
     click    xpath    ${splash_location}    #clicks the profile's splashpage button
-    ${check_splash_page_exist}=    waitElementDisplayed    xpath    //*[contains(text(),'Default click-through')]    5    true    #check if the page is displayed correctly, includes the element or not
-    sleep    1s
+    ${check_splash_page_exist}    waitElementDisplayed    xpath    //*[contains(text(),'Default click-through')]    5    true    #check if the page is displayed correctly, includes the element or not
+    should be true    '${check_splash_page_exist}'=='True'    msg=page loaded incorrectly, please check case manually
     : FOR    ${var1}    IN RANGE    1    5
     \    click    xpath    //*[@id="v2-ap-profile-splash"]/div/div[5]/div[1]/div/div[2]/div/table/tbody/tr[${var1}]/td[1]/div
     \    Configure_Get_Profile_SplashPage_ClickThrough
@@ -426,8 +438,8 @@ Configure_Set_Profile_SplashPage_Edit
     sleep    1s
     ${splash_location}=    Configure_Get_Profile_SplashPage_Location    ${profile_name}
     click    xpath    ${splash_location}    #clicks the profile's splashpage button
-    ${check_splash_page_exist}=    waitElementDisplayed    xpath    //*[contains(text(),'Default click-through')]    5    true    #check if the page is displayed correctly, includes the element or not
-    sleep    1s
+    ${check_splash_page_exist}    waitElementDisplayed    xpath    //*[contains(text(),'Default click-through')]    5    true    #check if the page is displayed correctly, includes the element or not
+    should be true    '${check_splash_page_exist}'=='True'    msg=page loaded incorrectly, please check case manually
     : FOR    ${var1}    IN RANGE    1    5
     \    Configure_Get_Profile_SplashPage_Add    ${var1}    ${splash_page_name}
 
@@ -572,15 +584,18 @@ Configure_Get_Profile_SplashPage_Add
     \    click    ${profiles_splash_page_add_save_button}
     \    sleep    1s
     \    ${splash_name_icon}=    Configure_Get_Profile_SplashPage_Name    ${splash_page_name}
-    \    ${check_splash_icon_exist}=    waitElementDisplayed    xpath    ${splash_name_icon}    5    true
+    \    ${check_splash_icon_exist}    waitElementDisplayed    xpath    ${splash_name_icon}    5    true
+    \    should be true    '${check_splash_icon_exist}'=='True'    msg=splash icon did not appear, please check the case manually
     \    click    xpath    ${splash_name_icon}
     \    sleep    1s
     \    ${splash_delete_location}=    Configure_Get_Profile_SplashPage_Delete    ${splash_page_name}
-    \    ${check_delete_splash_icon_exist}=    waitElementDisplayed    xpath    ${splash_delete_location}    5    true
+    \    ${check_delete_splash_icon_exist}    waitElementDisplayed    xpath    ${splash_delete_location}    5    true
+    \    should be true    '${check_delete_splash_icon_exist}'=='True'    msg=splash delete icon did not appear, please check the case manually
     \    click    xpath    ${splash_delete_location}    #deletes the created splashpage
     \    sleep    1s
     \    click    ${profiles_splash_page_delete_yes_button}    #press yes from the popup message
-    \    ${wait_for_splash_page}=    waitElementDisplayed    xpath    //*[contains(text(),'Default click-through')]    5    true
+    \    ${wait_for_splash_page}    waitElementDisplayed    xpath    //*[contains(text(),'Default click-through')]    5    true
+    \    should be true    '${wait_for_splash_page}'=='True'    msg=splash page did not appear, please check the case manually
     \    sleep    1s
 
 Configure_Get_Profile_SplashPage_Delete
@@ -623,7 +638,7 @@ Configure_Show_Profile_General_UserName
     click    xpath    ${general_location}
     ${name}=    getText    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[1]/div[2]/label
     ${check_general_name}    evaluate    "${name}"=='admin'
-    should be true    ${check_general_name}    must be true
+    should be true    '${check_general_name}'=='True'    msg=name does not equal to admin, please check this test case manually
 
 Configure_Show_Profile_General_Password
     [Arguments]    ${profile_name}    ${current_password}
@@ -632,11 +647,11 @@ Configure_Show_Profile_General_Password
     click    xpath    ${general_location}
     ${password}=    getText    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[2]/div[2]/input[1]
     ${check_password_hide}    evaluate    "${password}"==''
-    should be true    ${check_password_hide}    must be true
+    should be true    ${check_password_hide}    msg=password should be sensored, please check the case manually
     click    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[2]/div[6]/label
     ${password2}    getText    xpath    //*[@id="v2-ap-profile-general"]/div/div[4]/div/div/div/div[2]/div[2]/input[1]
     ${check_password_appear}    evaluate    "${password2}"=='${current_password}'
-    should be true    ${check_password_appear}    must be true
+    should be true    ${check_password_appear}    msg=password should be revealed, please check the case manually
 
 Configure_Show_Profile_General_EnableVlan
     [Arguments]    ${profile_name}
@@ -650,7 +665,8 @@ Configure_Show_Profile_General_EnableVlan
     sendtext    ${profiles_general_vlan_textbox}    1
     sleep    1s
     click    ${profiles_general_save_button}
-    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    ${check_save_success}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    should be true    ${check_save_success}    msg=item did not save successfully, please check the case manually
     click    xpath    //*[@id="v2-ap-profile-general"]/div/div[2]/success-message-box[1]/div[2]/button/span[1]
     click    ${profiles_general_vlan_enable}
     click    ${profiles_general_vlan_tagged}
@@ -658,7 +674,8 @@ Configure_Show_Profile_General_EnableVlan
     sendtext    ${profiles_general_vlan_textbox}    10
     sleep    1s
     click    ${profiles_general_save_button}
-    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    ${check_save_success2}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    should be true    ${check_save_success2}    msg=item did not save successfully, please check the case manually
     click    xpath    //*[@id="v2-ap-profile-general"]/div/div[2]/success-message-box[1]/div[2]/button/span[1]
     click    ${profiles_general_vlan_disable}
     sleep    1s
@@ -675,10 +692,11 @@ Configure_Show_Profile_General_ChangeNTPServer
     \    clearText    ${profiles_general_ntpserver1}
     \    sendText    ${profiles_general_ntpserver1}    ${var}
     \    click    ${profiles_general_save_button}
-    \    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    \    ${check_save_success}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    \    should be true    ${check_save_success}    msg=item did not save successfully, please check the case manually
     \    ${current_ntp_server}    getText    ${profiles_general_ntpserver1}
     \    ${check_ntp_server}    evaluate    '${current_ntp_server}'=='${var}'
-    \    should be true    ${check_ntp_server}
+    \    should be true    ${check_ntp_server}    msg=current NTP server did not match, please check the test case manually
 
 Configure_Show_Profile_General_ChangeTimeZone
     [Arguments]    ${profile_name}
@@ -693,10 +711,11 @@ Configure_Show_Profile_General_ChangeTimeZone
     \    click    xpath    //*[contains(text(),'${key}')]
     \    sleep    1s
     \    click    ${profiles_general_save_button}
-    \    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    \    ${check_save_success}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    \    should be true    ${check_save_success}    msg=item did not save successfully, please check the case manually
     \    ${current_utc_value}    getText    ${profiles_general_timezone_dropdown}
     \    ${check_utc_value}    evaluate    '${current_utc_value}'=='${country_utc["${key}"]}'
-    \    should be true    ${check_utc_value}
+    \    should be true    ${check_utc_value}    msg=utc value did not match, please check the case manually
 
 Check_Login
     toURL    ${url}
@@ -782,3 +801,67 @@ Settings_Get_New_Org_Delete
     \    ${delete_location}    Set Variable If    ${OK}    //*[@id="top"]/div[2]/div/div[1]/table/tbody/tr[${var}]/td[7]/span/a
     \    run keyword if    '${OK}'=='True'    exit for loop
     [Return]    ${delete_location}
+
+Settings_Get_New_Device_Check_Used
+    [Arguments]    ${new_device_name}
+    : FOR    ${var}    IN RANGE    1    20
+    \    ${device}    getText    xpath    //*[@id="v2-settings-inventory"]/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[4]/a
+    \    ${OK}    evaluate    '${device}'=='${new_device_name}'
+    \    ${check_location}    Set Variable If    ${OK}    //*[@id="v2-settings-inventory"]/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[2]/label
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${check_location}
+
+Settings_Get_New_Device_Check_Unused
+    [Arguments]    ${new_device_name}
+    : FOR    ${var}    IN RANGE    1    20
+    \    ${device}    getText    xpath    //*[@id="v2-settings-inventory"]/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[4]/span
+    \    ${OK}    evaluate    '${device}'=='${new_device_name}'
+    \    ${check_location2}    Set Variable If    ${OK}    //*[@id="v2-settings-inventory"]/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[2]/label
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${check_location2}
+
+Configure_Get_InnerSSID
+    [Arguments]    ${ssid_name}
+    : FOR    ${var}    IN RANGE    1    1000
+    \    ${ssid}    getText    xpath    //*[@id="v2-ap-profile-ssid"]/div/div[4]/div/div[1]/table/tbody/tr[${var}]/td[2]/a
+    \    ${OK}=    evaluate    "${ssid}"=="${ssid_name}"
+    \    ${SSID_location}=    Set Variable If    '${OK}'=='True'    //*[@id="v2-ap-profile-ssid"]/div/div[4]/div/div[1]/table/tbody/tr[${var}]/td[2]/a
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${SSID_location}
+
+Configure_Get_InnerSSID_Broadcast
+    [Arguments]    ${ssid_name}
+    : FOR    ${var}    IN RANGE    1    1000
+    \    ${ssid}    getText    xpath    //*[@id="v2-ap-profile-ssid"]/div/div[4]/div/div[1]/table/tbody/tr[${var}]/td[2]/a
+    \    ${OK}=    evaluate    "${ssid}"=="${ssid_name}"
+    \    ${broadcast_location}=    Set Variable If    '${OK}'=='True'    //*[@id="v2-ap-profile-ssid"]/div/div[4]/div/div[1]/table/tbody/tr[${var}]/td[5]/label
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${broadcast_location}
+
+Configure_Get_InnerSSID_Checkbox
+    [Arguments]    ${ssid_name}
+    : FOR    ${var}    IN RANGE    1    1000
+    \    ${ssid}    getText    xpath    //*[@id="v2-ap-profile-ssid"]/div/div[4]/div/div[1]/table/tbody/tr[${var}]/td[2]/a
+    \    ${OK}=    evaluate    "${ssid}"=="${ssid_name}"
+    \    ${checkbox_location}=    Set Variable If    '${OK}'=='True'    //*[@id="v2-ap-profile-ssid"]/div/div[4]/div/div[1]/table/tbody/tr[${var}]/td[1]/label
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${checkbox_location}
+
+Configure_Get_Monitor_Clients
+    [Arguments]    ${mac_check}
+    : FOR    ${var}    IN RANGE    1    10
+    \    ${mac_current}    getText    xpath    //*[@id="v2-ap-clients"]/div/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[3]
+    \    ${OK}=    evaluate    "${mac_current}"=="${mac_check}"
+    \    ${mac_location}=    Set Variable If    '${OK}'=='True'    //*[@id="v2-ap-clients"]/div/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[3]
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    [Return]    ${mac_location}
+
+Configure_Get_Monitor_Clients_SSID
+    [Arguments]    ${mac_check}
+    : FOR    ${var}    IN RANGE    1    10
+    \    ${mac_current}    getText    xpath    //*[@id="v2-ap-clients"]/div/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[3]
+    \    ${OK}=    evaluate    "${mac_current}"=="${mac_check}"
+    \    ${current_connected_ssid_location}    Set Variable If    ${OK}    //*[@id="v2-ap-clients"]/div/div/div[2]/div/div[1]/table/tbody/tr[${var}]/td[6]
+    \    run keyword if    '${OK}'=='True'    exit for loop
+    ${current_connected_ssid_text}    getText    xpath    ${current_connected_ssid_location}
+    [Return]    ${current_connected_ssid_text}

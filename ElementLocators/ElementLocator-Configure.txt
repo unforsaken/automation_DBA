@@ -42,9 +42,63 @@ ElementLocator-Configure
     Set Global Variable    ${configure_profile_ssid_add_ssid_save_button}
     ${configure_profile_ssid_add_ssid_2.4g_checkbox}=    getElementLocator    xpath    //*[@id="v2-ap-profile-modal"]/div/div[2]/form/div[2]/div[2]/label[1]
     Set Global Variable    ${configure_profile_ssid_add_ssid_2.4g_checkbox}
+    ${configure_profile_ssid_delete_icon}    getElementLocator    xpath    //*[@id="v2-ap-profile-ssid"]/div/div[2]/div[1]/div/button[2]
+    Set Global Variable    ${configure_profile_ssid_delete_icon}
+    ${configure_profile_ssid_delete_confirm}    getElementLocator    xpath    //*[@id="v2-ap-profile-modal"]/div/div[2]/div[2]/button[2]
+    Set Global Variable    ${configure_profile_ssid_delete_confirm}
+    #Profile_SSID_Basic
+    ${configure_profile_ssid_basic_ssidname}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[1]/div[2]/input
+    Set Global Variable    ${configure_profile_ssid_basic_ssidname}
+    ${configure_profile_ssid_basic_encyrption_dropdown}    getElementLocator    xpath    //*[@id="securityModeDropdownMenu"]/span
+    Set Global Variable    ${configure_profile_ssid_basic_encyrption_dropdown}
+    ${configure_profile_ssid_basic_save_button}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[24]/button[2]
+    Set Global Variable    ${configure_profile_ssid_basic_save_button}
+    ${configure_profile_ssid_basic_cancel_button}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[24]/button[1]
+    Set Global Variable    ${configure_profile_ssid_basic_cancel_button}
+    ${configure_profile_ssid_basic_encyrption_open}    getElementLocator    xpath    //*[@id="securityModeUl"]/li[1]/a[2]
+    Set Global Variable    ${configure_profile_ssid_basic_encyrption_open}
+    ${configure_profile_ssid_basic_encyrption_wpa}    getElementLocator    xpath    //*[@id="securityModeUl"]/li[2]/a[1]
+    Set Global Variable    ${configure_profile_ssid_basic_encyrption_wpa}
+    ${configure_profile_ssid_basic_encyrption_wpa2}    getElementLocator    xpath    //*[@id="securityModeUl"]/li[3]/a[1]
+    Set Global Variable    ${configure_profile_ssid_basic_encyrption_wpa2}
+    ${configure_profile_ssid_basic_encyrption_wpawpa2}    getElementLocator    xpath    //*[@id="securityModeUl"]/li[4]/a[1]
+    Set Global Variable    ${configure_profile_ssid_basic_encyrption_wpawpa2}
+    ${configure_profile_ssid_basic_psk}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[5]/div[2]/input
+    Set Global Variable    ${configure_profile_ssid_basic_psk}
+    ${configure_profile_ssid_basic_urlredirect_enable}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[19]/div[2]/label[1]
+    Set Global Variable    ${configure_profile_ssid_basic_urlredirect_enable}
+    ${configure_profile_ssid_basic_urlredirect_disable}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[19]/div[2]/label[2]
+    Set Global Variable    ${configure_profile_ssid_basic_urlredirect_disable}
+    ${configure_profile_ssid_basic_url_input}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[20]/div[2]/input
+    Set Global Variable    ${configure_profile_ssid_basic_url_input}
     #Profile_SSID_Mac_Filtering
-    ${configure_profile_ssid_mac_filtering_button}=    getElementLocator    xpath    //a[contains(text(),'MAC Filtering')]
+    ${configure_profile_ssid_mac_filtering_button}    getElementLocator    xpath    //a[contains(text(),'MAC Filtering')]
     Set Global Variable    ${configure_profile_ssid_mac_filtering_button}
+    ${configure_profile_ssid_mac_filtering_enable}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[1]/div[2]/label[1]
+    Set Global Variable    ${configure_profile_ssid_mac_filtering_enable}
+    ${configure_profile_ssid_mac_filtering_disable}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[1]/div[2]/label[2]
+    Set Global Variable    ${configure_profile_ssid_mac_filtering_disable}
+    ${configure_profile_ssid_mac_filtering_save_button}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[9]/button[2]
+    Set Global Variable    ${configure_profile_ssid_mac_filtering_save_button}
+    ${configure_profile_ssid_mac_filtering_cancel_button}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[9]/button[1]
+    Set Global Variable    ${configure_profile_ssid_mac_filtering_cancel_button}
+    ${configure_profile_ssid_mac_filtering_mac_dropdown}    getElementLocator    xpath    //*[@id="macDropdownMenu"]/span
+    Set Global Variable    ${configure_profile_ssid_mac_filtering_mac_dropdown}
+    ${configure_profile_ssid_mac_filtering_deny}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[4]/div[2]/label[2]
+    Set Global Variable    ${configure_profile_ssid_mac_filtering_deny}
+    ${configure_profile_ssid_mac_filtering_allow}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[4]/div[2]/label[1]
+    Set Global Variable    ${configure_profile_ssid_mac_filtering_allow}
+    #Profile_SSID_IP_Filtering
+    ${configure_profile_ssid_if_button}    getElementLocator    xpath    //*[@id="top"]/div[1]/div[3]/div/div/a[3]
+    Set Global Variable    ${configure_profile_ssid_if_button}
+    ${configure_profile_ssid_if_save}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[7]/button[2]
+    Set Global Variable    ${configure_profile_ssid_if_save}
+    ${configure_profile_ssid_if_cancel}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[7]/button[1]
+    Set Global Variable    ${configure_profile_ssid_if_cancel}
+    ${configure_profile_ssid_if_enable}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[1]/div[2]/label[1]
+    Set Global Variable    ${configure_profile_ssid_if_enable}
+    ${configure_profile_ssid_if_disable}    getElementLocator    xpath    //*[@id="top"]/div[2]/div/div/form/div[1]/div[2]/label[2]
+    Set Global Variable    ${configure_profile_ssid_if_disable}
     #Profile_SSID_Radio
     ${profile_ssid_radio_channel_button}    getElementLocator    xpath    //section[@id='v2-ap-profile-radio']/div/div[4]/div/div/ul/li[2]/a
     Set Global Variable    ${profile_ssid_radio_channel_button}

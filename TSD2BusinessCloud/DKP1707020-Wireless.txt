@@ -1,0 +1,913 @@
+*** Settings ***
+Suite Setup       Run Keywords    ElementLocator-Reports    ElementLocator-Main    ElementLocator-Configure    ElementLocator-Settings    ElementLocator-Dashboard    ElementLocator-Monitor
+Force Tags        DKP1707020-Wireless
+Resource          ../AllResources.txt
+
+*** Variables ***
+${client_mac}     6C:72:20:01:5E:04    # this is the wireless client's MAC, when using VM, please change accordingly
+${temp_ssid1}     jack_5255_bothg    # temporary SSID 1, enables both on 2.4G and 5G
+${temp_ssid2}     jack_5255_5g    # temporary SSID 2, enables only on 5G
+${temp_ssid3}     jack_5255_2.4g    # temporary SSID 3, enables only on 2.4G
+${temp_psk1}      11111111    # temporary PSK for WPA/2 encryptions
+${ssid_profile_name}    DBA-1510P_Jack_5255    # ssid profile name
+
+*** Test Cases ***
+test
+    [Tags]    test
+    create_and_add_profile_open    test_jack
+    ${status2}    connection    test_jack
+    should be true    ${status2}    msg=unable to connect to a broadcast ssid, please check the issue manually
+    sleep    10s
+    disconnect
+    delete_profile    test_jack
+    sleep    5s
+
+0001
+    [Documentation]    J_Spec_BizCloud_Portal_SSID Profiles-New SSID
+    ...
+    ...    Criteria:
+    ...    1. At step 3, we will be redirected to add SSID page.
+    ...    2. At step 4, if we don't input SSID name we cannot click "Save". But if we input the name within 64 characters then we can add SSID without problem.
+    ...    3. At step 5, we are able to see the new created SSID and which band has been enabled, broadcast SSID or not and it's security type.
+    ...    4. At step 6, we can disable/enable 2.4GHz, 5GHz and broadcast ID properly.
+    ...    5. At step 7, created SSID will be deleted after we click trash can icon.
+    ...    6. At step 9, configuration can by applied to AP without problem.
+    ...    7. At step 10, PC1 only can detect second and last SSID.
+    ...    8. At step 10, PC1 can associate to all SSIDs without problem.
+    [Tags]    0001
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    ${ssid_icon_location}    Configure_Get_Profile_SSID    DBA-1510P_Jack_5255    #gets the clicking location of the SSID profile
+    click    xpath    ${ssid_icon_location}
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid1
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid1}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    1s
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid2
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid2}
+    click    ${configure_profile_ssid_add_ssid_2.4g_checkbox}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    1s
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid3
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid3}
+    click    ${configure_profile_ssid_add_ssid_5g_checkbox}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    3s
+    sendKeyEscape
+    ${ssid_location1}    Configure_Get_InnerSSID    ${temp_ssid1}    #gets the location of the ssid
+    ${broadcast_location1}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid1}    #gets the location of the broadcast checkbox of that ssid
+    ${checkbox_location1}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid1}    #gets the location of the delete checkbox of that ssid
+    ${ssid_location2}    Configure_Get_InnerSSID    ${temp_ssid2}
+    ${broadcast_location2}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid2}
+    ${checkbox_location2}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid2}
+    ${ssid_location3}    Configure_Get_InnerSSID    ${temp_ssid3}
+    ${broadcast_location3}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid3}
+    ${checkbox_location3}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid3}
+    click    xpath    ${broadcast_location2}    #for ssid2 and ssid3 we need to broadcast the ssid
+    sleep    2s
+    click    xpath    ${broadcast_location3}    #for ssid2 and ssid3 we need to broadcast the ssid
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sendKeyEscape
+    sleep    5s
+    click    xpath    ${checkbox_location1}    #clicks all three created ssids
+    click    xpath    ${checkbox_location2}
+    click    xpath    ${checkbox_location3}
+    click    ${configure_profile_ssid_delete_icon}    #deletes the ssids created
+    click    ${configure_profile_ssid_delete_confirm}
+    sendKeyEscape
+    sleep    5s
+    create_and_add_profile_open    ${temp_ssid1}    #on wireless client PC, create and add the xml profile of that specific ssid
+    ${status1}    connection    ${temp_ssid1}    #tries to connect the ssid1, as it is not broadcasted, should return false
+    should be true    '${status1}'=='False'    msg=able to connect to a non-broadcast ssid, please check the issue manually
+    disconnect    #disconnects the wireless interface
+    delete_profile    ${temp_ssid1}    #deletes the profile created
+    sleep    5s
+    create_and_add_profile_open    ${temp_ssid2}
+    ${status2}    connection    ${temp_ssid2}
+    should be true    ${status2}    msg=unable to connect to a broadcast ssid, please check the issue manually
+    sleep    10s
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    ${client_ssid_check}    Configure_Get_Monitor_Clients_SSID    ${client_mac}    #this is to check if the client connected to the correct ssid
+    should be true    '${client_ssid_check}'=='${temp_ssid2}'    msg=the MAC address did not associate with the correct SSID, please check the case manually
+    sleep    10s
+    disconnect
+    delete_profile    ${temp_ssid2}
+    sleep    5s
+    Navigate_To_Profiles
+    click    xpath    ${ssid_icon_location}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    2s
+    sendKeyEscape
+    sleep    2s
+    Logout
+
+0003
+    [Documentation]    J_Spec_BizCloud_Portal_SSID Profiles-Basic_SSID
+    ...
+    ...    1. At step 3, we will be redirected to "Add SSID" page.
+    ...    2. At step 4, we can save without problem.
+    ...    3. At step 5, we will be redirected to "Basic" page after click new SSID and we can save the change without any problem.
+    ...    4. At step 6, we can apply configuration to DUT without proble
+    ...    5. At step 7, PC1 can detect the SSID with new name and can associate to it without problem.
+    [Tags]    0003
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    ${ssid_icon_location}    Configure_Get_Profile_SSID    ${ssid_profile_name}    #gets the clicking location of the SSID profile
+    click    xpath    ${ssid_icon_location}
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid1
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid1}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    1s
+    sendKeyEscape
+    ${ssid_location1}    Configure_Get_InnerSSID    ${temp_ssid1}    #gets the location of the ssid
+    ${broadcast_location1}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid1}    #gets the location of the broadcast checkbox of that ssid
+    ${checkbox_location1}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid1}    #gets the location of the delete checkbox of that ssid
+    click    xpath    ${broadcast_location1}    #for ssid1 we need to broadcast the ssid
+    click    xpath    ${ssid_location1}
+    click    ${configure_profile_ssid_basic_ssidname}
+    sleep    1s
+    clearText    ${configure_profile_ssid_basic_ssidname}
+    sleep    1s
+    sendText    ${configure_profile_ssid_basic_ssidname}    ${temp_ssid2}
+    click    ${configure_profile_ssid_basic_save_button}
+    ${check_save_success}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    10
+    should be true    ${check_save_success}    msg=save configuration should be able to save successfully, please check the case manually
+    click    ${configure_profile_ssid_basic_cancel_button}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    3s
+    sendKeyEscape
+    sleep    5s
+    click    xpath    ${checkbox_location1}    #clicks all three created ssids
+    click    ${configure_profile_ssid_delete_icon}    #deletes the ssids created
+    click    ${configure_profile_ssid_delete_confirm}
+    sendKeyEscape
+    sleep    5s
+    create_and_add_profile_open    ${temp_ssid2}    #on wireless client PC, create and add the xml profile of that specific ssid
+    ${status1}    connection    ${temp_ssid2}    #tries to connect the ssid1, as it is not broadcasted, should return false
+    should be true    ${status1}    msg=unable to connect to the ssid, please check the issue manually
+    sleep    10s
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    ${client_ssid_check}    Configure_Get_Monitor_Clients_SSID    ${client_mac}    #this is to check if the client connected to the correct ssid
+    should be true    '${client_ssid_check}'=='${temp_ssid2}'    msg=the MAC address did not associate with the correct SSID, please check the case manually
+    sleep    10s
+    disconnect
+    delete_profile    ${temp_ssid2}
+    sleep    5s
+    Navigate_To_Profiles
+    click    xpath    ${ssid_icon_location}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    2s
+    sendKeyEscape
+    sleep    2s
+    Logout
+
+0008
+    [Documentation]    *R_Spec_BizCloud_Portal_SSID Profiles-Basic_Broadcast SSID
+    ...
+    ...    Criteria:
+    ...    1. PC1 wireless survey can see the SSID name at the list.
+    ...    2. PC1 wireless survey cannot see the SSID name at the list.
+    [Tags]    0008
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    ${ssid_icon_location}    Configure_Get_Profile_SSID    ${ssid_profile_name}    #gets the clicking location of the SSID profile
+    click    xpath    ${ssid_icon_location}
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid1
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid1}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    1s
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid2
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid2}
+    click    ${configure_profile_ssid_add_ssid_2.4g_checkbox}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    3s
+    sendKeyEscape
+    ${ssid_location1}    Configure_Get_InnerSSID    ${temp_ssid1}    #gets the location of the ssid
+    ${broadcast_location1}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid1}    #gets the location of the broadcast checkbox of that ssid
+    ${checkbox_location1}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid1}    #gets the location of the delete checkbox of that ssid
+    ${ssid_location2}    Configure_Get_InnerSSID    ${temp_ssid2}
+    ${broadcast_location2}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid2}
+    ${checkbox_location2}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid2}
+    click    xpath    ${broadcast_location2}    #for ssid2 and ssid3 we need to broadcast the ssid
+    sleep    2s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    3s
+    sendKeyEscape
+    sleep    5s
+    click    xpath    ${checkbox_location1}    #clicks all three created ssids
+    click    xpath    ${checkbox_location2}
+    click    ${configure_profile_ssid_delete_icon}    #deletes the ssids created
+    click    ${configure_profile_ssid_delete_confirm}
+    sendKeyEscape
+    sleep    5s
+    create_and_add_profile_open    ${temp_ssid1}    #on wireless client PC, create and add the xml profile of that specific ssid
+    ${status1}    connection    ${temp_ssid1}    #tries to connect the ssid1, as it is not broadcasted, should return false
+    should be true    '${status1}'=='False'    msg=able to connect to a non-broadcast ssid, please check the issue manually
+    disconnect    #disconnects the wireless interface
+    delete_profile    ${temp_ssid1}    #deletes the profile created
+    sleep    5s
+    create_and_add_profile_open    ${temp_ssid2}
+    ${status2}    connection    ${temp_ssid2}
+    should be true    ${status2}    msg=unable to connect to a broadcast ssid, please check the issue manually
+    sleep    10s
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    ${client_ssid_check}    Configure_Get_Monitor_Clients_SSID    ${client_mac}    #this is to check if the client connected to the correct ssid
+    should be true    '${client_ssid_check}'=='${temp_ssid2}'    msg=the MAC address did not associate with the correct SSID, please check the case manually
+    sleep    10s
+    disconnect
+    delete_profile    ${temp_ssid2}
+    sleep    5s
+    Navigate_To_Profiles
+    click    xpath    ${ssid_icon_location}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    2s
+    sendKeyEscape
+    sleep    2s
+    Logout
+
+0010
+    [Documentation]    *R_Spec_BizCloud_Portal_SSID Profiles-Basic_Security-OPEN
+    ...
+    ...    Criteria:
+    ...    PC1 can wireless connect to DUT SSID with open security.
+    [Tags]    0010
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    ${ssid_icon_location}    Configure_Get_Profile_SSID    ${ssid_profile_name}    #gets the clicking location of the SSID profile
+    click    xpath    ${ssid_icon_location}
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid1
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid1}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    1s
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid2
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid2}
+    click    ${configure_profile_ssid_add_ssid_2.4g_checkbox}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    3s
+    sendKeyEscape
+    ${ssid_location1}    Configure_Get_InnerSSID    ${temp_ssid1}    #gets the location of the ssid
+    ${broadcast_location1}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid1}    #gets the location of the broadcast checkbox of that ssid
+    ${checkbox_location1}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid1}    #gets the location of the delete checkbox of that ssid
+    ${ssid_location2}    Configure_Get_InnerSSID    ${temp_ssid2}
+    ${broadcast_location2}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid2}
+    ${checkbox_location2}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid2}
+    click    xpath    ${broadcast_location2}    #for ssid2 and ssid3 we need to broadcast the ssid
+    sleep    2s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    3s
+    sendKeyEscape
+    sleep    5s
+    click    xpath    ${checkbox_location1}    #clicks all three created ssids
+    click    xpath    ${checkbox_location2}
+    click    ${configure_profile_ssid_delete_icon}    #deletes the ssids created
+    click    ${configure_profile_ssid_delete_confirm}
+    sendKeyEscape
+    sleep    5s
+    create_and_add_profile_open    ${temp_ssid1}    #on wireless client PC, create and add the xml profile of that specific ssid
+    ${status1}    connection    ${temp_ssid1}    #tries to connect the ssid1, as it is not broadcasted, should return false
+    should be true    '${status1}'=='False'    msg=able to connect to a non-broadcast ssid, please check the issue manually
+    disconnect    #disconnects the wireless interface
+    delete_profile    ${temp_ssid1}    #deletes the profile created
+    sleep    5s
+    create_and_add_profile_open    ${temp_ssid2}
+    ${status2}    connection    ${temp_ssid2}
+    should be true    ${status2}    msg=unable to connect to a broadcast OPEN-security ssid, please check the issue manually
+    sleep    10s
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    ${client_ssid_check}    Configure_Get_Monitor_Clients_SSID    ${client_mac}    #this is to check if the client connected to the correct ssid
+    should be true    '${client_ssid_check}'=='${temp_ssid2}'    msg=the MAC address did not associate with the correct SSID, please check the case manually
+    sleep    10s
+    disconnect
+    delete_profile    ${temp_ssid2}
+    sleep    5s
+    Navigate_To_Profiles
+    click    xpath    ${ssid_icon_location}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    2s
+    sendKeyEscape
+    sleep    2s
+    Logout
+
+0011
+    [Documentation]    *R_Spec_BizCloud_Portal_SSID Profiles-Basic_Security-WPA
+    ...
+    ...    Criteria:
+    ...    PC1 can wireless connect to DUT SSID with WPA security.
+    [Tags]    0011
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    ${ssid_icon_location}    Configure_Get_Profile_SSID    ${ssid_profile_name}    #gets the clicking location of the SSID profile
+    click    xpath    ${ssid_icon_location}
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid1
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid1}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    1s
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid2
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid2}
+    click    ${configure_profile_ssid_add_ssid_2.4g_checkbox}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    3s
+    sendKeyEscape
+    ${ssid_location1}    Configure_Get_InnerSSID    ${temp_ssid1}    #gets the location of the ssid
+    ${broadcast_location1}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid1}    #gets the location of the broadcast checkbox of that ssid
+    ${checkbox_location1}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid1}    #gets the location of the delete checkbox of that ssid
+    ${ssid_location2}    Configure_Get_InnerSSID    ${temp_ssid2}
+    ${broadcast_location2}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid2}
+    ${checkbox_location2}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid2}
+    click    xpath    ${broadcast_location2}    #for ssid2 and ssid3 we need to broadcast the ssid
+    sleep    2s
+    click    xpath    ${ssid_location2}
+    click    ${configure_profile_ssid_basic_encyrption_dropdown}
+    click    ${configure_profile_ssid_basic_encyrption_wpa}
+    sendText    ${configure_profile_ssid_basic_psk}    ${temp_psk1}
+    click    ${configure_profile_ssid_basic_save_button}
+    ${check_save_status}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5
+    should be true    ${check_save_status}    msg=did not observe save success status, please check the case manually
+    click    ${configure_profile_ssid_basic_cancel_button}
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    3s
+    sendKeyEscape
+    sleep    5s
+    click    xpath    ${checkbox_location1}    #clicks all three created ssids
+    click    xpath    ${checkbox_location2}
+    click    ${configure_profile_ssid_delete_icon}    #deletes the ssids created
+    click    ${configure_profile_ssid_delete_confirm}
+    sendKeyEscape
+    sleep    5s
+    create_and_add_profile_open    ${temp_ssid1}    #on wireless client PC, create and add the xml profile of that specific ssid
+    ${status1}    connection    ${temp_ssid1}    #tries to connect the ssid1, as it is not broadcasted, should return false
+    should be true    '${status1}'=='False'    msg=able to connect to a non-broadcast ssid, please check the issue manually
+    disconnect    #disconnects the wireless interface
+    delete_profile    ${temp_ssid1}    #deletes the profile created
+    sleep    5s
+    create_and_add_profile_wpapsk    ${temp_ssid2}    ${temp_psk1}
+    ${status2}    connection    ${temp_ssid2}
+    should be true    ${status2}    msg=unable to connect to a broadcast OPEN-security ssid, please check the issue manually
+    sleep    10s
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    ${client_ssid_check}    Configure_Get_Monitor_Clients_SSID    ${client_mac}    #this is to check if the client connected to the correct ssid
+    should be true    '${client_ssid_check}'=='${temp_ssid2}'    msg=the MAC address did not associate with the correct SSID, please check the case manually
+    sleep    10s
+    disconnect
+    delete_profile    ${temp_ssid2}
+    sleep    5s
+    Navigate_To_Profiles
+    click    xpath    ${ssid_icon_location}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    2s
+    sendKeyEscape
+    sleep    2s
+    Logout
+
+0012
+    [Documentation]    *R_Spec_BizCloud_Portal_SSID Profiles-Basic_Security-WPA2
+    ...
+    ...    Criteria:
+    ...    PC1 can wireless connect to DUT SSID with WPA 2security.
+    [Tags]    0012
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    ${ssid_icon_location}    Configure_Get_Profile_SSID    ${ssid_profile_name}    #gets the clicking location of the SSID profile
+    click    xpath    ${ssid_icon_location}
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid1
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid1}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    1s
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid2
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid2}
+    click    ${configure_profile_ssid_add_ssid_2.4g_checkbox}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    3s
+    sendKeyEscape
+    ${ssid_location1}    Configure_Get_InnerSSID    ${temp_ssid1}    #gets the location of the ssid
+    ${broadcast_location1}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid1}    #gets the location of the broadcast checkbox of that ssid
+    ${checkbox_location1}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid1}    #gets the location of the delete checkbox of that ssid
+    ${ssid_location2}    Configure_Get_InnerSSID    ${temp_ssid2}
+    ${broadcast_location2}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid2}
+    ${checkbox_location2}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid2}
+    click    xpath    ${broadcast_location2}    #for ssid2 and ssid3 we need to broadcast the ssid
+    sleep    2s
+    click    xpath    ${ssid_location2}
+    click    ${configure_profile_ssid_basic_encyrption_dropdown}
+    click    ${configure_profile_ssid_basic_encyrption_wpa2}
+    sendText    ${configure_profile_ssid_basic_psk}    ${temp_psk1}
+    click    ${configure_profile_ssid_basic_save_button}
+    ${check_save_status}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5
+    should be true    ${check_save_status}    msg=did not observe save success status, please check the case manually
+    click    ${configure_profile_ssid_basic_cancel_button}
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    3s
+    sendKeyEscape
+    sleep    5s
+    click    xpath    ${checkbox_location1}    #clicks all three created ssids
+    click    xpath    ${checkbox_location2}
+    click    ${configure_profile_ssid_delete_icon}    #deletes the ssids created
+    click    ${configure_profile_ssid_delete_confirm}
+    sendKeyEscape
+    sleep    5s
+    create_and_add_profile_open    ${temp_ssid1}    #on wireless client PC, create and add the xml profile of that specific ssid
+    ${status1}    connection    ${temp_ssid1}    #tries to connect the ssid1, as it is not broadcasted, should return false
+    should be true    '${status1}'=='False'    msg=able to connect to a non-broadcast ssid, please check the issue manually
+    disconnect    #disconnects the wireless interface
+    delete_profile    ${temp_ssid1}    #deletes the profile created
+    sleep    5s
+    create_and_add_profile_wpa2psk    ${temp_ssid2}    ${temp_psk1}
+    ${status2}    connection    ${temp_ssid2}
+    should be true    ${status2}    msg=unable to connect to a broadcast OPEN-security ssid, please check the issue manually
+    sleep    10s
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    ${client_ssid_check}    Configure_Get_Monitor_Clients_SSID    ${client_mac}    #this is to check if the client connected to the correct ssid
+    should be true    '${client_ssid_check}'=='${temp_ssid2}'    msg=the MAC address did not associate with the correct SSID, please check the case manually
+    sleep    10s
+    disconnect
+    delete_profile    ${temp_ssid2}
+    sleep    5s
+    Navigate_To_Profiles
+    click    xpath    ${ssid_icon_location}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    2s
+    sendKeyEscape
+    sleep    2s
+    Logout
+
+0013
+    [Documentation]    *R_Spec_BizCloud_Portal_SSID Profiles-Basic_Security-WPA+WPA2
+    ...
+    ...    Criteria:
+    ...    PC1 can wireless connect to DUT SSID with WPA+WPA2 security.
+    [Tags]    0013
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    ${ssid_icon_location}    Configure_Get_Profile_SSID    ${ssid_profile_name}    #gets the clicking location of the SSID profile
+    click    xpath    ${ssid_icon_location}
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid1
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid1}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    1s
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid2
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid2}
+    click    ${configure_profile_ssid_add_ssid_2.4g_checkbox}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    3s
+    sendKeyEscape
+    ${ssid_location1}    Configure_Get_InnerSSID    ${temp_ssid1}    #gets the location of the ssid
+    ${broadcast_location1}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid1}    #gets the location of the broadcast checkbox of that ssid
+    ${checkbox_location1}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid1}    #gets the location of the delete checkbox of that ssid
+    ${ssid_location2}    Configure_Get_InnerSSID    ${temp_ssid2}
+    ${broadcast_location2}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid2}
+    ${checkbox_location2}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid2}
+    click    xpath    ${broadcast_location2}    #for ssid2 and ssid3 we need to broadcast the ssid
+    sleep    2s
+    click    xpath    ${ssid_location2}
+    click    ${configure_profile_ssid_basic_encyrption_dropdown}
+    click    ${configure_profile_ssid_basic_encyrption_wpawpa2}
+    sendText    ${configure_profile_ssid_basic_psk}    ${temp_psk1}
+    click    ${configure_profile_ssid_basic_save_button}
+    ${check_save_status}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5
+    should be true    ${check_save_status}    msg=did not observe save success status, please check the case manually
+    click    ${configure_profile_ssid_basic_cancel_button}
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    3s
+    sendKeyEscape
+    sleep    5s
+    click    xpath    ${checkbox_location1}    #clicks all three created ssids
+    click    xpath    ${checkbox_location2}
+    click    ${configure_profile_ssid_delete_icon}    #deletes the ssids created
+    click    ${configure_profile_ssid_delete_confirm}
+    sendKeyEscape
+    sleep    5s
+    create_and_add_profile_open    ${temp_ssid1}    #on wireless client PC, create and add the xml profile of that specific ssid
+    ${status1}    connection    ${temp_ssid1}    #tries to connect the ssid1, as it is not broadcasted, should return false
+    should be true    '${status1}'=='False'    msg=able to connect to a non-broadcast ssid, please check the issue manually
+    disconnect    #disconnects the wireless interface
+    delete_profile    ${temp_ssid1}    #deletes the profile created
+    sleep    5s
+    create_and_add_profile_wpapsk    ${temp_ssid2}    ${temp_psk1}
+    ${status2}    connection    ${temp_ssid2}
+    should be true    ${status2}    msg=unable to connect to a broadcast OPEN-security ssid, please check the issue manually
+    sleep    10s
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    ${client_ssid_check}    Configure_Get_Monitor_Clients_SSID    ${client_mac}    #this is to check if the client connected to the correct ssid
+    should be true    '${client_ssid_check}'=='${temp_ssid2}'    msg=the MAC address did not associate with the correct SSID, please check the case manually
+    sleep    10s
+    disconnect
+    delete_profile    ${temp_ssid2}
+    sleep    5s
+    Navigate_To_Profiles
+    click    xpath    ${ssid_icon_location}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    2s
+    sendKeyEscape
+    sleep    2s
+    Logout
+
+0014
+    [Documentation]    *R_Spec_BizCloud_Portal_SSID Profiles-Basic_Enable URL redirection    ######Reminder######:
+    ...
+    ...    Criteria:
+    ...    When PC1 connect to DUT SSID the Browser will open the redirection Web Page.
+    ...
+    ...
+    ...    When testing locally, need to change the LAN interface disable function to local_disable1/local_enable1
+    ...    on line 44 and line 49
+    [Tags]    0014
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    ${ssid_icon_location}    Configure_Get_Profile_SSID    ${ssid_profile_name}    #gets the clicking location of the SSID profile
+    click    xpath    ${ssid_icon_location}
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid2
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid2}
+    click    ${configure_profile_ssid_add_ssid_2.4g_checkbox}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    3s
+    sendKeyEscape
+    ${ssid_location2}    Configure_Get_InnerSSID    ${temp_ssid2}
+    ${broadcast_location2}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid2}
+    ${checkbox_location2}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid2}
+    click    xpath    ${broadcast_location2}    #for ssid2 and ssid3 we need to broadcast the ssid
+    sleep    2s
+    click    xpath    ${ssid_location2}
+    click    ${configure_profile_ssid_basic_encyrption_dropdown}
+    click    ${configure_profile_ssid_basic_encyrption_wpawpa2}
+    sendText    ${configure_profile_ssid_basic_psk}    ${temp_psk1}
+    click    ${configure_profile_ssid_basic_urlredirect_enable}
+    click    ${configure_profile_ssid_basic_url_input}
+    sendText    ${configure_profile_ssid_basic_url_input}    https://www.facebook.com
+    click    ${configure_profile_ssid_basic_save_button}
+    ${check_save_status}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5
+    should be true    ${check_save_status}    msg=did not observe save success status, please check the case manually
+    click    ${configure_profile_ssid_basic_cancel_button}
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    3s
+    sendKeyEscape
+    sleep    5s
+    click    xpath    ${checkbox_location2}
+    click    ${configure_profile_ssid_delete_icon}    #deletes the ssids created
+    click    ${configure_profile_ssid_delete_confirm}
+    sendKeyEscape
+    sleep    5s
+    create_and_add_profile_wpapsk    ${temp_ssid2}    ${temp_psk1}
+    ${status2}    connection    ${temp_ssid2}
+    should be true    ${status2}    msg=unable to connect to a broadcast OPEN-security ssid, please check the issue manually
+    sleep    5s
+    disable_local1
+    sleep    5s
+    toURL    www.google.com
+    ${check_redirect}    waitElementDisplayed    xpath    //*[@id="email"]    10    true
+    should be true    ${check_redirect}    msg=URL redirect should be able to work properly, please check the case manually
+    enable_local1
+    sleep    5s
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    sleep    10s
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    ${client_ssid_check}    Configure_Get_Monitor_Clients_SSID    ${client_mac}    #this is to check if the client connected to the correct ssid
+    should be true    '${client_ssid_check}'=='${temp_ssid2}'    msg=the MAC address did not associate with the correct SSID, please check the case manually
+    sleep    10s
+    disconnect
+    delete_profile    ${temp_ssid2}
+    sleep    5s
+    Navigate_To_Profiles
+    click    xpath    ${ssid_icon_location}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    2s
+    sendKeyEscape
+    sleep    2s
+    Logout
+
+0016
+    [Documentation]    *R_Spec_BizCloud_Portal_SSID Profiles-MAC Filtering_Disabled
+    ...
+    ...    Criteria:
+    ...    PC1 should wireless connect to DUT SSID without problem.
+    [Tags]    0016
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    ${ssid_icon_location}    Configure_Get_Profile_SSID    ${ssid_profile_name}    #gets the clicking location of the SSID profile
+    click    xpath    ${ssid_icon_location}
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid2
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid2}
+    click    ${configure_profile_ssid_add_ssid_2.4g_checkbox}
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    3s
+    sendKeyEscape
+    ${ssid_location2}    Configure_Get_InnerSSID    ${temp_ssid2}
+    ${broadcast_location2}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid2}
+    ${checkbox_location2}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid2}
+    click    xpath    ${broadcast_location2}    #for ssid2 and ssid3 we need to broadcast the ssid
+    sleep    2s
+    click    xpath    ${ssid_location2}
+    click    ${configure_profile_ssid_basic_encyrption_dropdown}
+    click    ${configure_profile_ssid_basic_encyrption_wpawpa2}
+    sendText    ${configure_profile_ssid_basic_psk}    ${temp_psk1}
+    click    ${configure_profile_ssid_basic_urlredirect_enable}
+    click    ${configure_profile_ssid_basic_url_input}
+    sendText    ${configure_profile_ssid_basic_url_input}    https://www.facebook.com
+    click    ${configure_profile_ssid_basic_save_button}
+    ${check_save_status}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5
+    should be true    ${check_save_status}    msg=did not observe save success status, please check the case manually
+    click    ${configure_profile_ssid_mac_filtering_button}
+    click    ${configure_profile_ssid_mac_filtering_disable}
+    sleep    2s
+    click    ${configure_profile_ssid_mac_filtering_save_button}
+    ${check_save_status}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5
+    should be true    ${check_save_status}    msg=did not observe save success status, please check the case manually
+    click    ${configure_profile_ssid_mac_filtering_cancel_button}
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    3s
+    sendKeyEscape
+    sleep    5s
+    click    xpath    ${checkbox_location2}
+    click    ${configure_profile_ssid_delete_icon}    #deletes the ssids created
+    click    ${configure_profile_ssid_delete_confirm}
+    sendKeyEscape
+    sleep    5s
+    create_and_add_profile_wpapsk    ${temp_ssid2}    ${temp_psk1}
+    ${status2}    connection    ${temp_ssid2}
+    should be true    ${status2}    msg=unable to connect to a broadcast OPEN-security ssid, please check the issue manually
+    sleep    10s
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    ${client_ssid_check}    Configure_Get_Monitor_Clients_SSID    ${client_mac}    #this is to check if the client connected to the correct ssid
+    should be true    '${client_ssid_check}'=='${temp_ssid2}'    msg=the MAC address did not associate with the correct SSID, please check the case manually
+    sleep    10s
+    disconnect
+    delete_profile    ${temp_ssid2}
+    sleep    5s
+    Navigate_To_Profiles
+    click    xpath    ${ssid_icon_location}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    2s
+    sendKeyEscape
+    sleep    2s
+    Logout
+
+0017
+    [Documentation]    *R_Spec_BizCloud_Portal_SSID Profiles-MAC Filtering_MAC access control list
+    ...
+    ...    Criteria:
+    ...    1.When PC1 MAC are at the MAC ACL list and Policy mode select Allow, will connect to DUT SSID successfully.
+    ...    2. When PC1 MAC are at the MAC ACL list and Policy mode select Deny, will fail to connect DUT SSID.
+    ...
+    ...    Notification: need to change the ${mac} into win7_wireless_client or win10_wireless_client when using VM for testing.
+    [Tags]    0017
+    ${mac}    set variable    local_wireless_client
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    ${ssid_icon_location}    Configure_Get_Profile_SSID    ${ssid_profile_name}    #gets the clicking location of the SSID profile
+    click    xpath    ${ssid_icon_location}
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid2
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid2}
+    click    ${configure_profile_ssid_add_ssid_2.4g_checkbox}    #selects this ssid for 5g only
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    3s
+    sendKeyEscape
+    ${ssid_location2}    Configure_Get_InnerSSID    ${temp_ssid2}
+    ${broadcast_location2}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid2}
+    ${checkbox_location2}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid2}
+    click    xpath    ${broadcast_location2}    #for ssid2 and we need to broadcast the ssid
+    sleep    2s
+    click    xpath    ${ssid_location2}
+    sleep    2s
+    click    ${configure_profile_ssid_mac_filtering_button}
+    sleep    3s
+    click    ${configure_profile_ssid_mac_filtering_enable}
+    sleep    3s
+    click    ${configure_profile_ssid_mac_filtering_mac_dropdown}
+    sleep    1s
+    click    xpath    //*[contains(text(),'${mac}')]
+    sleep    1s
+    click    ${configure_profile_ssid_mac_filtering_deny}
+    sleep    2s
+    click    ${configure_profile_ssid_mac_filtering_save_button}
+    ${check_save_status}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5
+    should be true    ${check_save_status}    msg=did not observe save success status, please check the case manually
+    click    ${configure_profile_ssid_mac_filtering_cancel_button}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    5s
+    sendKeyEscape
+    click    xpath    ${checkbox_location2}
+    click    ${configure_profile_ssid_delete_icon}    #deletes the ssids created
+    click    ${configure_profile_ssid_delete_confirm}
+    sleep    5s
+    sleep    5s
+    create_and_add_profile_open    ${temp_ssid2}
+    ${status2}    connection    ${temp_ssid2}
+    should be true    '${status2}'=='False'    msg=able to connect even though under MAC filtering, please check the issue manually
+    sleep    10s
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid2
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid2}
+    click    ${configure_profile_ssid_add_ssid_2.4g_checkbox}    #selects this ssid for 5g only
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    3s
+    click    xpath    ${ssid_location2}
+    sleep    2s
+    click    ${configure_profile_ssid_mac_filtering_button}
+    sleep    3s
+    click    ${configure_profile_ssid_mac_filtering_enable}
+    sleep    3s
+    click    ${configure_profile_ssid_mac_filtering_mac_dropdown}
+    sleep    1s
+    click    xpath    //*[contains(text(),'${mac}')]
+    sleep    1s
+    click    ${configure_profile_ssid_mac_filtering_allow}
+    sleep    2s
+    click    ${configure_profile_ssid_mac_filtering_save_button}
+    ${check_save_status}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5
+    should be true    ${check_save_status}    msg=did not observe save success status, please check the case manually
+    click    ${configure_profile_ssid_mac_filtering_cancel_button}
+    sleep    2s
+    click    xpath    ${broadcast_location2}
+    sleep    2s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    5s
+    sendKeyEscape
+    sleep    5s
+    sleep    5s
+    ${status2}    connection    ${temp_ssid2}
+    should be true    ${status2}    msg=able to connect even though under MAC filtering, please check the issue manually
+    sleep    10s
+    click    xpath    ${checkbox_location2}
+    click    ${configure_profile_ssid_delete_icon}    #deletes the ssids created
+    click    ${configure_profile_ssid_delete_confirm}
+    sleep    5s
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    ${client_ssid_check}    Configure_Get_Monitor_Clients_SSID    ${client_mac}    #this is to check if the client connected to the correct ssid
+    should be true    '${client_ssid_check}'=='${temp_ssid2}'    msg=the MAC address did not associate with the correct SSID, please check the case manually
+    sleep    10s
+    disconnect
+    delete_profile    ${temp_ssid2}
+    sleep    5s
+    Navigate_To_Profiles
+    click    xpath    ${ssid_icon_location}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    2s
+    sendKeyEscape
+    sleep    2s
+    Logout
+
+0020
+    [Documentation]    *R_Spec_BizCloud_Portal_SSID Profiles-IP Filtering_Disabled
+    ...
+    ...    Criteria:
+    ...    PC1 should wireless connect to DUT SSID without problem.
+    ...
+    ...
+    [Tags]    0020
+    #${mac}    set variable    local_wireless_client
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Profiles
+    ${ssid_icon_location}    Configure_Get_Profile_SSID    ${ssid_profile_name}    #gets the clicking location of the SSID profile
+    click    xpath    ${ssid_icon_location}
+    click    ${configure_profile_ssid_add_ssid_button}    #adds a new SSID in the profile ssid2
+    sendText    ${configure_profile_ssid_add_ssid_name}    ${temp_ssid2}
+    click    ${configure_profile_ssid_add_ssid_2.4g_checkbox}    #selects this ssid for 5g only
+    click    ${configure_profile_ssid_add_ssid_save_button}
+    sleep    3s
+    sendKeyEscape
+    ${ssid_location2}    Configure_Get_InnerSSID    ${temp_ssid2}
+    ${broadcast_location2}    Configure_Get_InnerSSID_Broadcast    ${temp_ssid2}
+    ${checkbox_location2}    Configure_Get_InnerSSID_Checkbox    ${temp_ssid2}
+    click    xpath    ${broadcast_location2}    #for ssid2 and we need to broadcast the ssid
+    sleep    2s
+    click    xpath    ${ssid_location2}
+    sleep    2s
+    click    ${configure_profile_ssid_if_button}
+    sleep    3s
+    click    ${configure_profile_ssid_if_disable}
+    sleep    2s
+    click    ${configure_profile_ssid_if_save}
+    sleep    2s
+    ${check_save_status}    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5
+    should be true    ${check_save_status}    msg=did not observe save success status, please check the case manually
+    sleep    2s
+    click    ${configure_profile_ssid_if_cancel}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    5s
+    sendKeyEscape
+    click    xpath    ${checkbox_location2}
+    click    ${configure_profile_ssid_delete_icon}    #deletes the ssids created
+    click    ${configure_profile_ssid_delete_confirm}
+    sleep    5s
+    create_and_add_profile_open    ${temp_ssid2}
+    ${status2}    connection    ${temp_ssid2}
+    should be true    ${status2}    msg=should be able to connect when IP filtering is disabled, please check the issue manually
+    sleep    10s
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_accesspoint}
+    click    ${monitor_dropdown_accesspoint_clients}
+    ${client_ssid_check}    Configure_Get_Monitor_Clients_SSID    ${client_mac}    #this is to check if the client connected to the correct ssid
+    should be true    '${client_ssid_check}'=='${temp_ssid2}'    msg=the MAC address did not associate with the correct SSID, please check the case manually
+    sleep    10s
+    disconnect
+    delete_profile    ${temp_ssid2}
+    sleep    5s
+    Navigate_To_Profiles
+    click    xpath    ${ssid_icon_location}
+    sleep    3s
+    click    ${profiles_ssid_push_configuration_button}
+    ${check_push_success}    waitElementDisplayed    xpath    //*[contains(text(),'Successful')]    10
+    should be true    ${check_push_success}    msg=push configuration should be able to push successfully, please check the case manually
+    sleep    2s
+    sendKeyEscape
+    sleep    2s
+    Logout

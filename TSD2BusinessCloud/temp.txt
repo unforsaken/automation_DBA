@@ -1,0 +1,105 @@
+*** Settings ***
+Suite Setup       Run Keywords    ElementLocator-Reports    ElementLocator-Main    ElementLocator-Configure    ElementLocator-Settings    ElementLocator-Dashboard    ElementLocator-Monitor
+Force Tags
+Resource          ../AllResources.txt
+
+*** Test Cases ***
+0140
+    [Documentation]    Monitor_FloorPlans
+    ...
+    ...    Criteria: unable to upload picture image to WEB through RIDE
+    [Tags]    DKP1707020-0140
+    ${firmware_location}    set variable    D:\\automation temp\\site-survey\\1F.jpg'
+    Check_Login
+    Login
+    Navigate_To_Created_Organization    ${org}
+    Navigate_To_Created_Site    ${site}
+    click    ${monitor_dropdown_menu}
+    click    ${monitor_dropdown_floorplans}
+    waitElementDisplayed    ${add_floor_plan_button}    5    true
+    sleep    1s
+    click    ${add_floor_plan_button}
+    waitElementDisplayed    ${upload_image_button}    5    true
+    sleep    3s
+    click    ${upload_image_button}
+    ${isDisplayed}=    waitElementDisplayed    xpath    //*[@id="v2-dashboard-modal"]/div[2]/form/div[1]/div/div/label/span[1]    10    true
+    ${isDisplayed}=    waitElementDisplayed    id    upload-map-input    10    true
+    sleep    5s
+    sendText    id    upload-map-input    ${firmware_location}
+    click    ${upload_floorimage_button}
+    sleep    8s
+    waitElementDisplayed    ${first_floorplan_name}    5    true
+    click    ${first_floorplan_name}
+    clearText    ${first_floorplan_name}
+    sendText    ${first_floorplan_name}    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    waitElementDisplayed    ${flooplan_error_msg}    5    true
+    should contain    ${flooplan_error_msg}    Invalid parameters    msg='name is invalid'
+    click    ${first_floorplan_name}
+    clearText    ${first_floorplan_name}
+    sendText    ${first_floorplan_name}    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    click    ${floorplan_save_button}
+    waitElementDisplayed    xpath    //*[contains(text(),'Save Success')]    5    true
+    click    xpath    //*[@id="v2-floor-plan"]/div/div[2]/div[2]/div[2]/div[1]/button
+    click    ${first_floorplan_delete_icon}
+    click    ${floorplan_delete_confirm}
+    Logout
+
+Login
+    Login
+
+Logout
+
+ping_test
+    [Tags]    ping
+    ping_test    192.168.10.31    20
+
+Configure_AP_Create_New_Profile
+    [Tags]    create_profile
+    [Setup]
+    Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    Jack_Test_Org
+    Configure_Create_New_Profile    DBA-1510P_Jack_5255_2
+
+Configure_AP_Check_New_Profile
+    [Tags]    check_profile
+    #To_DBA_URL_and_Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    Jack_Test_Org
+    Configure_Check_New_Profile    DBA-1510P_Jack_5255
+
+Monitor_Access_Point_Event_Log
+    [Tags]    event
+    Login
+    Navigate_To_Created_Organization    TSD2
+    Navigate_To_Event_Log
+    Event_Log_Change_Date    October 23, 2017
+
+Settings_Organization_Management_Create_Organization
+    [Tags]    create_organization
+    [Setup]
+    Login
+    Back_To_Main_Page
+    Settings_Create_New_Organization    Jack_Test_Org
+    Back_To_Main_Page
+    sleep    5s
+
+Settings_Account_Management_Invite_User
+    [Tags]    invite_user
+    Login
+    Back_To_Main_Page
+    Navigate_To_Created_Organization    Jack_Test_Org
+    Settings_Create_New_User    Jack_Tzu
+
+Settings_Organization_Management_Check_New_Organization
+    [Tags]    check_organization
+    #To_DBA_URL_and_Login
+    Back_To_Main_Page
+    Settings_Check_New_Organization    Jack_Test_Org
+
+0097
+    [Documentation]    Top_User_Profile
+    [Tags]    DKP1707020-0097
+    Login
+    Top_User_Profile_Check
+    Logout
